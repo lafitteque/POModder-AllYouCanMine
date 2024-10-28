@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://vnpqweqhqmtk"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.gd" id="1_nipi2"]
+
+[node name="CustomAchievements" type="Node2D"]
+script = ExtResource("1_nipi2")

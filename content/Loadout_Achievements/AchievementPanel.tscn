@@ -1,0 +1,160 @@
+[gd_scene load_steps=19 format=3 uid="uid://chiw461nr8841"]
+
+[ext_resource type="Theme" path="res://gui/theme.tres" id="1_hljb3"]
+[ext_resource type="StyleBox" path="res://gui/panels/panel_inside_dark.tres" id="2_srvwb"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/AchievementPanel.gd" id="3_og4xp"]
+[ext_resource type="PackedScene" path="res://content/shared/Usable.tscn" id="4_d1lch"]
+[ext_resource type="FontVariation" path="res://gui/fonts/FontSmall.tres" id="7_njkc0"]
+[ext_resource type="LabelSettings" path="res://gui/fontsettings/SmallFontSettings.tres" id="8_0np2n"]
+[ext_resource type="Texture2D" uid="uid://bci1reg7lsn5n" path="res://content/caves/halloweencave/spookyguys.png" id="9_ub1ah"]
+[ext_resource type="StyleBox" path="res://gui/buttons/button_focus_expand_beyond_parent.tres" id="10_6w6kl"]
+[ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="11_giu85"]
+[ext_resource type="Material" path="res://systems/style/materials/palette_swap_unmodulated.tres" id="12_un43g"]
+[ext_resource type="Texture2D" uid="uid://crxcie5jow43x" path="res://content/icons/badge_missing.png" id="13_1kirk"]
+[ext_resource type="Texture2D" uid="uid://b85h057l3vfs6" path="res://gui/buttons/checkbox_checked.png" id="14_a62xy"]
+[ext_resource type="Shader" path="res://content/gadgets/shield/reflect_glow.gdshader" id="17_d0eev"]
+[ext_resource type="Texture2D" uid="uid://depbd3wcbrgw5" path="res://content/gadgets/shield/forcefieldglow.png" id="18_6nyp6"]
+
+[sub_resource type="StyleBoxFlat" id="7"]
+bg_color = Color(0.407843, 0.423529, 0.862745, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.407843, 0.423529, 0.862745, 0)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+expand_margin_left = 20.0
+expand_margin_top = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 20.0
+
+[sub_resource type="ShaderMaterial" id="8"]
+shader = ExtResource("17_d0eev")
+
+[sub_resource type="Curve" id="9"]
+_data = [Vector2(0, 0.490909), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.490909), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="10"]
+offsets = PackedFloat32Array(0, 0.142373, 0.501695, 0.840678, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="RewardChoice" type="PanelContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(300, 0)
+offset_right = 24.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+theme = ExtResource("1_hljb3")
+theme_override_styles/panel = ExtResource("2_srvwb")
+script = ExtResource("3_og4xp")
+
+[node name="Usable" parent="." instance=ExtResource("4_d1lch")]
+unique_name_in_owner = true
+position = Vector2(62, 103)
+modulateOnFocus = NodePath(".")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="LabelTitle" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TITLE"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LabelDesc" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 4
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("7_njkc0")
+label_settings = ExtResource("8_0np2n")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer" groups=["unstyled"]]
+unique_name_in_owner = true
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("9_ub1ah")
+stretch_mode = 5
+
+[node name="SelectedPanel" type="Panel" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("10_6w6kl")
+
+[node name="Tween" parent="." instance=ExtResource("11_giu85")]
+
+[node name="LockIcon" type="TextureRect" parent="."]
+visible = false
+material = ExtResource("12_un43g")
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("13_1kirk")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="CheckIcon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+material = ExtResource("12_un43g")
+custom_minimum_size = Vector2(32, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("14_a62xy")
+stretch_mode = 5
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("7")
+
+[node name="Glow" type="Line2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+material = SubResource("8")
+position = Vector2(-1, 3)
+points = PackedVector2Array(302, -4, 1, -4, 1, 88, 303, 89, 0, 0)
+width = 32.0
+width_curve = SubResource("9")
+gradient = SubResource("10")
+texture = ExtResource("18_6nyp6")
+texture_mode = 1
+joint_mode = 1
+
+[connection signal="gui_input" from="." to="." method="_on_LoadoutChoice_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_LoadoutChoice_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_LoadoutChoice_mouse_exited"]

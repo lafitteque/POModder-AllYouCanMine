@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ceaphal7o8fot"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-MoreGuildMissions/content/detonator_tile/Detonator.gd" id="1_ad57d"]
+[ext_resource type="AudioStream" uid="uid://dg7oyernje3bw" path="res://content/sounds/Locations/BlastMiner/ActivateCountdown.wav" id="2_vkmiw"]
+[ext_resource type="AudioStream" uid="uid://c1tgcrm0t2s1i" path="res://content/sounds/Locations/BlastMiner/CountDownTick.wav" id="3_yu3dh"]
+[ext_resource type="Texture2D" uid="uid://cejvih2mjtfe4" path="res://mods-unpacked/POModder-MoreGuildMissions/images/detonator.png" id="4_3rc1b"]
+
+[node name="Detonator" type="Node2D"]
+z_index = 23
+texture_filter = 1
+script = ExtResource("1_ad57d")
+
+[node name="ActivateSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_vkmiw")
+volume_db = 6.19
+bus = &"Important"
+
+[node name="CountdownSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_yu3dh")
+volume_db = -7.464
+pitch_scale = 1.26
+max_distance = 500.0
+bus = &"Mine"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_3rc1b")

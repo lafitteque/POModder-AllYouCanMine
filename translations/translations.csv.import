@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://beoorjcrqclh3"
+
+[deps]
+
+files=["res://mods-unpacked/POModder-AllYouCanMine/translations/translations.en.translation", "res://mods-unpacked/POModder-AllYouCanMine/translations/translations.fr.translation", "res://mods-unpacked/POModder-AllYouCanMine/translations/translations.es.translation"]
+
+source_file="res://mods-unpacked/POModder-AllYouCanMine/translations/translations.csv"
+dest_files=["res://mods-unpacked/POModder-AllYouCanMine/translations/translations.en.translation", "res://mods-unpacked/POModder-AllYouCanMine/translations/translations.fr.translation", "res://mods-unpacked/POModder-AllYouCanMine/translations/translations.es.translation"]
+
+[params]
+
+compress=true
+delimiter=0

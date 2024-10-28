@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://v3lxe8yxym4o"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/mine_loadout.gd" id="1_ftkil"]
+
+[node name="MineLoadout" type="Node2D"]
+script = ExtResource("1_ftkil")

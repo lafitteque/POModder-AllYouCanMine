@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c08j7m3yrkihi"]
+
+[ext_resource type="PackedScene" uid="uid://dvknvixl2hjok" path="res://content/map/MapData.tscn" id="1_0q4gv"]
+
+[node name="MapData" instance=ExtResource("1_0q4gv")]
+layer_0/tile_data = PackedInt32Array(65537, 589824, 1, 131206, 589824, 1, 524533, 589824, 1)
+layer_1/tile_data = PackedInt32Array(65537, 196608, 2, 131206, 131072, 2, 524533, 196608, 2)
+layer_2/tile_data = PackedInt32Array(65537, 65536, 0, 131206, 0, 0, 524533, 0, 1)

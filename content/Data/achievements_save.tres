@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cas587poot1uc"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Data/AchievementsSave.gd" id="1_oflvt"]
+
+[resource]
+script = ExtResource("1_oflvt")
+dict = {}

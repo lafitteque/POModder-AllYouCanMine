@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ykkik4pr7kwu"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/useless_explosion.gd" id="1_kry4d"]
+
+[node name="UselessExplosion" type="Node2D"]
+script = ExtResource("1_kry4d")

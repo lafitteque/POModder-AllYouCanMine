@@ -1,0 +1,52 @@
+mineall:
+  tier: 0
+  goaltype: property
+  goalvalue: inventory.remainingtiles == 0
+  eraseupgradelimits: [primaryweapon, hostile]
+  freegadgets: 1
+  mapArchetype: regular-small
+  worldModifiers: worldmodifiernomonsters
+  propertyChanges:
+    - game.fixedtimelimit = 30
+  challengePropertyChanges:
+    - game.fixedtimelimit = 20
+
+detonators:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-detonators
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.1
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 2.5
+    - monsters.additionalwaveweight = 20
+    - monsters.minimumtimebetweenmonsters = 0.08
+	
+aprilfools:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-aprilfools
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.1
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.5
+    - monsters.additionalwaveweight = 10
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+thieves:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: regular-large
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.9
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 2.0
+    - monsters.additionalwaveweight = 30
+    - monsters.minimumtimebetweenmonsters = 0.08
+
