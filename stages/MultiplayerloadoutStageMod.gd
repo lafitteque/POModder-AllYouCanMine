@@ -7,7 +7,7 @@ class_name MultiplayerLoadoutStageMod
 func createMapDataFor(requiremnts) -> MapData:
 	var tileData = preload("res://content/map/MapData.tscn").instantiate()
 	tileData.clear()
-	tileData.stack(preload("res://stages/loadout/TileDataStartArea.tscn").instantiate(), Vector2(0, 1))
+	tileData.stack(preload("res://mods-unpacked/POModder-AllYouCanMine/stages/TileDataStartArea.tscn").instantiate(), Vector2(0, 1))
 	
 	for x in requiremnts:
 		match x:

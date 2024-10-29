@@ -1,7 +1,12 @@
 extends "res://content/map/generation/TileDataGenerator.gd"
 
 const TILE_DETONATOR = 11
+var x = 0
 
+func _ready():
+	x = 12
+	super()
+	
 func generate_resources(rand):
 	super.generate_resources(rand)
 	
@@ -15,7 +20,7 @@ func generate_detonators(ironClusterCenters, original_cell_coords, borderCells):
 	var detonator_rate = a.max_tile_count_deviation*1000 
 	detonator_rate -= int(detonator_rate)
 	detonator_rate *= 100
-	print('detonator rate : ' , detonator_rate)
+	print('detonator rate : ' , detonator_rate, " ; x = " , x)
 	 # encode detonator_rate in digits 4 , 5 , 6 , 7 after the comma. reads as 45.67
 	var detonatorAmount = round(detonator_rate * 0.001 * original_cell_coords.size())
 	var availableCells = $MapData.get_resource_cells_by_id(Data.TILE_DIRT_START)

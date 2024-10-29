@@ -869,6 +869,49 @@ layout_mode = 2
 toggleable = true
 titleLocId = "loadout.zoom2"
 
+[node name="BlockProgress" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_left = 1348.0
+offset_top = 1572.0
+offset_right = 2684.0
+offset_bottom = 2484.0
+
+[node name="Engineer" type="VBoxContainer" parent="UI/BlockProgress"]
+layout_mode = 2
+
+[node name="Headline" type="Label" parent="UI/BlockProgress/Engineer"]
+texture_filter = 4
+layout_mode = 2
+theme = ExtResource("12_ano3e")
+theme_override_fonts/font = ExtResource("13_833lr")
+theme_override_font_sizes/font_size = 64
+text = "loadout..title"
+label_settings = ExtResource("14_5rxjy")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/BlockProgress/Engineer"]
+layout_mode = 2
+
+[node name="Assessor" type="VBoxContainer" parent="UI/BlockProgress"]
+layout_mode = 2
+
+[node name="Headline" type="Label" parent="UI/BlockProgress/Assessor"]
+texture_filter = 4
+layout_mode = 2
+theme = ExtResource("12_ano3e")
+theme_override_fonts/font = ExtResource("13_833lr")
+theme_override_font_sizes/font_size = 64
+text = "loadout.custom_achievements.title"
+label_settings = ExtResource("14_5rxjy")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/BlockProgress/Assessor"]
+layout_mode = 2
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Tween" parent="." instance=ExtResource("5_i45ha")]
