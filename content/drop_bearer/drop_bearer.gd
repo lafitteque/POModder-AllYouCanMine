@@ -129,6 +129,6 @@ func die():
 func _on_area_2d_body_entered(body):
 	if body is Carryable and !body.isCarried() and !drop and state != State.DIE and ! body.get_node("BoolCarried"):
 		drop = body
-		var bool_node = preload("res://mods-unpacked/POModder-MoreGuildMissions/content/drop_bearer/boolCarried.tscn").instantiate()
+		var bool_node = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/boolCarried.tscn").instantiate()
 		body.add_child(bool_node)
 		

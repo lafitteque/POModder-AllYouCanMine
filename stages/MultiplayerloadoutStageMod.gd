@@ -73,3 +73,13 @@ func update_custom_achievements():
 			e.completed()
 		else :
 			e.setChoice(title, customAchievementId, null, desc)
+
+func preGenerateMap(requirements):
+	var generated = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn").instantiate()
+	add_child(generated)
+	generated.setTileData(createMapDataFor(requirements))
+	generated.init(false, false)
+	generated.revealInitialState(Vector2(0, 4))
+	pregeneratedMaps[requirements] = generated
+	remove_child(generated)
+	return generated

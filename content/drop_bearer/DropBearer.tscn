@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=3 uid="uid://bbrcsy54a4qpm"]
 
-[ext_resource type="Script" path="res://mods-unpacked/POModder-MoreGuildMissions/content/drop_bearer/drop_bearer.gd" id="1_kpri6"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer.gd" id="1_4p0ij"]
 [ext_resource type="Texture2D" uid="uid://01ok1v6su3dj" path="res://content/critters/mushroomman/pilzmannerl_sheet.png" id="2"]
 [ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="3"]
 
@@ -271,7 +271,7 @@ radius = 8.0
 [node name="Shroomer" type="CharacterBody2D" groups=["critters_shroomer"]]
 z_index = 23
 collision_layer = 0
-script = ExtResource("1_kpri6")
+script = ExtResource("1_4p0ij")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -6)

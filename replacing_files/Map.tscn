@@ -1,6 +1,6 @@
-[gd_scene load_steps=67 format=3]
+[gd_scene load_steps=67 format=3 uid="uid://7o4asj5tcqua"]
 
-[ext_resource type="Script" path="res://mods-unpacked/POModder-MoreGuildMissions/it_hurts/Map.gd" id="1"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.gd" id="1_my2h0"]
 [ext_resource type="Texture2D" uid="uid://ccqqc5rjgjkom" path="res://systems/style/palettes/index_palette.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://b6cs73er4iy2" path="res://content/map/bodenv2.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://1ge7yeqfnhbj" path="res://content/map/tile/new_rocks/rocks1_margin.png" id="4"]
@@ -23,9 +23,9 @@
 [ext_resource type="Script" path="res://content/map/BorderDecorations.gd" id="21"]
 [ext_resource type="Shader" path="res://content/map/shaders/map_alpha_fix.gdshader" id="22"]
 [ext_resource type="Script" path="res://content/map/CentralMarker.gd" id="23"]
-[ext_resource type="PackedScene" uid="uid://bwv0ttmgfw5cg" path="res://content/critters/Critters.tscn" id="24"]
-[ext_resource type="PackedScene" uid="uid://cal1wf2f0kx7b" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="25"]
-[ext_resource type="PackedScene" uid="uid://fl5e4x7lb4px" path="res://systems/audio/Sound.tscn" id="26"]
+[ext_resource type="PackedScene" path="res://content/critters/Critters.tscn" id="24"]
+[ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="25"]
+[ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="26"]
 [ext_resource type="AudioStream" uid="uid://bji3d5dsqegnd" path="res://content/sounds/rock-break-1.wav" id="27"]
 [ext_resource type="AudioStream" uid="uid://ccs61fwitiqh3" path="res://content/sounds/Map/Dig_layerv2_01.wav" id="28"]
 [ext_resource type="AudioStream" uid="uid://bw6vgbbkgxytv" path="res://content/sounds/Map/Dig_layerv2_02.wav" id="29"]
@@ -58,87 +58,66 @@ void fragment() {
 	float l = TEXTURE_PIXEL_SIZE.y*grad_length;
 	COLOR.rgb = output.rgb * (1.0 - smoothstep(0.0, 1.5, UV.y/l));
 }"
-script = null
 
 [sub_resource type="ShaderMaterial" id="2"]
 shader = SubResource("1")
 shader_parameter/grad_length = 100.0
 shader_parameter/palette = ExtResource("2")
-script = null
 
 [sub_resource type="TileSetAtlasSource" id="3"]
 texture = ExtResource("4")
 texture_region_size = Vector2i(32, 32)
 0:0/next_alternative_id = 8
 0:0/0 = 0
-0:0/0/script = null
-script = null
 
 [sub_resource type="TileSetAtlasSource" id="4"]
 texture = ExtResource("5")
 texture_region_size = Vector2i(32, 32)
 0:0/next_alternative_id = 8
 0:0/0 = 0
-0:0/0/script = null
-script = null
 
 [sub_resource type="TileSetAtlasSource" id="5"]
 texture = ExtResource("6")
 texture_region_size = Vector2i(32, 32)
 0:0/next_alternative_id = 8
 0:0/0 = 0
-0:0/0/script = null
-script = null
 
 [sub_resource type="TileSetAtlasSource" id="6"]
 texture = ExtResource("7")
 texture_region_size = Vector2i(32, 32)
 0:0/next_alternative_id = 9
 0:0/0 = 0
-0:0/0/script = null
-script = null
 
 [sub_resource type="TileSetAtlasSource" id="7"]
 texture = ExtResource("8")
 texture_region_size = Vector2i(32, 32)
 0:0/next_alternative_id = 8
 0:0/0 = 0
-0:0/0/script = null
-script = null
 
 [sub_resource type="TileSetAtlasSource" id="8"]
 texture = ExtResource("9")
 texture_region_size = Vector2i(32, 32)
 0:0/next_alternative_id = 8
 0:0/0 = 0
-0:0/0/script = null
 0:0/1 = 1
 0:0/1/flip_h = true
-0:0/1/script = null
 0:0/2 = 2
 0:0/2/flip_v = true
-0:0/2/script = null
 0:0/3 = 3
 0:0/3/flip_h = true
 0:0/3/flip_v = true
-0:0/3/script = null
 0:0/4 = 4
 0:0/4/transpose = true
-0:0/4/script = null
 0:0/5 = 5
 0:0/5/flip_h = true
 0:0/5/transpose = true
-0:0/5/script = null
 0:0/6 = 6
 0:0/6/flip_v = true
 0:0/6/transpose = true
-0:0/6/script = null
 0:0/7 = 7
 0:0/7/flip_h = true
 0:0/7/flip_v = true
 0:0/7/transpose = true
-0:0/7/script = null
-script = null
 
 [sub_resource type="TileSet" id="9"]
 tile_size = Vector2i(24, 24)
@@ -148,19 +127,15 @@ sources/2 = SubResource("5")
 sources/3 = SubResource("6")
 sources/4 = SubResource("7")
 sources/5 = SubResource("8")
-script = null
 
 [sub_resource type="ViewportTexture" id="10"]
 viewport_path = NodePath("ViewportRocks")
-script = null
-
-[sub_resource type="ViewportTexture" id="11"]
-viewport_path = NodePath("ViewportLights")
-script = null
 
 [sub_resource type="ViewportTexture" id="12"]
 viewport_path = NodePath("ViewportBackgroundAlpha")
-script = null
+
+[sub_resource type="ViewportTexture" id="11"]
+viewport_path = NodePath("ViewportLights")
 
 [sub_resource type="ShaderMaterial" id="13"]
 resource_local_to_scene = true
@@ -199,19 +174,15 @@ shader_parameter/bg_alpha_map = SubResource("12")
 shader_parameter/biome_color_map = ExtResource("14")
 shader_parameter/combined_noise_1 = ExtResource("15")
 shader_parameter/combined_noise_2 = ExtResource("16")
-script = null
 
 [sub_resource type="ViewportTexture" id="14"]
 viewport_path = NodePath("ViewportRocks")
-script = null
 
 [sub_resource type="ViewportTexture" id="15"]
 viewport_path = NodePath("ViewportCrackImpact")
-script = null
 
 [sub_resource type="ViewportTexture" id="16"]
 viewport_path = NodePath("ViewportLights")
-script = null
 
 [sub_resource type="ShaderMaterial" id="17"]
 resource_local_to_scene = true
@@ -242,28 +213,19 @@ shader_parameter/temp_damage_mult_a = 3.724
 shader_parameter/pixel_size = Vector2(200, 200)
 shader_parameter/palette = ExtResource("2")
 shader_parameter/crack_impact = SubResource("15")
-shader_parameter/mask_map = null
 shader_parameter/light_map = SubResource("16")
-shader_parameter/rock_falloff_map = null
-shader_parameter/damage_map = null
 shader_parameter/cracks_tiled_map = ExtResource("18")
-shader_parameter/biome_color_map = null
 shader_parameter/mask_noise_map = ExtResource("19")
-shader_parameter/mask_noise_factor_map = null
 shader_parameter/mask_noise_big_map = ExtResource("20")
-script = null
 
 [sub_resource type="ViewportTexture" id="18"]
 viewport_path = NodePath("ViewportRocks")
-script = null
 
 [sub_resource type="ShaderMaterial" id="19"]
 shader = ExtResource("22")
-script = null
 
 [sub_resource type="ViewportTexture" id="20"]
 viewport_path = NodePath("ViewportLights")
-script = null
 
 [sub_resource type="Shader" id="21"]
 code = "shader_type canvas_item;
@@ -277,35 +239,29 @@ void fragment() {
 	COLOR = vec4(color_fix,color.a);
 	COLOR.a *= vec3(texture(grad, vec2(UV.y, UV.x)).r).r;
 }"
-script = null
 
 [sub_resource type="Gradient" id="22"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0, 0.994, 0.996, 0.998)
 colors = PackedColorArray(1, 1, 1, 1, 0.625, 0.625, 0.625, 1, 0.347656, 0.347656, 0.347656, 1, 0.195312, 0.195312, 0.195312, 1)
-script = null
 
 [sub_resource type="GradientTexture2D" id="23"]
 gradient = SubResource("22")
-script = null
 
 [sub_resource type="ShaderMaterial" id="24"]
 shader = SubResource("21")
 shader_parameter/grad = SubResource("23")
-script = null
 
 [sub_resource type="ViewportTexture" id="25"]
 viewport_path = NodePath("ViewportTopEffects")
-script = null
 
 [sub_resource type="RectangleShape2D" id="26"]
 size = Vector2(20000, 1000)
-script = null
 
 [node name="Map" type="Node2D"]
 process_mode = 1
 texture_filter = 1
-script = ExtResource("1")
+script = ExtResource("1_my2h0")
 
 [node name="Background" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -422,9 +378,7 @@ unique_name_in_owner = true
 [node name="BackgroundRender" type="Node2D" parent="."]
 z_index = -20
 
-[node name="BackgroundSprite" type="Sprite2D" parent="BackgroundRender" groups=[
-"shader-background-gradient",
-]]
+[node name="BackgroundSprite" type="Sprite2D" parent="BackgroundRender" groups=["shader-background-gradient"]]
 texture_filter = 3
 texture_repeat = 2
 material = SubResource("13")
@@ -437,9 +391,7 @@ unique_name_in_owner = true
 
 [node name="TileRender" type="Node2D" parent="."]
 
-[node name="MainStones" type="Sprite2D" parent="TileRender" groups=[
-"shader-background-gradient",
-]]
+[node name="MainStones" type="Sprite2D" parent="TileRender" groups=["shader-background-gradient"]]
 z_index = -1
 texture_filter = 1
 material = SubResource("17")
@@ -501,7 +453,7 @@ bus = &"Mine"
 randomPitch = 0.2
 maxAudibleDistance = 250.0
 minAudibleDistance = 40.0
-streams = [ExtResource("28"), ExtResource("29"), ExtResource("30")]
+streams = Array[AudioStream]([ExtResource("28"), ExtResource("29"), ExtResource("30")])
 removeAfterPlaying = true
 
 [node name="TileDestroyedIron" parent="." instance=ExtResource("26")]
@@ -519,7 +471,7 @@ bus = &"Mine"
 randomPitch = 0.2
 maxAudibleDistance = 250.0
 minAudibleDistance = 40.0
-streams = [ExtResource("31"), ExtResource("32"), ExtResource("33")]
+streams = Array[AudioStream]([ExtResource("31"), ExtResource("32"), ExtResource("33")])
 removeAfterPlaying = true
 
 [node name="TileDestroyedSand" parent="." instance=ExtResource("26")]
@@ -537,7 +489,7 @@ bus = &"Mine"
 randomPitch = 0.2
 maxAudibleDistance = 250.0
 minAudibleDistance = 40.0
-streams = [ExtResource("34"), ExtResource("35"), ExtResource("36")]
+streams = Array[AudioStream]([ExtResource("34"), ExtResource("35"), ExtResource("36")])
 removeAfterPlaying = true
 
 [node name="TileDestroyedWater" parent="." instance=ExtResource("26")]
@@ -555,7 +507,7 @@ bus = &"Mine"
 randomPitch = 0.2
 maxAudibleDistance = 250.0
 minAudibleDistance = 40.0
-streams = [ExtResource("37"), ExtResource("38"), ExtResource("39")]
+streams = Array[AudioStream]([ExtResource("37"), ExtResource("38"), ExtResource("39")])
 removeAfterPlaying = true
 
 [node name="TileDestroyedChamber" parent="." instance=ExtResource("26")]
@@ -573,7 +525,7 @@ bus = &"Mine"
 randomPitch = 0.2
 maxAudibleDistance = 250.0
 minAudibleDistance = 40.0
-streams = [ExtResource("37"), ExtResource("38"), ExtResource("39")]
+streams = Array[AudioStream]([ExtResource("37"), ExtResource("38"), ExtResource("39")])
 removeAfterPlaying = true
 
 [node name="DropDeleter" type="Area2D" parent="."]

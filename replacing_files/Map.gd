@@ -40,6 +40,10 @@ const DROP_FROM_TILES_SCENES := {
 
 const APRIL_FOOLS_PROBABILITIES = [50.0, 5.0 , 2.0 , 1.0, 20.0]
 
+func _ready():
+	print("Map ready")
+	super._ready()
+	
 func weighted_random(weights) -> int:
 	var weights_sum := 0.0
 	for weight in weights:
@@ -72,7 +76,7 @@ func revealTile(coord:Vector2):
 	if tiles.has(coord):
 		return
 	
-	var tile = preload("res://mods-unpacked/POModder-MoreGuildMissions/it_hurts/Tile.tscn").instantiate()
+	var tile = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn").instantiate()
 	var biomeId:int = tileData.get_biome(coord.x, coord.y)
 	tile.layer = biomeId
 	tile.biome = biomes[tile.layer]
