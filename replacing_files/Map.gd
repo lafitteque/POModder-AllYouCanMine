@@ -40,10 +40,6 @@ const DROP_FROM_TILES_SCENES := {
 
 const APRIL_FOOLS_PROBABILITIES = [50.0, 5.0 , 2.0 , 1.0, 20.0]
 
-func _ready():
-	print("Map ready")
-	super._ready()
-	
 func weighted_random(weights) -> int:
 	var weights_sum := 0.0
 	for weight in weights:
@@ -139,6 +135,5 @@ func addDrop(drop):
 		#var dropbearer = preload("res://mods-unpacked/POModder-MoreGuildMissions/content/drop_bearer/DropBearer.tscn").instantiate()#QLafitte Added
 		#dropbearer.global_position = drop.global_position#QLafitte Added
 		#add_child(dropbearer)
-		#print("shroom added")
 	add_child(drop)		
 

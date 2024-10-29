@@ -5,7 +5,6 @@ var detonator = null #QLafitte Added
 
 func setType(type:String):
 	super.setType(type)
-	print(type)
 	if type == data_mod.TILE_ID_TO_STRING_MAP.get(data_mod.TILE_DETONATOR): #QLafitte Added
 		res_sprite.hide()
 		set_meta("destructable", true)
@@ -13,11 +12,9 @@ func setType(type:String):
 		detonator = load("res://mods-unpacked/POModder-AllYouCanMine/content/detonator_tile/Detonator.tscn").instantiate()#QLafitte Added
 		detonator.position = position#QLafitte Added
 		get_parent().add_child(detonator)#QLafitte Added
-		print("detonator découvert")
-	
 
 
 func hit(dir:Vector2, dmg:float):
-	if type == DataForMod.TILE_ID_TO_STRING_MAP.get(DataForMod.TILE_DETONATOR) and !detonator.exploded:#QLafitte Added
+	if type == data_mod.TILE_ID_TO_STRING_MAP.get(data_mod.TILE_DETONATOR) and !detonator.exploded:#QLafitte Added
 		detonator.explode()
 	super.hit(dir,dmg)

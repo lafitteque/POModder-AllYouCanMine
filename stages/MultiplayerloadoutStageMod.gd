@@ -48,12 +48,13 @@ func update_achievements():
 		var e = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/AchievementPanel.tscn").instantiate()
 		var title = "achievement." + achievementId.to_lower() + ".title"
 		var desc = "achievement." + achievementId.to_lower() + ".desc"
+		var hint = "achievement." + achievementId.to_lower() + ".hint"
 		achievement_container.add_child(e)
 		if Steam.getAchievement(achievementId)["achieved"]:
 			e.setChoice(title, achievementId, null, desc)
 			e.completed()
 		else :
-			e.setChoice(title, achievementId, null, desc)
+			e.setChoice(title, achievementId, null, hint)
 			
 	
 	
@@ -67,12 +68,13 @@ func update_custom_achievements():
 		var e = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/AchievementPanel.tscn").instantiate()
 		var title = "achievement." + customAchievementId.to_lower() + ".title"
 		var desc = "achievement." + customAchievementId.to_lower() + ".desc"
+		var hint = "achievement." + customAchievementId.to_lower() + ".hint"
 		customAchievement_container.add_child(e)
 		if custom_achievements_manager.isAchievementUnlocked(customAchievementId):
 			e.setChoice(title, customAchievementId, null, desc)
 			e.completed()
 		else :
-			e.setChoice(title, customAchievementId, null, desc)
+			e.setChoice(title, customAchievementId, null, hint)
 
 func preGenerateMap(requirements):
 	var generated = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn").instantiate()

@@ -1,2 +1,7 @@
 Mine_All assignment :
 - une personne dit que la mission n'a pas été validée parce qu'il lui manquait un bloc, mais que ce bloc n'existait pas.
+
+
+Attention : Quand le jeu est pausé -> achievements easy?
+
+Extensions : Problèmes -> extension ne marche que en partie.

@@ -19,8 +19,9 @@ func _ready():
 	add_child(timer)
 	
 func _on_timer_timeout():
-	if get_tree().get_nodes_in_group("relic").size()>=1 and !GameWorld.paused:
+	if StageManager.currentStage.find_child("RelicChamber",true,false).currentState>=2 and !GameWorld.paused:
 		wait_time+= delta 
+		print("wait_time : " , wait_time)
 	if wait_time>=time_to_unlock:
 		get_parent().unlockAchievement(id)
 		timer.queue_free()

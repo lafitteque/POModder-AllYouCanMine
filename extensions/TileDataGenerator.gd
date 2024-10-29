@@ -2,7 +2,6 @@ extends "res://content/map/generation/TileDataGenerator.gd"
 
 const TILE_DETONATOR = 11
 
-
 func generate_resources(rand):
 	super.generate_resources(rand)
 	

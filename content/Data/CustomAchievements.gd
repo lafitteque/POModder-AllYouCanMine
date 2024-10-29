@@ -20,7 +20,8 @@ var save_path = "res://save_AllYouCanMine.save"
 	"Relichunt" : [preload("res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/relic_wait.tscn")],
 	"MultiplayerLoadoutStage" : [],
 	"TitleStage":[],
-	"LandingSequence":[]
+	"LandingSequence":[],
+	"Intro" : []
 	}
 
  
