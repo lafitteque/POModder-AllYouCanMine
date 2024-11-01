@@ -3,10 +3,8 @@ extends Node
 const MYMODNAME_LOG = "POModder-AllYouCanMine"
 const MYMODNAME_MOD_DIR = "POModder-AllYouCanMine/"
 
-
 var dir = ""
 var ext_dir = ""
-
 var cooldown : float = 1.0
 var in_game = false
 var map_node = null
@@ -14,10 +12,10 @@ var map_node = null
 var trans_dir = "res://mods-unpacked/POModder-AllYouCanMine/translations/"
 
 var achievements = {}
-
 var data_achievements 
 var data_mod 
 var custom_achievements 
+var saver
 
 func _init():
 	ModLoaderLog.info("Init", MYMODNAME_LOG)
@@ -29,6 +27,7 @@ func _init():
 		ModLoaderMod.add_translation(trans_dir + "translations." + loc + ".translation")
 	ModLoaderMod.install_script_extension(ext_dir + "AssignmentDisplay.gd")
 	ModLoaderMod.install_script_extension(ext_dir + "TileDataGenerator.gd")
+
 	
 func _ready():
 	ModLoaderLog.info("Done", MYMODNAME_LOG)
@@ -36,9 +35,9 @@ func _ready():
 
 		
 func modInit():
-	
 	var pathToModYaml : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
 	Data.parseAssignmentYaml(pathToModYaml)
+	
 	ModLoaderLog.info("Trying to parse YAML: %s" % pathToModYaml, MYMODNAME_LOG)
 	
 	data_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForAchievements.tscn").instantiate()
@@ -49,7 +48,11 @@ func modInit():
 	
 	manage_overwrites()
 	
-	custom_achievements = load("res://systems/achievements/CustomAchievements.tscn").instantiate()
+	saver = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Save/Saver.tscn").instantiate()
+	add_child(saver)
+	
+	
+	custom_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.tscn").instantiate()
 	add_child(custom_achievements)
 	
 	StageManager.connect("level_ready", _on_level_ready)
@@ -67,24 +70,22 @@ func manage_overwrites():
 	var new_archetype2 = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-aprilfools.tres")
 	new_archetype2.take_over_path("res://content/map/generation/archetypes/assignment-aprilfools.tres")
 	
-	var new_stage = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutModStage.tscn")
+	var new_stage = load("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutModStage.tscn")
 	new_stage.take_over_path("res://stages/loadout/multiplayerloadoutmodstage.tscn")
 
-	var custom_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.tscn")
+	var custom_achievements = load("res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.tscn")
 	custom_achievements.take_over_path("res://systems/achievements/CustomAchievements.tscn")
 	
-	var map = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn")
-	map.take_over_path("res://content/map/Map.tscn")
 		
-	var tile = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
+	var tile = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
 	tile.take_over_path("res://content/map/tile/Tile.tscn")
 	
 	
 	
 func _on_level_ready():
-	if Data.of("assignment.id") is String and Data.of("assignment.id") == "thieves":
+	if Data.ofOr("assignment.id","") == "thieves":
 		var drop_bearer_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer_manager.tscn").instantiate()
 		get_tree().get_root().get_child(13).map.add_child(drop_bearer_manager)
-	if Data.of("assignment.id") is String and Data.of("assignment.id") == "mineall":
+	if Data.ofOr("assignment.id","") == "mineall":
 		var mine_all_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mine_all_data.tscn").instantiate()
 		add_child(mine_all_data)

@@ -6,9 +6,9 @@ var achievements_unlocked = {}
 var data_achievements 
 var all_children = []
 var stage = null
-var save_path = "res://save_AllYouCanMine.save"
+var saver_id = "custom_achievements"
 
-
+@onready var saver = get_node("/root/ModLoader/POModder-AllYouCanMine").saver
 
 
 @onready var achievement_stage = {
@@ -26,9 +26,15 @@ var save_path = "res://save_AllYouCanMine.save"
 
  
 func _ready():
-	var loaded = load_data()
+	saver.load_data()
+	
+	if !saver.save_dict.has(saver_id): # If save_file is empty (first time)
+		saver.save_dict[saver_id] = {}
+		
+	var loaded = saver.save_dict[saver_id] 
 	if loaded!= {} and loaded != null:
 		achievements_unlocked = loaded
+		
 	data_achievements = get_node("/root/ModLoader/POModder-AllYouCanMine").data_achievements
 	for achievementId in data_achievements.CUSTOM_ACHIEVEMENTS:
 		if !achievements_unlocked.has(achievementId):
@@ -61,7 +67,7 @@ func change_stage(new_stage : String):
 func unlockAchievement(achievementId : String):
 	assert( achievements_unlocked.has(achievementId), "ERROR: You try to unlock an achievement that does not exist.")
 	achievements_unlocked[achievementId] = true
-	if stage == "MultiplayerLoadoutModStage":
+	if StageManager.currentStage.name == "MultiplayerLoadoutModStage":
 		StageManager.currentStage.update_custom_achievements()
 	save_data()
 		
@@ -70,18 +76,9 @@ func isAchievementUnlocked(achievementId : String):
 	assert( achievements_unlocked.has(achievementId), "ERROR: You try to access an achievement that does not exist.")
 	return achievements_unlocked[achievementId] 
 	
-	
-func load_data():
-	var file = FileAccess.open(save_path,FileAccess.READ)
-	if !file :
-		return null
-	var result = file.get_var()
-	file.close()
-	return result
 
 func save_data():
-	var file = FileAccess.open(save_path,FileAccess.WRITE)
-	file.store_var(achievements_unlocked)
-	file.close()
+	saver.save_dict[saver_id] = achievements_unlocked
+	saver.save_data()
 
 

@@ -11,8 +11,8 @@ var timer : Timer
 var second_timer 
 
 var delta = 0.5
-var max_kill_tiles = 1
-var min_kill_tiles = 1
+var max_kill_tiles = 0
+var min_kill_tiles = 0
 var previous_tiles
 
 @onready var map = StageManager.currentStage.MAP
@@ -38,7 +38,6 @@ func _on_timer_timeout():
 			timer.stop()
 			
 func verify_kill_count():
-	
 	if is_instance_valid(cave_bomb) :
 		cave_bomb_pos = cave_bomb.global_position
 		previous_tiles = map.tiles
@@ -57,4 +56,3 @@ func verify_kill_count():
 		timer.queue_free()
 	else : 
 		timer.start()
-	

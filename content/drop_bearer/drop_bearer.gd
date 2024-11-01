@@ -73,7 +73,20 @@ func _physics_process(delta):
 			velocity.x = old_x_speed
 	if keepdrop:
 		drop.global_position = $Sprite2D.global_position + Vector2.UP*3
-	elif drop and !keepdrop:
+	if drop and !keepdrop:
+		var po = CarryablePhysicsOverride.new(self)
+		po.call_deferred("set_bounce", 0.0)
+		po.gravity_scale = 1.0
+		po.linear_damp = 2
+		po.angular_damp = 2
+		drop.addPhysicsOverride(po)
+		drop.get_node("BoolCarried").queue_free()
+		drop.global_position = global_position
+		var possible_keeper = drop.carriedBy[-1]
+		if possible_keeper is Keeper and "carryLines" in possible_keeper :
+			possible_keeper.carryLines[drop].points[-1] = drop.global_position
+
+		drop = null
 		die()
 	elif !drop and $DropDetector.is_colliding() and cooldown <=0:
 		flip()
@@ -102,8 +115,6 @@ func _SpriteAnimationFinishedCheck() -> void:
 	match $Sprite2D.animation:
 		"shrink":
 			if state == State.DIE:
-				if drop :
-					drop.get_node("BoolCarried").queue_free()
 				queue_free()
 			else:
 				animateShrunken()
@@ -130,5 +141,11 @@ func _on_area_2d_body_entered(body):
 	if body is Carryable and !body.isCarried() and !drop and state != State.DIE and ! body.get_node("BoolCarried"):
 		drop = body
 		var bool_node = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/boolCarried.tscn").instantiate()
-		body.add_child(bool_node)
+		drop.add_child(bool_node)
+		var po = CarryablePhysicsOverride.new(self)
+		po.call_deferred("set_bounce", 0.0)
+		po.gravity_scale = 0.0
+		po.linear_damp = 0.0
+		po.angular_damp = 0.0
+		drop.addPhysicsOverride(po)
 		

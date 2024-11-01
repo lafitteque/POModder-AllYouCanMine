@@ -2,6 +2,16 @@ Mine_All assignment :
 - une personne dit que la mission n'a pas été validée parce qu'il lui manquait un bloc, mais que ce bloc n'existait pas.
 
 
+
+Achievement Useless bombs :
+- La vérification ne marche pas si la bombe explose en cercle (vérifie uniquement les lignes)
+
+
 Attention : Quand le jeu est pausé -> achievements easy?
 
 Extensions : Problèmes -> extension ne marche que en partie.
+
+
+
+--------- DONE ----------
+Thieves assignment :Les ressources passent parfois dans les murs  ----- OK

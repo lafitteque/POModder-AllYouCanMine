@@ -107,7 +107,7 @@ func revealTile(coord:Vector2):
 	# Allow border tiles to fade correctly at edges of the map
 	visibleTileCoords[coord] = typeId
 	
-	if Data.of("assignment.id") is String and Data.of("assignment.id") == "aprilfools":
+	if Data.ofOr("assignment.id","") == "aprilfools":
 		if tile.type in [CONST.IRON, CONST.SAND, CONST.WATER, TILE_DETONATOR]: #Qlafitte Added
 			var vec_list = [\
 				Vector2(5, 0) , Vector2(randi_range(2, 6), 11) , \
@@ -118,7 +118,7 @@ func revealTile(coord:Vector2):
 			tile.initResourceSprite(vec_list[rand_index]) #Qlafitte Added
 	
 func addDrop(drop):
-	if Data.of("assignment.id") is String and Data.of("assignment.id") == "aprilfools" and\
+	if Data.ofOr("assignment.id","") == "aprilfools" and\
 	("type" in drop) and drop.type in [CONST.WATER, CONST.IRON,CONST.SAND]: #QLafitte Added
 		var old_position = drop.global_position #QLafitte Added
 		drop = null #QLafitte Added

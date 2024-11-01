@@ -24,4 +24,14 @@ void fragment() {
 	float line = smoothstep(-line_width, line_width, 
 			rotate_precalculated((UV*UV - vec2(0.5)), sine, cosine).y - mod(TIME * speed, (len * 2.0) * wait_cycles) + len);
 	COLOR.rgb += shine_color.rgb * shine_color.a * vec3(line * (1.0 - line) * 4.0);
+	
+	//vec4 outline_color = vec4(1.0,1.0,1.0,1.0);
+	//vec4 line_NW = vec4(outline_color.rgb, texture(TEXTURE, UV - TEXTURE_PIXEL_SIZE ).a);
+	//vec4 line_SE = vec4(outline_color.rgb, texture(TEXTURE, UV + TEXTURE_PIXEL_SIZE ).a);
+	//vec4 line_NE = vec4(outline_color.rgb, texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x,-TEXTURE_PIXEL_SIZE.y) ).a);
+	//vec4 line_SW = vec4(outline_color.rgb, texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x,TEXTURE_PIXEL_SIZE.y) ).a);
+	//vec4 outline1 = mix(line_NW, line_SE, line_SE);
+	//vec4 outline2 = mix(line_NE, line_SW, line_SW);
+	//vec4 outline = mix(outline1, outline2, outline2);
+	//COLOR.rgba = mix(COLOR, outline, (1.0 - COLOR.a));
 }

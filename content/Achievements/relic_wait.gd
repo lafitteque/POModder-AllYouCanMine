@@ -19,7 +19,8 @@ func _ready():
 	add_child(timer)
 	
 func _on_timer_timeout():
-	if StageManager.currentStage.find_child("RelicChamber",true,false).currentState>=2 and !GameWorld.paused:
+	var relic_chamber = StageManager.currentStage.find_child("RelicChamber",true,false)
+	if relic_chamber and relic_chamber.currentState>=2 and !GameWorld.paused:
 		wait_time+= delta 
 		print("wait_time : " , wait_time)
 	if wait_time>=time_to_unlock:

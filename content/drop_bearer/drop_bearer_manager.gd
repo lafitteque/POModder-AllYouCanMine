@@ -13,7 +13,7 @@ var probability_spawn = 0.01
 
 func _ready():
 	
-	if Data.of("assignment.id") is String and Data.of("assignment.id") == "thieves":
+	if Data.ofOr("assignment.id","")  == "thieves":
 		probability_spawn = 1
 	
 func _on_timer_timeout():
