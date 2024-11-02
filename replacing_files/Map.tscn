@@ -537,4 +537,11 @@ script = ExtResource("40")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropDeleter"]
 shape = SubResource("26")
 
+[node name="Label" type="Label" parent="."]
+offset_left = 120.0
+offset_top = -165.0
+offset_right = 160.0
+offset_bottom = -142.0
+text = "OUI"
+
 [connection signal="body_entered" from="DropDeleter" to="DropDeleter" method="_on_body_entered"]

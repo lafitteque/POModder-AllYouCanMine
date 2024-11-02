@@ -9,7 +9,7 @@ func _ready():
 func _process(delta):
 	if cooldown > 0.0:
 		cooldown -= delta
-	else:
+	elif is_instance_valid(tile_data):
 		cooldown += 1.0
 		var count = tile_data.get_remaining_mineable_tile_count()
 		Data.apply("inventory.remainingtiles", count)

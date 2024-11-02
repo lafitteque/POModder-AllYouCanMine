@@ -10,6 +10,7 @@ var old_x_speed = 0
 var wall_during_jump = true
 var just_landed = false
 var drop  = null
+var po_save
 
 @onready var jump_fall_acceleration = randf_range(4,6)
 @onready var jump_initial_speed = randf_range(110,150)
@@ -74,12 +75,7 @@ func _physics_process(delta):
 	if keepdrop:
 		drop.global_position = $Sprite2D.global_position + Vector2.UP*3
 	if drop and !keepdrop:
-		var po = CarryablePhysicsOverride.new(self)
-		po.call_deferred("set_bounce", 0.0)
-		po.gravity_scale = 1.0
-		po.linear_damp = 2
-		po.angular_damp = 2
-		drop.addPhysicsOverride(po)
+		drop.removePhysicsOverride(self)
 		drop.get_node("BoolCarried").queue_free()
 		drop.global_position = global_position
 		var possible_keeper = drop.carriedBy[-1]
@@ -142,6 +138,7 @@ func _on_area_2d_body_entered(body):
 		drop = body
 		var bool_node = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/boolCarried.tscn").instantiate()
 		drop.add_child(bool_node)
+		po_save = drop.physics_material_override.duplicate()
 		var po = CarryablePhysicsOverride.new(self)
 		po.call_deferred("set_bounce", 0.0)
 		po.gravity_scale = 0.0

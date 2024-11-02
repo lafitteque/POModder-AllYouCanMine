@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfgvlkrmtoff"]
+
+[ext_resource type="PackedScene" uid="uid://dnwyvrvffgtu3" path="res://content/drop/iron/IronDrop.tscn" id="1_07u0c"]
+[ext_resource type="PackedScene" uid="uid://ceaphal7o8fot" path="res://mods-unpacked/POModder-AllYouCanMine/content/destroyer_tile/Destroyer.tscn" id="2_pjibh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rh6ne"]
+resource_local_to_scene = true
+friction = 0.2
+bounce = 0.15
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_blm1s"]
+resource_local_to_scene = true
+friction = 0.2
+bounce = 0.15
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5jf46"]
+resource_local_to_scene = true
+friction = 0.2
+bounce = 0.15
+
+[node name="Node2D" type="Node2D"]
+
+[node name="IronDrop" parent="." instance=ExtResource("1_07u0c")]
+position = Vector2(162, 81)
+mass = 0.01
+physics_material_override = SubResource("PhysicsMaterial_rh6ne")
+
+[node name="IronDrop2" parent="." instance=ExtResource("1_07u0c")]
+position = Vector2(142, 96)
+mass = 0.01
+physics_material_override = SubResource("PhysicsMaterial_blm1s")
+
+[node name="IronDrop3" parent="." instance=ExtResource("1_07u0c")]
+position = Vector2(107, 78)
+mass = 0.01
+physics_material_override = SubResource("PhysicsMaterial_5jf46")
+
+[node name="Destroyer" parent="." instance=ExtResource("2_pjibh")]
+position = Vector2(134, 136)

@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ceaphal7o8fot"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/destroyer_tile/Destroyer.gd" id="1_svvuq"]
+[ext_resource type="AudioStream" uid="uid://dg7oyernje3bw" path="res://content/sounds/Locations/BlastMiner/ActivateCountdown.wav" id="2_o41b2"]
+[ext_resource type="AudioStream" uid="uid://c1tgcrm0t2s1i" path="res://content/sounds/Locations/BlastMiner/CountDownTick.wav" id="3_uf60t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c3c1t"]
+radius = 72.0
+
+[node name="Destroyer" type="Node2D"]
+z_index = 23
+texture_filter = 1
+script = ExtResource("1_svvuq")
+
+[node name="ActivateSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_o41b2")
+volume_db = 6.19
+bus = &"Important"
+
+[node name="CountdownSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_uf60t")
+volume_db = -7.464
+pitch_scale = 1.26
+max_distance = 500.0
+bus = &"Mine"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 34
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_c3c1t")

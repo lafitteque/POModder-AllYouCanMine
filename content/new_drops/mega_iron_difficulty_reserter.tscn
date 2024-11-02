@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciodba1relyfh"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/new_drops/mega_iron_difficulty_reserter.gd" id="1_xtupy"]
+
+[node name="MegaIronDifficultyReserter" type="Node2D"]
+script = ExtResource("1_xtupy")

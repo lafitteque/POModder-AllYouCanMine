@@ -77,10 +77,14 @@ func manage_overwrites():
 	custom_achievements.take_over_path("res://systems/achievements/CustomAchievements.tscn")
 	
 		
-	var tile = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
+	var tile = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
 	tile.take_over_path("res://content/map/tile/Tile.tscn")
 	
+	var map = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn")
+	map.take_over_path("res://content/map/Map.tscn")
 	
+	var level_stage = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/LevelStage.tscn")
+	level_stage.take_over_path("res://stages/level/LevelStage.tscn")
 	
 func _on_level_ready():
 	if Data.ofOr("assignment.id","") == "thieves":

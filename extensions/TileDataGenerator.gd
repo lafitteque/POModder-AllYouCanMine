@@ -1,12 +1,9 @@
 extends "res://content/map/generation/TileDataGenerator.gd"
 
 const TILE_DETONATOR = 11
-var x = 0
+const TILE_DESTROYER = 12
+const TILE_MEGA_IRON = 13
 
-func _enter_tree():
-	x = 12
-	print("after generate?")
-	
 func generate_resources(rand):
 	super.generate_resources(rand)
 	
@@ -14,20 +11,32 @@ func generate_resources(rand):
 	var borderCells = findOutsideBorderCells()
 	var ironClusterCenters = $MapData.get_resource_cells_by_id(Data.TILE_IRON).duplicate()
 	
-	generate_detonators(ironClusterCenters, original_cell_coords, borderCells)
-	
-func generate_detonators(ironClusterCenters, original_cell_coords, borderCells):
 	var detonator_rate = a.max_tile_count_deviation*1000 
 	detonator_rate -= int(detonator_rate)
 	detonator_rate *= 100
-	print('detonator rate : ' , detonator_rate, " ; x = " , x)
+	print('detonator rate : ' , detonator_rate)
+	
+	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,detonator_rate, TILE_DETONATOR)
+	
+	var destroyer_rate = 50
+	print('destroyer rate : ' , destroyer_rate)
+	
+	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,destroyer_rate, TILE_DESTROYER)
+	
+	var mega_iron_rate = 50
+	print('mega_iron rate : ' , mega_iron_rate)
+	
+	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,mega_iron_rate, TILE_MEGA_IRON)
+
+func generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells, type_rate,typeId):
 	 # encode detonator_rate in digits 4 , 5 , 6 , 7 after the comma. reads as 45.67
-	var detonatorAmount = round(detonator_rate * 0.001 * original_cell_coords.size())
+	var typeAmount = round(type_rate * 0.001 * original_cell_coords.size())
 	var availableCells = $MapData.get_resource_cells_by_id(Data.TILE_DIRT_START)
 	Utils.shuffle(availableCells,rand)
 	var freeTileIndex = 0
-	for _j in detonatorAmount:
-		$MapData.set_resourcev(availableCells[freeTileIndex], TILE_DETONATOR)
+	for _j in typeAmount:
+		$MapData.set_resourcev(availableCells[freeTileIndex], typeId)
+		print("reussi à générer : " , typeId)
 		freeTileIndex += 1
 	var iterations = 100
 	var totalMove = Vector2()
@@ -35,11 +44,11 @@ func generate_detonators(ironClusterCenters, original_cell_coords, borderCells):
 	var zeroMoves = 0
 	
 	for iteration in iterations:
-		var detonatorTiles = $MapData.get_resource_cells_by_id(TILE_DETONATOR)
+		var typeTiles = $MapData.get_resource_cells_by_id(typeId)
 		Utils.shuffle(ironClusterCenters,rand)
-		for tileCoord in detonatorTiles:
+		for tileCoord in typeTiles:
 			var sum := Vector2()
-			for otherCoord in detonatorTiles:
+			for otherCoord in typeTiles:
 				if otherCoord == tileCoord:
 					continue
 				var strength = 100 + round(otherCoord.y * 2.0)
