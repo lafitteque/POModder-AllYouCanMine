@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://vu3vk2ujuf2r"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_saver_prepare.gd" id="1_cv8fe"]
+
+[node name="CoreSaverPrepare" type="Node2D" groups=["gamemodes-prepare"]]
+script = ExtResource("1_cv8fe")

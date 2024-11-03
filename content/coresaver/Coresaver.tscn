@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://nmeh8bij4khb"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/Coresaver.gd" id="1_qcprw"]
+[ext_resource type="AudioStream" uid="uid://bbguj1ksij3im" path="res://content/music/ENGINEER Relic Retrieval Layer 1 [intro].ogg" id="2"]
+[ext_resource type="AudioStream" uid="uid://dh1pq811067wu" path="res://content/music/ENGINEER Relic Retrieval Layer 1 [loop].ogg" id="3"]
+[ext_resource type="AudioStream" uid="uid://c4orcgpdtwbed" path="res://content/music/ENGINEER Relic Retrieval Layer 2 [loop].ogg" id="4"]
+[ext_resource type="AudioStream" uid="uid://y36wpcfe0flt" path="res://content/music/LASER Desperation Layer 1 [loop].ogg" id="5"]
+[ext_resource type="AudioStream" uid="uid://bnop0rogrnh1d" path="res://content/music/LASER Desperation Layer 2 [loop].ogg" id="6"]
+[ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="7"]
+
+[node name="CoreSaver" type="Node" groups=["gamemodes-prepare"]]
+script = ExtResource("1_qcprw")
+
+[node name="RelicRetrievalLayer1Intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2")
+bus = &"Music"
+
+[node name="RelicRetrievalLayer1Loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3")
+bus = &"Music"
+
+[node name="RelicRetrievalLayer2Loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4")
+bus = &"Music"
+
+[node name="DesperationLayer1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5")
+bus = &"Music"
+
+[node name="DesperationLayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6")
+bus = &"Music"
+
+[node name="MusicTween" parent="." instance=ExtResource("7")]
+
+[node name="DesperationTween" parent="." instance=ExtResource("7")]
+
+[node name="ScriptTween" parent="." instance=ExtResource("7")]
+
+[connection signal="finished" from="RelicRetrievalLayer1Intro" to="." method="_on_RelicRetrievalLayer1Intro_finished"]

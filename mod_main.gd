@@ -35,14 +35,17 @@ func _ready():
 
 		
 func modInit():
-	var pathToModYaml : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
-	Data.parseAssignmentYaml(pathToModYaml)
-	
-	ModLoaderLog.info("Trying to parse YAML: %s" % pathToModYaml, MYMODNAME_LOG)
+	var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
+	var pathToModYamlUpgrades : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/upgrades.yaml"
+	#var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
+	Data.parseAssignmentYaml(pathToModYamlAssignments)
+	#Data.parseUpgradesYaml(pathToModYamlUpgrades)
+
+	ModLoaderLog.info("Trying to parse YAML: %s" % pathToModYamlAssignments, MYMODNAME_LOG)
+	ModLoaderLog.info("Trying to parse YAML: %s" % pathToModYamlUpgrades, MYMODNAME_LOG)
 	
 	data_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForAchievements.tscn").instantiate()
 	data_mod = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForMod.tscn").instantiate()
-	
 	add_child(data_achievements)
 	add_child(data_mod)
 	
@@ -50,25 +53,41 @@ func modInit():
 	
 	saver = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Save/Saver.tscn").instantiate()
 	add_child(saver)
-	
-	
 	custom_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.tscn").instantiate()
 	add_child(custom_achievements)
-	
-	StageManager.connect("level_ready", _on_level_ready)
-	
 	var stage_manager_extender = preload("res://mods-unpacked/POModder-AllYouCanMine/content/StageManagerExtender/StageManagerExtender.tscn").instantiate()
 	StageManager.add_child(stage_manager_extender)
 
+	StageManager.connect("level_ready", _on_level_ready)
 
+	Data.registerGameMode("coresaver")
+	GameWorld.unlockElement("coresaver")
 
+	var coreSaverPrepare = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_saver_prepare.tscn").instantiate()
+	add_child(coreSaverPrepare)
+	
 # Called when the node enters the scene tree for the first time.
 func manage_overwrites():
-	var new_archetype = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-detonators.tres")
-	new_archetype.take_over_path("res://content/map/generation/archetypes/assignment-detonators.tres")
+	var new_archetype_detonators = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-detonators.tres")
+	new_archetype_detonators.take_over_path("res://content/map/generation/archetypes/assignment-detonators.tres")
 
-	var new_archetype2 = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-aprilfools.tres")
-	new_archetype2.take_over_path("res://content/map/generation/archetypes/assignment-aprilfools.tres")
+	var new_archetype_aprilfools = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-aprilfools.tres")
+	new_archetype_aprilfools.take_over_path("res://content/map/generation/archetypes/assignment-aprilfools.tres")
+	
+	var new_archetype_thieves = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-thieves.tres")
+	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/assignment-thieves.tres")
+	
+	var new_archetype_huge_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-huge.tres")
+	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/coresaver-huge.tres")
+	
+	var new_archetype_large_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-large.tres")
+	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/coresaver-large.tres")
+	
+	var new_archetype_medium_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-medium.tres")
+	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/coresaver-medium.tres")
+	
+	var new_archetype_small_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-small.tres")
+	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/coresaver-small.tres")
 	
 	var new_stage = load("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutModStage.tscn")
 	new_stage.take_over_path("res://stages/loadout/multiplayerloadoutmodstage.tscn")
@@ -86,10 +105,20 @@ func manage_overwrites():
 	var level_stage = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/LevelStage.tscn")
 	level_stage.take_over_path("res://stages/level/LevelStage.tscn")
 	
+	var coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/Coresaver.tscn")
+	coresaver.take_over_path("res://content/gamemode/coresaver/Coresaver.tscn")
+	
+	
+	
 func _on_level_ready():
-	if Data.ofOr("assignment.id","") == "thieves":
-		var drop_bearer_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer_manager.tscn").instantiate()
-		get_tree().get_root().get_child(13).map.add_child(drop_bearer_manager)
 	if Data.ofOr("assignment.id","") == "mineall":
 		var mine_all_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mine_all_data.tscn").instantiate()
 		add_child(mine_all_data)
+		
+	## Actions that need an action from StageManagerExtender
+	await get_tree().create_timer(0.5).timeout
+	print("on level ready delayed : " , data_mod.generation_data)
+	if data_mod.generation_data["drop_bearer_rate"] > 0:
+		print("Drop Bearer Manager ajouté")
+		var drop_bearer_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer_manager.tscn").instantiate()
+		StageManager.currentStage.MAP.add_child(drop_bearer_manager)

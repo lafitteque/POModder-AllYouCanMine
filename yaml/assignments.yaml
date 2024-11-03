@@ -42,7 +42,7 @@ thieves:
   goaltype: relic
   upgradeLimits: hostile
   freegadgets: 1
-  mapArchetype: regular-large
+  mapArchetype: assignment-thieves
   propertyChanges:
     - monstermodifiers.totalrunweightmodifier = 0.9
   challengePropertyChanges:

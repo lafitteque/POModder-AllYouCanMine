@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c81iod8w85qxc"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/lottery_tile/Lottery.gd" id="1_yvpek"]
+[ext_resource type="AudioStream" uid="uid://dg7oyernje3bw" path="res://content/sounds/Locations/BlastMiner/ActivateCountdown.wav" id="2_27y0n"]
+[ext_resource type="AudioStream" uid="uid://c1tgcrm0t2s1i" path="res://content/sounds/Locations/BlastMiner/CountDownTick.wav" id="3_1o48o"]
+
+[node name="Lottery" type="Node2D"]
+z_index = 23
+texture_filter = 1
+script = ExtResource("1_yvpek")
+
+[node name="ActivateSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_27y0n")
+volume_db = 6.19
+bus = &"Important"
+
+[node name="CountdownSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_1o48o")
+volume_db = -7.464
+pitch_scale = 1.26
+max_distance = 500.0
+bus = &"Mine"

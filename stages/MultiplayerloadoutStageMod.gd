@@ -11,7 +11,11 @@ var current_assignment_page = 1
 var assignments_per_page = 16
 @onready var max_page : int = int(Data.assignments.keys().size()/assignments_per_page) + 1
 
-
+func build(data:Array):
+	super(data)
+	fillDifficulties("BlockCoreSaverLoadout")
+	fillMapSizes("BlockCoreSaverLoadout")
+	
 func createMapDataFor(requiremnts) -> MapData:
 	var tileData = preload("res://content/map/MapData.tscn").instantiate()
 	tileData.clear()
@@ -31,7 +35,8 @@ func createMapDataFor(requiremnts) -> MapData:
 				tileData.stack(preload("res://stages/loadout/TileDataDomeOpening.tscn").instantiate(), Vector2(-1, 2))
 			"guildrewards":
 				tileData.stack(preload("res://stages/loadout/TileDataGuildRewards.tscn").instantiate(), Vector2(5, 13))
-	
+			"coresaver":
+				tileData.stack(preload("res://stages/loadout/TileDataModeRelicHunt.tscn").instantiate(), Vector2(-9, 2))
 	for coord in dugTileCoordinates:
 		var res = tileData.get_resourcev(coord)
 		if res >= 0 and res <= 10:
@@ -60,6 +65,26 @@ func fillGameModes():
 	var right_arrow = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
 	arrow_containers.add_child(right_arrow)
 	right_arrow.connect("select", next_page)
+
+func fillDifficulties(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
+	var pgc = $UI.find_child(BlockDifficultyName,true,false).find_child("DifficultyContainers",true,false)
+	var difficulties := [-2, -1, 0, 2]
+	for i in 4:
+		var image = load("res://content/icons/loadout_diff" + str(i) + ".png")
+		var e = preload("res://stages/loadout/LoadoutChoice.tscn").instantiate()
+		e.loadoutScale = 2.0
+		var diffName = CONST.difficultyStringByInt.get(difficulties[i])
+		var desc:String
+		if GameWorld.isUnlocked(CONST.difficultyIdByInt[difficulties[i]]):
+			desc = diffName + ".description"
+		else:
+			desc = diffName.replace("loadout", "unlock")
+			e.set_enabled(false)
+		e.setChoice(diffName, str(difficulties[i]), image, desc)
+		pgc.add_child(e)
+		e.select.connect(difficultySelected.bind(difficulties[i]))
+		e.connect("select", updateBlockVisibility)
+	difficultySelected(Level.loadout.difficulty)
 
 	
 func update_keeper_progress():
@@ -184,7 +209,274 @@ func update_assignments():
 		%AssignmentsContainer.add_child(e)
 	
 
+func gameModeSelected(id:String):
+	if ensureDelayBetweenMajorActions():
+		return
 		
+	var oldId = Level.loadout.modeId
+	if oldId == CONST.MODE_PRESTIGE and Level.loadout.modeConfig.has(CONST.MODE_CONFIG_PRESTIGE_VARIANT):
+		oldId = Level.loadout.modeConfig.get(CONST.MODE_CONFIG_PRESTIGE_VARIANT)
+	GameWorld.lastLoadoutsByMode[oldId] = Level.loadout.duplicate()
+	
+	#clear any config that might bleed over to other gamemodes when it shouldn't
+	Level.loadout.modeConfig.erase(CONST.MODE_CONFIG_ADDITIONAL_GADGETS)
+	Level.loadout.modeConfig.erase(CONST.MODE_CONFIG_ASSIGNMENT)
+	Level.loadout.modeConfig.erase(CONST.MODE_CONFIG_WORLDMODIFIERS)
+	
+	Level.loadout.modeId = id
+	match id:
+		CONST.MODE_RELICHUNT:
+			if GameWorld.lastLoadoutsByMode.has(id):
+				setLoadout(GameWorld.lastLoadoutsByMode.get(id))
+		"coresaver":
+			print("coresaver matched")
+			if GameWorld.lastLoadoutsByMode.has(id):
+				print("GameWorld.lastLoadoutsByMode.has(id) OK")
+				var coresaver_loadout = GameWorld.lastLoadoutsByMode.get("relichunt").duplicate()
+				coresaver_loadout.difficulty = 3
+				coresaver_loadout.modeId = "coresaver"
+				coresaver_loadout.worldId = GameWorld.getNextRandomWorldId()
+				setLoadout(coresaver_loadout)
+		CONST.MODE_PRESTIGE:
+			var found = false
+			for c in find_child("PrestigeModeVariantContainer").get_children():
+				if not c is Label and c.selected:
+					if GameWorld.lastLoadoutsByMode.has(c.id):
+						setLoadout(GameWorld.lastLoadoutsByMode.get(c.id))
+						found = true
+						break
+			if not found and GameWorld.lastLoadoutsByMode.has(id):
+				setLoadout(GameWorld.lastLoadoutsByMode.get(id))
+		CONST.MODE_ASSIGNMENTS:
+			if GameWorld.lastLoadoutsByMode.has(id):
+				setLoadout(GameWorld.lastLoadoutsByMode.get(id))
+			%AssignmentLeaderboard.start()
+			updateRewardStatus()
+	
+	for c in find_child("GameModeContainers").get_children():
+		if not c is Label:
+			c.selected = c.id == id
+	
+	updateAllHintContainers()
+
+		
+func updateBlockVisibility(forceRebuild := false):
+	if not initialized:
+		return
+		
+	var stackedTileDataIds := []
+	if GameWorld.figuredOutMovementInLoadout:
+		var blockRelicHunt = find_child("BlockRelicHuntLoadout") 
+		blockRelicHunt.visible = Level.loadout.modeId == CONST.MODE_RELICHUNT
+		if blockRelicHunt.visible:
+			stackedTileDataIds.append("relichunt")
+		
+		var blockPrestige = find_child("BlockPrestigeLoadout") 
+		blockPrestige.visible = Level.loadout.modeId == CONST.MODE_PRESTIGE
+		if blockPrestige.visible:
+			stackedTileDataIds.append("prestige")
+		
+		var blockAssignments = find_child("BlockAssignmentsLoadout") 
+		blockAssignments.visible = Level.loadout.modeId == CONST.MODE_ASSIGNMENTS
+		if blockAssignments.visible:
+			stackedTileDataIds.append("assignments")
+		else:
+			%AdditionalGadgetContainers.visible = false
+		
+		var blockCoreSaver = find_child("BlockCoreSaverLoadout") 
+		blockCoreSaver.visible = Level.loadout.modeId == "coresaver"
+		if blockCoreSaver.visible:
+			stackedTileDataIds.append("coresaver")
+				
+		var blockLoadout = find_child("BlockDomeLoadout") 
+		blockLoadout.visible = (blockRelicHunt.visible and Level.loadout.modeConfig.has(CONST.MODE_CONFIG_MAP_ARCHETYPE))\
+		or (blockPrestige.visible and Level.loadout.modeConfig.get(CONST.MODE_CONFIG_PRESTIGE_VARIANT, "") != "")\
+		or (blockAssignments.visible and Level.loadout.modeConfig.get(CONST.MODE_CONFIG_ASSIGNMENT, "") != "")\
+		or (blockCoreSaver.visible)
+		if blockLoadout.visible:
+			stackedTileDataIds.append("loadout")
+			blockLoadout.size.x = 0
+		
+		%BlockGuildReward.visible = GameWorld.isUnlocked(CONST.MODE_ASSIGNMENTS) and blockLoadout.visible
+		if %BlockGuildReward.visible:
+			updateRewardStatus()
+			stackedTileDataIds.append("guildrewards")
+		
+		if Level.dome:
+			stackedTileDataIds.append("dome-opening")
+	
+	updateStartRunButton()
+	
+	var rebuildMap := false
+	for id in lastStackedTileData:
+		if not stackedTileDataIds.has(id):
+			rebuildMap = true
+			break
+	for id in stackedTileDataIds:
+		if not lastStackedTileData.has(id):
+			rebuildMap = true
+			break
+	
+	if rebuildMap or forceRebuild:
+		var drops := []
+		for drop in get_tree().get_nodes_in_group("drops"):
+			drops.append(drop)
+			drop.get_parent().remove_child(drop)
+		
+		var map
+		if pregeneratedMaps.has(stackedTileDataIds):
+			map = pregeneratedMaps[stackedTileDataIds]
+		else:
+			map = preGenerateMap(stackedTileDataIds)
+		
+		remove_child(MAP)
+		add_child(map)
+		MAP = map
+		Level.map = map
+		runDecoration()
+		
+		ensure_player_in_bounds()
+		create_tween().tween_callback(ensure_player_in_bounds).set_delay(0.1)
+		
+		for drop in drops:
+			MAP.addDrop(drop)
+			
+		for coord in MAP.tileData.get_mineable_tile_coords():
+			MAP.addTileDestroyedListener(self, coord)
+		
+		if GameWorld.devMode:
+			var packedTileData = MAP.tileData.pack()
+			ResourceSaver.save(packedTileData, "res://stages/loadout/TileDataLoadoutResultDebug.tscn")
+		
+		if visibilityTween:
+			visibilityTween.kill()
+			
+		for c in $VisibilityChecker.get_children():
+			c.queue_free()
+			
+		#recreave visibility over multiple frames to avoid lagspike
+		var tw = create_tween()
+		var revealed = MAP.getTileData().getRevealedCells()
+		#spawn higher ones first to stop the camera from moving up again
+		revealed.sort_custom(func(x,y): return x.y < y.y)
+		for coord in ceil(revealed.size()/20.0):
+			tw.tween_callback(addVisibilitiyTileArr.bind(revealed.slice(coord*20,coord*20+20))).set_delay(0.05)
+	
+	lastStackedTileData = stackedTileDataIds
+	
+	# update available loadout
+	for c in find_child("PrimaryGadgetContainers").get_children():
+		if not c is Label:
+			if Level.loadout.modeId == CONST.MODE_PRESTIGE and \
+			 Level.loadout.modeConfig.get(CONST.MODE_CONFIG_PRESTIGE_VARIANT, "") == CONST.MODE_PRESTIGE_MINER:
+				c.visible = not Data.gadgets.get(c.id).get("limit", []).has("hostile")
+			else:
+				c.visible = true
+				
+func fillMapSizes(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
+	var pgc = $UI.find_child(BlockDifficultyName,true,false).find_child("MapsizeContainers",true,false)
+	var mapsizes := []
+	for ms in [CONST.MAP_SMALL, CONST.MAP_MEDIUM, CONST.MAP_LARGE, CONST.MAP_HUGE]:
+		if GameWorld.isUnlocked(ms):
+			mapsizes.append(ms)
+	for ms in [CONST.MAP_SMALL, CONST.MAP_MEDIUM, CONST.MAP_LARGE, CONST.MAP_HUGE]:
+		var e = preload("res://stages/loadout/LoadoutChoice.tscn").instantiate()
+		e.loadoutScale = 2.0
+		var desc:String
+		if GameWorld.isUnlocked(ms):
+			desc = CONST.mapSizesStringsById.get(ms) + ".description"
+		else:
+			desc = "unlock.mapsize." + ms.replace("regular-", "")
+			e.set_enabled(false)
+		var title = CONST.mapSizesStringsById.get(ms)
+		e.setChoice(title, ms, null, desc)
+		pgc.add_child(e)
+		e.connect("select", mapSizeSelected.bind(ms))
+		e.connect("select", updateBlockVisibility)
+		if GameWorld.buildType == CONST.BUILD_TYPE.EXHIBITION and ms != CONST.MAP_SMALL:
+			e.disable()
+	
+	if GameWorld.buildType == CONST.BUILD_TYPE.EXHIBITION:
+		mapSizeSelected(CONST.MAP_SMALL)
+	else:
+		var conf = Level.loadout.modeConfig.get(CONST.MODE_CONFIG_MAP_ARCHETYPE)
+		if not [CONST.MAP_SMALL, CONST.MAP_MEDIUM, CONST.MAP_LARGE, CONST.MAP_HUGE].has(conf):
+			conf = CONST.MAP_SMALL
+		mapSizeSelected(conf)			
+		
+func mapSizeSelected(id):
+	print("mapSizeSelected : " , id)
+	resetPersistMetaCooldown()
+	Audio.sound("gui_select")
+	Level.loadout.modeConfig[CONST.MODE_CONFIG_MAP_ARCHETYPE] = id
+	var block 
+	if Level.loadout.modeId == CONST.MODE_RELICHUNT:
+		block = $UI.find_child("BlockRelicHuntLoadout",true,false)
+	elif Level.loadout.modeId == "coresaver":
+		block = $UI.find_child("BlockCoreSaverLoadout",true,false)
+		
+	for c in block.find_child("MapsizeContainers").get_children():
+		if not c is Label:
+			c.selected = c.id == id
+	GameWorld.getNextRandomWorldId()
+			
+func difficultySelected(d):
+	resetPersistMetaCooldown()
+	Audio.sound("gui_select")
+	Level.loadout.difficulty = d
+	
+	var block
+	if Level.loadout.modeId == CONST.MODE_RELICHUNT:
+		block = $UI.find_child("BlockRelicHuntLoadout",true,false)
+	elif Level.loadout.modeId == "coresaver":
+		block = $UI.find_child("BlockCoreSaverLoadout",true,false)
+		
+	for c in block.find_child("DifficultyContainers").get_children():
+		if not c is Label:
+			c.selected = c.id == str(d)
+
+			
+func startRun():
+	%StartRunChoice.set_enabled(false)
+	
+	Audio.sound("gui_loadout_startrun")
+	for loadoutKeeper in Level.loadout.keepers:
+		if loadoutKeeper.keeper == null:
+			return
+		loadoutKeeper.playerId = loadoutKeeper.keeper.playerId
+		
+		#override ost-source to the last player
+		GameWorld.ostKeeperId = loadoutKeeper.keeperId
+	
+	match Level.loadout.modeId:
+		CONST.MODE_PRESTIGE:
+			if Level.loadout.modeConfig.get(CONST.MODE_CONFIG_PRESTIGE_FRIENDLY_MODE, false):
+				Level.loadout.difficulty = -2
+			else:
+				Level.loadout.difficulty = 0
+		CONST.MODE_ASSIGNMENTS:
+			if Level.loadout.modeConfig.get(CONST.MODE_CONFIG_ASSIGNMENT_CHALLENGE_MODE, false):
+				Level.loadout.difficulty = 0
+			else:
+				Level.loadout.difficulty = 0
+	
+	var startData = LevelStartData.new()
+	startData.loadout = Level.loadout.asLoadout()
+	if get_tree().get_nodes_in_group("keeper").size() > 1:
+		Level.loadout.additionalGadgets = ["autocannon"]
+	
+	if GameWorld.buildType == CONST.BUILD_TYPE.EXHIBITION:
+		startData.tileDataPresetId = "Exhibition"
+	
+	GameWorld.lastLoadoutsByMode["last"] = Level.loadout.duplicate()
+	Level.randomizeSeed()
+	
+	Audio.stopMusic()
+	
+	StageManager.startStage("stages/landing/landing", [startData])
+
+
+
 func next_page():
 	current_assignment_page = min(max_page,current_assignment_page+1)
 	update_assignments()

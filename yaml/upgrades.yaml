@@ -1,0 +1,5 @@
+savecore:
+  type: gamemode
+  modifiers: [difficulty]
+  scenes :
+    gamemode : res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/Coresaver.tscn

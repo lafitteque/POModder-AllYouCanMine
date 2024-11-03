@@ -10,11 +10,11 @@ var cooldown_already_spawned = 50.0
 var cooldown_list = []
 
 var probability_spawn = 0.01
+var data_mod 
 
 func _ready():
-	
-	if Data.ofOr("assignment.id","")  == "thieves":
-		probability_spawn = 1
+	data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
+	probability_spawn = data_mod.generation_data["drop_bearer_rate"]
 	
 func _on_timer_timeout():
 	var count_to_pop = 0

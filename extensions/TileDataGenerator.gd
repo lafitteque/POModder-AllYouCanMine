@@ -4,28 +4,53 @@ const TILE_DETONATOR = 11
 const TILE_DESTROYER = 12
 const TILE_MEGA_IRON = 13
 
+var data_mod
+
+
+
+func get_generation_data(a):
+	## 4th to 7th decimals are for detonator rate
+	print("raw data : ", a.max_tile_count_deviation)
+	var detonator_rate = a.max_tile_count_deviation*10**(4-1) 
+	detonator_rate -= int(detonator_rate)
+	detonator_rate *= 100
+	print("raw 1 " , detonator_rate)
+	## 8th to 11th decimals are for destroyer rate
+	var destroyer_rate = detonator_rate*100
+	destroyer_rate -= int(destroyer_rate)
+	destroyer_rate *= 100
+	print("raw 2 " , destroyer_rate)
+	## 12th to 15th decimals are for mega iron rate
+	var mega_iron_rate = destroyer_rate*100
+	mega_iron_rate -= int(mega_iron_rate)
+	mega_iron_rate *= 100
+	print("raw 3 " , mega_iron_rate)
+	detonator_rate = round(detonator_rate*100)/100
+	destroyer_rate = round(destroyer_rate*100)/100
+	mega_iron_rate = round(mega_iron_rate*100)/100
+	
+	return [detonator_rate , mega_iron_rate , mega_iron_rate]
+	
 func generate_resources(rand):
 	super.generate_resources(rand)
+	
 	
 	var original_cell_coords:Array = $MapData.get_used_biome_cells()
 	var borderCells = findOutsideBorderCells()
 	var ironClusterCenters = $MapData.get_resource_cells_by_id(Data.TILE_IRON).duplicate()
 	
-	var detonator_rate = a.max_tile_count_deviation*1000 
-	detonator_rate -= int(detonator_rate)
-	detonator_rate *= 100
-	print('detonator rate : ' , detonator_rate)
+	var rates = get_generation_data(a)
+	var detonator_rate = rates[0]
+	var destroyer_rate = rates[1]
+	var mega_iron_rate = rates[2]
 	
+	print('detonator rate : ' , detonator_rate)
 	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,detonator_rate, TILE_DETONATOR)
 	
-	var destroyer_rate = 50
 	print('destroyer rate : ' , destroyer_rate)
-	
 	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,destroyer_rate, TILE_DESTROYER)
 	
-	var mega_iron_rate = 50
 	print('mega_iron rate : ' , mega_iron_rate)
-	
 	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,mega_iron_rate, TILE_MEGA_IRON)
 
 func generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells, type_rate,typeId):

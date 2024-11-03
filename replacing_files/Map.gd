@@ -50,7 +50,6 @@ func weighted_random(weights) -> int:
 
 
 func revealTile(coord:Vector2):
-	print("reveal tile OK")
 	var invalids := []
 	if tileRevealedListeners.has(coord):
 		for listener in tileRevealedListeners[coord]:
@@ -89,13 +88,10 @@ func revealTile(coord:Vector2):
 			tile.richness = Data.ofOr("map.waterrichness", 2.5)
 			revealTileVisually(coord)
 		"detonator":# QLafitte Added
-			print("Map : detonator")
 			revealTileVisually(coord) # QLafitte Added
 		"destroyer":# QLafitte Added
-			print("Map : destroyer")
 			revealTileVisually(coord) # QLafitte Added
 		"mega_iron":# QLafitte Added
-			print("Map : mega iron")
 			tile.richness = Data.ofOr("map.ironrichness", 2)
 			revealTileVisually(coord) # QLafitte Added
 			

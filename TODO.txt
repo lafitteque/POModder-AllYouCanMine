@@ -1,0 +1,7 @@
+- Copier coller le code des drop_bearer (débbugé) vers le mod version compatibilité
+
+- Ajouter la tile pillules
+
+- Ajouter des flêches pour changer de game mode
+
+- Ajouter un choix par défaut quand choix de coresaver dans le loadout

@@ -10,13 +10,11 @@ func setType(type:String):
 	match type :
 		"mega_iron": #QLafitte Added
 			set_meta("destructable", true)
-			print("Tile : added ", "mega_iron")
 			#customInitResourceSprite(Vector2(5, 0))
 			customInitResourceSprite(Vector2(randi_range(0,1),1))
 			
 		"detonator": #QLafitte Added
 			set_meta("destructable", true)
-			print("Tile : added ", "detonator")
 			#customInitResourceSprite(Vector2(5, 0))
 			detonator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/detonator_tile/Detonator.tscn").instantiate()#QLafitte Added
 			StageManager.currentStage.MAP.add_child(detonator)#QLafitte Added
@@ -25,7 +23,6 @@ func setType(type:String):
 		
 		"destroyer":
 			set_meta("destructable", true)
-			print("Tile : added ", "destroyer")
 			#customInitResourceSprite(Vector2(5, 0))
 			destroyer = load("res://mods-unpacked/POModder-AllYouCanMine/content/destroyer_tile/Destroyer.tscn").instantiate()#QLafitte Added
 			StageManager.currentStage.MAP.add_child(destroyer)#QLafitte Added
@@ -41,8 +38,8 @@ func customInitResourceSprite(v : Vector2):
 	Style.init(self)
 	
 func hit(dir:Vector2, dmg:float):
-	if type == "detonator" and !detonator.exploded:#QLafitte Added
+	if detonator and !detonator.exploded:#QLafitte Added
 		detonator.explode()
-	if type == "destroyer" and !destroyer.exploded:#QLafitte Added
+	if destroyer and !destroyer.exploded:#QLafitte Added
 		destroyer.explode()
 	super.hit(dir,dmg)
