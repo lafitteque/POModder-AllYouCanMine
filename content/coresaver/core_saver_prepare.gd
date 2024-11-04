@@ -2,19 +2,24 @@ extends Node2D
 
 func prepareGameMode(modeId, levelStartData):
 	print("Game mode prepare :" , modeId)
+	
+	levelStartData.loadout.modeConfig[CONST.MODE_CONFIG_WORLDMODIFIERS] =  ["worldmodifiernorelic"]
+	levelStartData.loadout.modeConfig["upgradelimits"] = ["hostile"]
+	GameWorld.setUpgradeLimitAvailable("hostile")
+	
+	
 	if not levelStartData.mapArchetype:
 		var archetypeName:String = levelStartData.loadout.modeConfig.get(CONST.MODE_CONFIG_MAP_ARCHETYPE, "regular-medium")
-		archetypeName = "coresaver-"+archetypeName.rsplit("-")[1]
-		print("Map archetype loaded : " , "res://content/map/generation/archetypes/" + archetypeName + ".tres")
+		archetypeName = "coresaver-"+archetypeName.rsplit("-")[1]	
 		levelStartData.mapArchetype = load("res://mods-unpacked/POModder-AllYouCanMine/overwrites/" + archetypeName + ".tres").duplicate()
-		
-		print("Map archetype loaded : " , "res://content/map/generation/archetypes/" + archetypeName + ".tres")
+
 	levelStartData.mapArchetype.cobalt_rate *= 1.0 - 0.1 * levelStartData.loadout.difficulty
 
 	if not levelStartData.loadout.worldId or levelStartData.loadout.worldId == "":
 		levelStartData.loadout.worldId = GameWorld.getNextRandomWorldId()
 		Data.apply("monsters.allowedtypes", Data.gameProperties.get("monstersbyworld." + levelStartData.loadout.worldId))
 	
+	print("Data worldModifiers : " , Data.worldModifiers)
 	for modifierId in levelStartData.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
 		var modifier = Data.worldModifiers[modifierId]
 		for propertyChange in modifier.get("propertychanges", {}):

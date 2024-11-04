@@ -5,3 +5,5 @@
 - Ajouter des flêches pour changer de game mode
 
 - Ajouter un choix par défaut quand choix de coresaver dans le loadout
+
+- savefile change path to user://

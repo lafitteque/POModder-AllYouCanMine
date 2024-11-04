@@ -84,6 +84,8 @@ func fillDifficulties(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
 		pgc.add_child(e)
 		e.select.connect(difficultySelected.bind(difficulties[i]))
 		e.connect("select", updateBlockVisibility)
+	if Level.loadout.difficulty == null or  not(Level.loadout.difficulty in [-2,-1,0,2]):
+			Level.loadout.difficulty = -2
 	difficultySelected(Level.loadout.difficulty)
 
 	
@@ -400,6 +402,8 @@ func fillMapSizes(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
 		mapSizeSelected(CONST.MAP_SMALL)
 	else:
 		var conf = Level.loadout.modeConfig.get(CONST.MODE_CONFIG_MAP_ARCHETYPE)
+		if conf == null or conf == "":
+			conf = CONST.MAP_SMALL
 		if not [CONST.MAP_SMALL, CONST.MAP_MEDIUM, CONST.MAP_LARGE, CONST.MAP_HUGE].has(conf):
 			conf = CONST.MAP_SMALL
 		mapSizeSelected(conf)			
@@ -409,31 +413,31 @@ func mapSizeSelected(id):
 	resetPersistMetaCooldown()
 	Audio.sound("gui_select")
 	Level.loadout.modeConfig[CONST.MODE_CONFIG_MAP_ARCHETYPE] = id
-	var block 
-	if Level.loadout.modeId == CONST.MODE_RELICHUNT:
-		block = $UI.find_child("BlockRelicHuntLoadout",true,false)
-	elif Level.loadout.modeId == "coresaver":
-		block = $UI.find_child("BlockCoreSaverLoadout",true,false)
+	
+	var blocks  = []
+	blocks.append(find_child("BlockRelicHuntLoadout",true,false))
+	blocks.append(find_child("BlockCoreSaverLoadout",true,false))
 		
-	for c in block.find_child("MapsizeContainers").get_children():
-		if not c is Label:
-			c.selected = c.id == id
+	for b in blocks :
+		for c in b.find_child("MapsizeContainers").get_children():
+			if not c is Label:
+				c.selected = c.id == id
 	GameWorld.getNextRandomWorldId()
+
 			
 func difficultySelected(d):
 	resetPersistMetaCooldown()
 	Audio.sound("gui_select")
 	Level.loadout.difficulty = d
 	
-	var block
-	if Level.loadout.modeId == CONST.MODE_RELICHUNT:
-		block = $UI.find_child("BlockRelicHuntLoadout",true,false)
-	elif Level.loadout.modeId == "coresaver":
-		block = $UI.find_child("BlockCoreSaverLoadout",true,false)
+	var blocks = []
+	blocks.append( $UI.find_child("BlockRelicHuntLoadout",true,false) )
+	blocks.append($UI.find_child("BlockCoreSaverLoadout",true,false))
 		
-	for c in block.find_child("DifficultyContainers").get_children():
-		if not c is Label:
-			c.selected = c.id == str(d)
+	for b in blocks :
+		for c in b.find_child("DifficultyContainers").get_children():
+			if not c is Label:
+				c.selected = c.id == str(d)
 
 			
 func startRun():

@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="MapArchetype" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="MapArchetype" load_steps=5 format=3 uid="uid://bnfv1wk81bumn"]
 
 [ext_resource type="Script" path="res://content/map/generation/MapArchetype.gd" id="1"]
-[ext_resource type="FastNoiseLite" uid="uid://bliygx25g2wo8" path="res://content/map/generation/noises/viability_large_noise.tres" id="2"]
-[ext_resource type="FastNoiseLite" uid="uid://bvt8pw0usiq6e" path="res://content/map/generation/noises/viability_small_noise.tres" id="3"]
-[ext_resource type="FastNoiseLite" uid="uid://c7s4eqjfpqitm" path="res://content/map/generation/noises/hardness_noise.tres" id="4"]
+[ext_resource type="FastNoiseLite" path="res://content/map/generation/noises/viability_large_noise.tres" id="2"]
+[ext_resource type="FastNoiseLite" path="res://content/map/generation/noises/viability_small_noise.tres" id="3"]
+[ext_resource type="FastNoiseLite" path="res://content/map/generation/noises/hardness_noise.tres" id="4"]
 
 [resource]
 script = ExtResource("1")
@@ -13,7 +13,7 @@ generateResources = true
 width = 60
 depth = 65
 tileCount = 3600
-max_tile_count_deviation = 0.0155000500050005000
+max_tile_count_deviation = 0.0155001
 viability_large_noise = ExtResource("2")
 viability_small_noise = ExtResource("3")
 hardness_noise = ExtResource("4")

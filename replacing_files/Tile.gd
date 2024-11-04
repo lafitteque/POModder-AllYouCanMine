@@ -38,8 +38,8 @@ func customInitResourceSprite(v : Vector2):
 	Style.init(self)
 	
 func hit(dir:Vector2, dmg:float):
-	if detonator and !detonator.exploded:#QLafitte Added
+	if detonator and is_instance_valid(detonator) and  !detonator.exploded:#QLafitte Added
 		detonator.explode()
-	if destroyer and !destroyer.exploded:#QLafitte Added
+	if destroyer and is_instance_valid(destroyer) and!destroyer.exploded:#QLafitte Added
 		destroyer.explode()
 	super.hit(dir,dmg)
