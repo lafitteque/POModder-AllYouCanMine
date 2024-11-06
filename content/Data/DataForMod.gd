@@ -17,6 +17,8 @@ const TILE_DIRT_START := 10
 const TILE_DETONATOR := 11 # QLafitte Added
 const TILE_DESTROYER = 12 # QLafitte Added
 const TILE_MEGA_IRON = 13 # QLafitte Added
+const TILE_BAD_RELIC = 14 #QLafitte Added
+const TILE_GLASS = 15
 
 const RESOURCES_ID = [TILE_IRON,TILE_WATER,TILE_SAND,TILE_MEGA_IRON]
 
@@ -33,7 +35,9 @@ const TILE_ID_TO_STRING_MAP := {
 	TILE_SUPPLEMENT: CONST.POWERCORE,
 	TILE_DETONATOR :"detonator" ,
 	TILE_DESTROYER :"destroyer" ,
-	TILE_MEGA_IRON :"mega_iron" 
+	TILE_MEGA_IRON :"mega_iron",
+	TILE_BAD_RELIC : "bad_relic",
+	TILE_GLASS : "glass"
 } 
 
 const DROP_FROM_TILES_SCENES := {
@@ -53,6 +57,13 @@ var generation_data = {
 	"destroyer_rate":0 # from 00.00 to 99.99
 }
 
+func get_endings():
+	#var endings = ["glass" , "heavy_rock", "secret"]
+	#endings.remove_at(randi() % 3)
+	var endings = ["glass" , "heavy_rock"]
+	return endings
+	
+	
 func update_generation_data(a : MapArchetype):
 	### /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\   
 	###  The changes here should also be done in the extension of TileDataGenerator.gd 

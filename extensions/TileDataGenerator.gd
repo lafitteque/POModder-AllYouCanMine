@@ -3,42 +3,50 @@ extends "res://content/map/generation/TileDataGenerator.gd"
 const TILE_DETONATOR = 11
 const TILE_DESTROYER = 12
 const TILE_MEGA_IRON = 13
+const TILE_BAD_RELIC = 14 #QLafitte Added
 
 var data_mod
 
-
+const detonator_rate_list = [0 , 0.1 , 0.5 , 1 , 5 , 10 , 25 , 50 , 75 ]
+const destroyer_rate_list = [0 , 0.1 , 0.5 , 1 , 5 , 10 , 25 , 50 , 75 ]
+const mega_iron_rate_list = [0 , 0.1 , 0.5 , 1 , 5 , 10 , 25 , 50 , 75 ]
+const drop_bearer_rate_list = [0 , 0.001 , 0.005 , 0.01 , 0.05 , 0.10 , 0.25 , 0.50, 100 ]
 
 func get_generation_data(a):
-	## 4th to 7th decimals are for detonator rate
+	## 4th decimal of max_tile_count_deviation for detonator rate
 	print("raw data : ", a.max_tile_count_deviation)
-	var detonator_rate = a.max_tile_count_deviation*10**(4-1) 
-	detonator_rate -= int(detonator_rate)
-	detonator_rate *= 100
-	print("raw 1 " , detonator_rate)
+	var detonator_rate_index = a.max_tile_count_deviation*10**3
+	detonator_rate_index -= int(detonator_rate_index)
+	detonator_rate_index *= 10
+	detonator_rate_index = round(detonator_rate_index)
 	
-	## 8th to 11th decimals are for destroyer rate
-	var destroyer_rate = detonator_rate*100
-	destroyer_rate -= int(destroyer_rate)
-	destroyer_rate *= 100
-	print("raw 2 " , destroyer_rate)
+	## 5th decimal of max_tile_count_deviation decimals for destroyer_rate_index
+	var destroyer_rate_index = a.max_tile_count_deviation*10**4
+	destroyer_rate_index -= int(destroyer_rate_index)
+	destroyer_rate_index *= 10
+	destroyer_rate_index = round(destroyer_rate_index)
 	
-	## 12th to 15th decimals are for mega iron rate
-	var mega_iron_rate = destroyer_rate*100
-	mega_iron_rate -= int(mega_iron_rate)
-	mega_iron_rate *= 100
-	print("raw 3 " , mega_iron_rate)
+	## 6th decimalsof max_tile_count_deviation for mega_iron_rate_index
+	var mega_iron_rate_index = a.max_tile_count_deviation*10**5
+	mega_iron_rate_index -= int(mega_iron_rate_index)
+	mega_iron_rate_index *= 10
+	mega_iron_rate_index = round(mega_iron_rate_index)
 	
-	#20th decimal is for bad relics number
-	var bad_relics = mega_iron_rate*10**6
-	bad_relics -= int(mega_iron_rate)
+	## 3rd decimal of viability_thin_top_width for bad_relics
+	var bad_relics = a.viability_thin_top_width*10**2
+	bad_relics -= int(bad_relics)
 	bad_relics *= 10
-	print("raw 4 " , bad_relics)
-	
-	detonator_rate = round(detonator_rate*100)/100
-	destroyer_rate = round(destroyer_rate*100)/100
-	mega_iron_rate = round(mega_iron_rate*100)/100
 	bad_relics = round(bad_relics)
 	
+	var detonator_rate = detonator_rate_list[detonator_rate_index]
+	var destroyer_rate = destroyer_rate_list[destroyer_rate_index]
+	var mega_iron_rate = mega_iron_rate_list[mega_iron_rate_index]
+	
+	print("raw max_tile_count_deviation : ", a.max_tile_count_deviation)
+	print("computed detonator_rate " , detonator_rate)
+	print("computed destroyer_rate " , destroyer_rate)
+	print("computed mega_iron_rate " , mega_iron_rate)
+	print("computed bad_relics " , bad_relics)
 	
 	return [detonator_rate , mega_iron_rate , mega_iron_rate, bad_relics]
 	
@@ -70,11 +78,15 @@ func generate_resources(rand):
 	generate_power_cores()
 	endTimer()
 	gen_stage = 4.4
-	startTimer("generate_relics")
-	generate_relics()
-	### Added vvvvvv
-	generate_bad_relics(bad_relics)
-	### Added ^^^^^^
+	if bad_relics == 0:
+		startTimer("generate_relics")
+		generate_relics()
+	else :
+		### Added vvvvvv
+		startTimer("generate_bad_relics")
+		generate_bad_relics(bad_relics)
+		### Added ^^^^^^
+		
 	endTimer()
 	gen_stage = 4.5
 	startTimer("adjust_ore_amounts")
@@ -102,15 +114,28 @@ func generate_resources(rand):
 	### Added vvvvvv
 	
 	
-	print('detonator rate : ' , detonator_rate)
-	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,detonator_rate, TILE_DETONATOR)
+	print('detonator(', TILE_DETONATOR, ') rate : ' , detonator_rate)
+	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,detonator_rate, TILE_DETONATOR)
 	
-	print('destroyer rate : ' , destroyer_rate)
-	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,destroyer_rate, TILE_DESTROYER)
+	print("detonator total 1 : ", $MapData.get_resource_cells_by_id(TILE_DETONATOR).size())
+	print("destroyer total 1 : ", $MapData.get_resource_cells_by_id(TILE_DESTROYER).size())
+	print("mega_iron total 1 : ", $MapData.get_resource_cells_by_id(TILE_MEGA_IRON).size())
 	
-	print('mega_iron rate : ' , mega_iron_rate)
-	generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells,mega_iron_rate, TILE_MEGA_IRON)
+	print('destroyer(', TILE_DESTROYER, ') rate : ' , destroyer_rate)
+	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,destroyer_rate, TILE_DESTROYER)
+	
+	print("detonator total 2 : ", $MapData.get_resource_cells_by_id(TILE_DETONATOR).size())
+	print("destroyer total 2 : ", $MapData.get_resource_cells_by_id(TILE_DESTROYER).size())
+	print("mega_iron total 2 : ", $MapData.get_resource_cells_by_id(TILE_MEGA_IRON).size())
+	
+	print('mega_iron(', TILE_MEGA_IRON, ') rate : ' , mega_iron_rate)
+	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,mega_iron_rate, TILE_MEGA_IRON)
 
+	print("detonator total 3 : ", $MapData.get_resource_cells_by_id(TILE_DETONATOR).size())
+	print("destroyer total 3 : ", $MapData.get_resource_cells_by_id(TILE_DESTROYER).size())
+	print("mega_iron total 3 : ", $MapData.get_resource_cells_by_id(TILE_MEGA_IRON).size())
+	
+	
 func generate_bad_relics(badRelics):
 # ADD RELIC CHAMBERS
 	var remainingBadRelics = badRelics
@@ -140,7 +165,7 @@ func generate_bad_relics(badRelics):
 				bestD = d
 				bestCell = cell
 		
-		var placed = tryPlace(4, [bestCell, 
+		var placed = tryPlace(TILE_BAD_RELIC, [bestCell, 
 		bestCell + Vector2(-1,0),
 		bestCell + Vector2(-1,1),
 		bestCell + Vector2(0,-1),
@@ -159,99 +184,21 @@ func generate_bad_relics(badRelics):
 			var deltaWidth = sign(bestCell.x) * a.width * 0.2 - bestCell.x
 			resourceX = -bestCell.x - deltaWidth
 			
-			var remainingSwitches = a.relic_switches
-			#reportLog("Placing %s switches" % a.relic_switches)
-			var switchDirections:Array
-			var distanceNormalization := 0.0
-			failsafe = 50
-			var averageDistance = 0.5 * (a.relic_switch_distance_range.x + a.relic_switch_distance_range.y)
-			var minDistance = a.relic_switch_distance_range.x
-			while remainingSwitches > 0:
-				failsafe -= 1
-				if failsafe < 0:
-					reportError("Failsafe reached: Failed to generate relic switch chambers")
-					break
-				if rand.randf() < 0.2:
-					if rand.randf() > 0.5:
-						switchDirections = [Vector2.UP, Vector2.LEFT, Vector2.RIGHT, Vector2.DOWN]
-					else:
-						switchDirections = [Vector2.UP, Vector2.RIGHT, Vector2.LEFT, Vector2.DOWN]
-				else:
-					if rand.randf() > 0.5:
-						switchDirections = [Vector2.LEFT, Vector2.RIGHT, Vector2.DOWN, Vector2.UP]
-					else:
-						switchDirections = [Vector2.RIGHT, Vector2.LEFT, Vector2.DOWN, Vector2.UP]
-				
-				var distance = rand.randf_range(a.relic_switch_distance_range.x, a.relic_switch_distance_range.y) + distanceNormalization
-				distance = clamp(distance, a.relic_switch_distance_range.x, a.relic_switch_distance_range.y)
-				while switchDirections.size() > 0:
-					var direction = switchDirections.pop_front()
-					var result:Vector2 = tryPlaceRelicSwitch(bestCell, direction, distance, minDistance)
-					if result != Vector2.ZERO:
-						var distanceToSwitch = (result - bestCell).length()
-						distanceNormalization += averageDistance - distanceToSwitch
-						remainingSwitches -= 1
-						if remainingSwitches == 0:
-							break
-				minDistance -= 1
 	
 	if remainingBadRelics != 0:
 		reportError("Relic generation failed. Failed to place %s relics" % remainingBadRelics)
 		
 		
-func generate_cursom_tiles(ironClusterCenters, original_cell_coords, borderCells, type_rate,typeId):
-	 # encode detonator_rate in digits 4 , 5 , 6 , 7 after the comma. reads as 45.67
+func generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells, type_rate,typeId):
 	var typeAmount = round(type_rate * 0.001 * original_cell_coords.size())
 	var availableCells = $MapData.get_resource_cells_by_id(Data.TILE_DIRT_START)
 	Utils.shuffle(availableCells,rand)
 	var freeTileIndex = 0
 	for _j in typeAmount:
 		$MapData.set_resourcev(availableCells[freeTileIndex], typeId)
-		print("reussi à générer : " , typeId)
 		freeTileIndex += 1
 	var iterations = 100
 	var totalMove = Vector2()
 	var averagedLastTotalMoves = Vector2()
 	var zeroMoves = 0
 	
-	for iteration in iterations:
-		var typeTiles = $MapData.get_resource_cells_by_id(typeId)
-		Utils.shuffle(ironClusterCenters,rand)
-		for tileCoord in typeTiles:
-			var sum := Vector2()
-			for otherCoord in typeTiles:
-				if otherCoord == tileCoord:
-					continue
-				var strength = 100 + round(otherCoord.y * 2.0)
-				var delta = tileCoord - otherCoord
-				var mod = strength / pow(delta.length(), 2)
-				if mod < 0.01:
-					continue
-				sum += (Vector2(delta).normalized()) * mod
-			for otherCoord in ironClusterCenters:
-				var strength = 10
-				var delta = tileCoord - otherCoord
-				var mod = strength / pow(delta.length(), 2)
-				if mod < 0.001:
-					continue
-				sum += (Vector2(delta).normalized()) * mod
-			for borderCell in borderCells:
-				var strength = 20
-				var delta = tileCoord - borderCell
-				var mod = strength / pow(delta.length(), 3)
-				if mod < 0.001:
-					continue
-				sum += (Vector2(delta).normalized()) * mod
-			if sum.length() > 0.2:
-				sum = sum.normalized()
-			sum.x = round(sum.x)
-			sum.y = round(sum.y)
-			if $MapData.get_resourcev(Vector2(tileCoord) + sum) == Data.TILE_DIRT_START:
-				totalMove += sum
-				moveResource(tileCoord, sum.x, sum.y, 2)
-		
-		averagedLastTotalMoves = averagedLastTotalMoves * 0.5 + totalMove * 0.5
-		if (totalMove - averagedLastTotalMoves).length() < 1.0:
-			zeroMoves += 1
-			if zeroMoves >= 5:
-				break

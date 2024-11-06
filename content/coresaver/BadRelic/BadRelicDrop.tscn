@@ -1,0 +1,184 @@
+[gd_scene load_steps=20 format=3 uid="uid://vhoyyba7f7g5"]
+
+[ext_resource type="Script" path="res://content/drop/Drop.gd" id="1_wsgvi"]
+[ext_resource type="Texture2D" uid="uid://b348gpkclhwkk" path="res://content/drop/relic/relic.png" id="2_4b6at"]
+[ext_resource type="Texture2D" uid="uid://b87gy6ps3waj1" path="res://content/drop/relic/carried.png" id="3_qxaqt"]
+[ext_resource type="Material" path="res://content/shared/HighlightShader.tres" id="4_k1bef"]
+[ext_resource type="Texture2D" uid="uid://chmaxs735l6hy" path="res://content/drop/relic/focussed.png" id="5_pckle"]
+[ext_resource type="PackedScene" path="res://content/shared/drops/DropEnterTrigger.tscn" id="6_8yprt"]
+[ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="7_pcpol"]
+[ext_resource type="Material" path="res://content/drop/relic/distortion_material.tres" id="8_jw8ij"]
+[ext_resource type="Texture2D" uid="uid://d1dgwf16tj73a" path="res://mods-unpacked/POModder-AllYouCanMine/images/bad_distortion.png" id="9_cbmnh"]
+[ext_resource type="AudioStream" uid="uid://rdycunoibxav" path="res://content/sounds/Locations/ChamberRelic/Wave_01.wav" id="10_py2vp"]
+[ext_resource type="AudioStream" uid="uid://ddt6mttwwpuy6" path="res://content/sounds/relic-pulse.wav" id="11_s4bjd"]
+
+[sub_resource type="PhysicsMaterial" id="1"]
+friction = 0.0
+bounce = 0.5
+
+[sub_resource type="Gradient" id="2"]
+offsets = PackedFloat32Array(0.00263158, 0.176316, 0.373259, 0.598684, 0.928947, 0.969737, 1)
+colors = PackedColorArray(0.219608, 0.4, 0.235294, 1, 0.0627451, 0.352941, 0.235294, 1, 0.0941176, 0.568627, 0.235294, 1, 0.345098, 0.619608, 0.235294, 1, 0.0627451, 0.352941, 0.235294, 0.129412, 0.12549, 0.807843, 0.235294, 1, 0.0627451, 0.352941, 0.235294, 0)
+
+[sub_resource type="GradientTexture2D" id="3"]
+gradient = SubResource("2")
+
+[sub_resource type="ParticleProcessMaterial" id="4"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("3")
+
+[sub_resource type="CircleShape2D" id="5"]
+radius = 4.12311
+
+[sub_resource type="Animation" id="6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="7"]
+resource_name = "default"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../PulseSfx:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="8"]
+_data = {
+"RESET": SubResource("6"),
+"default": SubResource("7")
+}
+
+[node name="BadRelicDrop" type="RigidBody2D" groups=["carryable", "relic", "saveable"]]
+modulate = Color(1, 0.490196, 0.490196, 1)
+z_index = 21
+texture_filter = 1
+collision_layer = 34
+collision_mask = 522
+mass = 5.0
+physics_material_override = SubResource("1")
+gravity_scale = 0.0
+can_sleep = false
+linear_damp = 1.0
+script = ExtResource("1_wsgvi")
+type = "bad_relic"
+stabilizeRotation = true
+independentSpeedClamp = 3.0
+independentAcceleration = 0.2
+additionalSlowdown = 0.4
+carryableType = "gadget"
+carryInfluenceSize = 2.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0.5, 0.5)
+texture = ExtResource("2_4b6at")
+
+[node name="CarrySprite" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(0.5, 0.5)
+texture = ExtResource("3_qxaqt")
+
+[node name="FocusSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = 30
+texture_filter = 1
+material = ExtResource("4_k1bef")
+position = Vector2(0.5, 0.5)
+texture = ExtResource("5_pckle")
+
+[node name="CarryParticles" type="GPUParticles2D" parent="."]
+z_index = -1
+amount = 100
+process_material = SubResource("4")
+lifetime = 3.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("5")
+
+[node name="DropEnterTrigger" parent="." instance=ExtResource("6_8yprt")]
+
+[node name="Tween" parent="." instance=ExtResource("7_pcpol")]
+
+[node name="Distortion" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+material = ExtResource("8_jw8ij")
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("9_cbmnh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Distortion"]
+libraries = {
+"": SubResource("8")
+}
+autoplay = "default"
+
+[node name="DroneSfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_py2vp")
+volume_db = -80.0
+autoplay = true
+max_distance = 500.0
+bus = &"Sounds"
+
+[node name="PulseSfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_s4bjd")
+max_distance = 300.0
+bus = &"Sounds"

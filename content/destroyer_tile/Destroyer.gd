@@ -10,22 +10,12 @@ var exploded := false
 func explode():
 	$ActivateSound.stop()
 	exploded = true
-	print(" Total iron : " , Data.of("inventory.floatingIron"))
-	print(" Total water : " , Data.of("inventory.floatingWater"))
-	print(" Total sand : " , Data.of("inventory.floatingSand"))
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.1).timeout
 	for carryable in $Area2D.get_overlapping_bodies():
 		if carryable is Drop and carryable.type in [CONST.IRON, CONST.SAND, CONST.WATER]:
 			carryable.queue_free()
-			print("destroyed one")
-
-	print(" Total iron : " , Data.of("inventory.floatingIron"))
-	print(" Total water : " , Data.of("inventory.floatingWater"))
-	print(" Total sand : " , Data.of("inventory.floatingSand"))
 	
 	if Level.map:
 		Level.map.damageTileCircleArea(global_position,  3, 100000)
-	else :
-		print("EXPLOSION mais pas de map")
 	queue_free()
 

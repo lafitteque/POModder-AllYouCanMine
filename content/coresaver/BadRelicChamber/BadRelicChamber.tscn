@@ -1,0 +1,89 @@
+[gd_scene load_steps=15 format=3 uid="uid://dpsk15sn2wnxv"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelicChamber/BadRelicChamber.gd" id="1_t6kx1"]
+[ext_resource type="PackedScene" uid="uid://vhoyyba7f7g5" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelic/BadRelicDrop.tscn" id="2_v3rwr"]
+[ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="3_m0juj"]
+[ext_resource type="AudioStream" uid="uid://bo64u286jvct" path="res://content/sounds/Locations/RelicRoom/eerie_01.wav" id="4_5l1gr"]
+[ext_resource type="SpriteFrames" uid="uid://dbouhwtacoyuq" path="res://content/map/chamber/relic/RelicChamber_spriteframes.tres" id="5_u846g"]
+[ext_resource type="SpriteFrames" uid="uid://ldhsea0p07s4" path="res://content/map/chamber/relic/RelicChamberFront_spriteframes.tres" id="6_hd48x"]
+[ext_resource type="PackedScene" path="res://content/map/TileCover.tscn" id="7_16be5"]
+[ext_resource type="Texture2D" uid="uid://yan3ge52a6vc" path="res://content/map/chamber/cover.png" id="8_qf2ew"]
+[ext_resource type="PackedScene" uid="uid://bg8fe576mdx0k" path="res://content/shared/Usable.tscn" id="9_alfvw"]
+[ext_resource type="AudioStream" uid="uid://dg6icbj5rs4y4" path="res://content/sounds/Locations/ChamberRelic/RelicDoor_1.wav" id="10_jtyn4"]
+[ext_resource type="Texture2D" uid="uid://chmaxs735l6hy" path="res://content/drop/relic/focussed.png" id="11_tu4yn"]
+[ext_resource type="Script" path="res://content/shared/LightLineOfSight.gd" id="12_10fsl"]
+
+[sub_resource type="TileSetAtlasSource" id="1"]
+texture = ExtResource("8_qf2ew")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="2"]
+tile_size = Vector2i(24, 24)
+sources/0 = SubResource("1")
+
+[node name="BadRelicChamber" type="Node2D" groups=["chamber", "relicchamber", "saveable"]]
+modulate = Color(1, 0.490196, 0.490196, 1)
+z_index = -10
+texture_filter = 1
+script = ExtResource("1_t6kx1")
+GIZMO_SCENE = ExtResource("2_v3rwr")
+type = "bad_relic"
+
+[node name="GizmoSpawn" type="Marker2D" parent="."]
+z_index = 50
+position = Vector2(49, 49)
+
+[node name="ChamberAmb" parent="GizmoSpawn" instance=ExtResource("3_m0juj")]
+stream = ExtResource("4_5l1gr")
+volume_db = 9.0
+bus = &"Mine"
+randomVolume = 0.0
+randomPitch = 0.0
+maxAudibleDistance = 80.0
+minAudibleDistance = 40.0
+fadeInTime = 0.5
+fadeOutTime = 0.5
+loop = true
+
+[node name="SpriteBack" type="AnimatedSprite2D" parent="."]
+position = Vector2(49.5, 47.5)
+sprite_frames = ExtResource("5_u846g")
+animation = &"running"
+
+[node name="SpriteFront" type="AnimatedSprite2D" parent="SpriteBack"]
+position = Vector2(-0.5, 1.5)
+sprite_frames = ExtResource("6_hd48x")
+animation = &"New Anim"
+
+[node name="TileCover" parent="." instance=ExtResource("7_16be5")]
+visible = false
+modulate = Color(1, 1, 1, 1)
+tile_set = SubResource("2")
+layer_0/tile_data = PackedInt32Array(1, 0, 0, 2, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 196609, 0, 0, 196610, 0, 0)
+
+[node name="Usable" parent="." instance=ExtResource("9_alfvw")]
+position = Vector2(48, 48)
+visibleOnFocus = NodePath("../FocusMarker")
+
+[node name="DoorOpen" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_jtyn4")
+volume_db = 1.303
+bus = &"Mine"
+
+[node name="FocusMarker" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(48.5, 47.5)
+texture = ExtResource("11_tu4yn")
+
+[node name="Light3D" type="Node2D" parent="."]
+position = Vector2(48, 48)
+script = ExtResource("12_10fsl")
+light_name = "teleporter_cave"
+light_color = Color(0.12549, 0.568627, 0.156863, 1)
+light_size = 30.0
+light_active = false
+light_flicker_strength = 2.0
+light_flicker_speed = 4.0
+
+[connection signal="frame_changed" from="SpriteBack/SpriteFront" to="." method="_on_SpriteFront_frame_changed"]

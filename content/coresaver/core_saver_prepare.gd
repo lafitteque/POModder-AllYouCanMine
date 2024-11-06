@@ -2,7 +2,9 @@ extends Node2D
 
 func prepareGameMode(modeId, levelStartData):
 	print("Game mode prepare :" , modeId)
-	
+	if modeId != "coresaver":
+		return
+		
 	levelStartData.loadout.modeConfig[CONST.MODE_CONFIG_WORLDMODIFIERS] =  ["worldmodifiernorelic"]
 	levelStartData.loadout.modeConfig["upgradelimits"] = ["hostile"]
 	GameWorld.setUpgradeLimitAvailable("hostile")
@@ -19,7 +21,6 @@ func prepareGameMode(modeId, levelStartData):
 		levelStartData.loadout.worldId = GameWorld.getNextRandomWorldId()
 		Data.apply("monsters.allowedtypes", Data.gameProperties.get("monstersbyworld." + levelStartData.loadout.worldId))
 	
-	print("Data worldModifiers : " , Data.worldModifiers)
 	for modifierId in levelStartData.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
 		var modifier = Data.worldModifiers[modifierId]
 		for propertyChange in modifier.get("propertychanges", {}):

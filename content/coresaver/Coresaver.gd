@@ -12,10 +12,6 @@ var runWeightOverride := -1 # for control testing purposes
 
 var relicRetrievalMusicType:String
 
-func prepareGameMode(mode_id, levelStartData):
-	print(" Core Saver called")
-	GameWorld.prepareRegularLevelStart(levelStartData)
-	
 func init():
 	Data.listen(self, "inventory.floatingrelic")
 	Data.listen(self, "inventory.relic")
@@ -74,8 +70,6 @@ func propertyChanged(property:String, oldValue, newValue):
 				$DesperationLayer2.play()
 				$DesperationTween.interpolate_property($DesperationLayer1, "volume_db", -60, 0, 5.0)
 				$DesperationTween.start()
-		"inventory.floatingrelic":
-			started = true
 		"inventory.relic":
 			if newValue == 1:
 				SaveGame.allow_saving = false

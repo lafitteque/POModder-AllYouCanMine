@@ -117,8 +117,6 @@ func _on_level_ready():
 		
 	## Actions that need an action from StageManagerExtender
 	await get_tree().create_timer(0.5).timeout
-	print("on level ready delayed : " , data_mod.generation_data)
 	if data_mod.generation_data["drop_bearer_rate"] > 0:
-		print("Drop Bearer Manager ajouté")
 		var drop_bearer_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer_manager.tscn").instantiate()
 		StageManager.currentStage.MAP.add_child(drop_bearer_manager)

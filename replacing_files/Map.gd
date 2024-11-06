@@ -50,6 +50,7 @@ func weighted_random(weights) -> int:
 
 
 func revealTile(coord:Vector2):
+	var typeId:int = tileData.get_resource(coord.x, coord.y)
 	var invalids := []
 	if tileRevealedListeners.has(coord):
 		for listener in tileRevealedListeners[coord]:
@@ -60,10 +61,10 @@ func revealTile(coord:Vector2):
 		for invalid in invalids:
 			tileRevealedListeners.erase(invalid)
 	
-	var typeId:int = tileData.get_resource(coord.x, coord.y)
+	
 	if typeId == Data.TILE_EMPTY:
 		return
-	
+
 	if tiles.has(coord):
 		return
 	
@@ -94,7 +95,10 @@ func revealTile(coord:Vector2):
 		"mega_iron":# QLafitte Added
 			tile.richness = Data.ofOr("map.ironrichness", 2)
 			revealTileVisually(coord) # QLafitte Added
-			
+		"bad_relic":
+			revealTileVisually(coord) # QLafitte Added
+		"glass":
+			revealTileVisually(coord) # QLafitte Added
 	
 	
 	
@@ -110,7 +114,8 @@ func revealTile(coord:Vector2):
 	visibleTileCoords[coord] = typeId
 	
 	if Data.ofOr("assignment.id","") == "aprilfools":
-		if tile.type in [CONST.IRON, CONST.SAND, CONST.WATER, TILE_DETONATOR]: #Qlafitte Added
+		if tile.type in [CONST.IRON, CONST.SAND, CONST.WATER,
+		 "detonator", "destroyer" , "mega_iron"]: #Qlafitte Added
 			var vec_list = [\
 				Vector2(5, 0) , Vector2(randi_range(2, 6), 11) , \
 				Vector2(2, 3) , Vector2(randi_range(2, 3), 7) , \
@@ -158,6 +163,8 @@ func destroyTile(tile, withDropsAndSound := true):
 				sound = $TileDestroyedChamber.duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
 			CONST.RELIC:
 				sound = $TileDestroyedChamber.duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
+			"mega_iron":
+				sound = $TileDestroyedIron.duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
 			_:
 				sound = $TileDestroyed.duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
 		sound.setSimulatedPosition(tile.global_position)
@@ -228,3 +235,175 @@ func destroyTile(tile, withDropsAndSound := true):
 		drop.apply_central_impulse(Vector2(0, 10).rotated(randf() * TAU))
 		call_deferred("addDrop", drop)
 		GameWorld.incrementRunStat("resources_mined")
+
+func getSceneForTileType(tileType:int) -> PackedScene:
+	if tileType == data_mod.TILE_BAD_RELIC:
+		return preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelicChamber/BadRelicChamber.tscn")
+	
+	return super(tileType)
+
+func init(fromDeserialize := false, defaultState := true):
+	super(fromDeserialize,defaultState)
+	if not fromDeserialize:
+		# tile data gets modified with creating chambers, so that should not be done on reload
+		var clusterCenters = getResourceClusterTopLeft(data_mod.TILE_BAD_RELIC)
+		for centerCoord in clusterCenters:
+			addChamber(centerCoord, getSceneForTileType(data_mod.TILE_BAD_RELIC))
+	
+
+func generateCaves(minDistanceToCenter := 10):
+	var rand = RandomNumberGenerator.new()
+	rand.seed = Level.levelSeed
+	var caveScenesById = Data.CAVE_SCENES.duplicate()
+
+	var cavePackeScenes := []
+	# SPECIAL CAVES
+	if Level.loadout.modeId == CONST.MODE_RELICHUNT:
+		if GameWorld.isPetUnlockable():
+			cavePackeScenes.append(preload("res://content/map/chamber/nest/NestCave.tscn"))
+
+	if GameWorld.useCustomCaveOrder and GameWorld.customCaveOrder and GameWorld.customCaveOrder.size() > 0:
+		for caveId in GameWorld.customCaveOrder:
+			if caveScenesById.has(caveId):
+				cavePackeScenes.append(caveScenesById[caveId])
+	else:
+		for caveId in Data.CAVE_SCENES:
+			if caveScenesById.has(caveId):
+				cavePackeScenes.append(caveScenesById[caveId])
+		Utils.shuffle(cavePackeScenes,rand)
+
+	if Level.loadout.modeId == CONST.MODE_RELICHUNT:
+		for keeper in Level.loadout.keepers:
+			if keeper.keeperId == "keeper1":
+				if GameWorld.isHalloween and Level.loadout.modeId == CONST.MODE_RELICHUNT:
+					cavePackeScenes.insert(0, preload("res://content/caves/halloweencave/HalloweenSkeletonCave.tscn"))
+					break
+		if GameWorld.isLunarNewYear and not GameWorld.unlockedPets.has("pet8"):
+			cavePackeScenes.insert(0, preload("res://content/caves/dragoncave/LunarNewYearDragonCave.tscn"))
+		if shouldGenerateDrillbertCave():
+			cavePackeScenes.insert(0, preload("res://content/caves/drillicave/DrillbertCave.tscn"))
+	
+	# Added vvvvvvvvv
+	var coresaver_endings = data_mod.get_endings()
+	
+	if Level.loadout.modeId == "coresaver" and coresaver_endings.has("heavy_rock") :
+		var heavy_rock_cave =  preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.tscn").instantiate()
+		var maxLayer = startingIronCountByLayer.size()
+		addForcedCave(rand, heavy_rock_cave, maxLayer-1, 2)
+
+		
+		
+	## Added ^^^^^^^^
+	
+	var availableCaves:Array
+	var caveCount := {}
+	var maxLayer = startingIronCountByLayer.size()
+	for layerIndex in maxLayer:
+		if availableCaves.is_empty():
+			availableCaves = cavePackeScenes.duplicate()
+		for cavePackedScene in availableCaves:
+			var cave = cavePackedScene.instantiate() # yeah this is shit, but probably not noticable
+			var biomeFits = cave.biome == "" or biomes[layerIndex] == cave.biome 
+			var minLayerFits = cave.minLayer <= layerIndex
+			var relativeDepth = layerIndex / float(maxLayer)
+			var minDepthFits = round(relativeDepth * cave.minRelativeDepth) <= layerIndex
+			var maxDepthFits = layerIndex <= round(maxLayer * cave.maxRelativeDepth)
+			var withinAllowedCount = caveCount.get(cavePackedScene, 0) < cave.maxCount
+			if biomeFits and minLayerFits and minDepthFits and maxDepthFits and withinAllowedCount:
+				addCave(rand, cave, layerIndex, minDistanceToCenter)
+				availableCaves.erase(cavePackedScene)
+				caveCount[cavePackedScene] = caveCount.get(cavePackedScene, 0) + 1
+				break
+			else:
+				cave.queue_free()
+
+	### Added vvvvvvvv	
+	if Level.loadout.modeId == "coresaver" and coresaver_endings.has("glass") :
+		spawn_glass()
+		
+						
+func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_layer = true):
+	cave.updateUsedTileCoords()
+
+	# try for a few times to find a suitable spot for the cave
+	for _i in 50:
+		var cells = tileData.get_biome_cells_by_index(biomeIndex)
+		if cells.size() < cave.tileCoords.size():
+			accept_higher_layer = true
+			break
+			
+		var cell = cells[rand.randi() % cells.size()]
+		if abs(cell.x) < minDistanceToCenter:
+			continue
+		
+		if not tileData.is_area_free(cell, cave.tileCoords):
+			continue
+		
+		addLandmark(cell, cave)
+		for c in cave.tileCoords:
+			var absCoord = Vector2(cell) + c
+			tileData.clear_resource(absCoord)
+		return
+		
+	if !accept_higher_layer:
+		var cells = tileData.get_biome_cells_by_index(biomeIndex)
+		var cell
+		var can_spawn
+		for _i in 30 :
+			cell = cells[rand.randi() % cells.size()]
+			can_spawn = true
+			for c in cave.tileCoords:
+				var absCoord = cell + c
+				can_spawn = can_spawn and not (tileData.get_resourcev(absCoord) in [14, 15])
+			
+			if can_spawn :
+				break
+		if can_spawn :
+			for c in cave.tileCoords:
+				var absCoord = Vector2(cell) + c
+				tileData.clear_resource(absCoord)
+			addLandmark(cell, cave)
+			return
+	
+	for _i in 50:
+		var cells = tileData.get_biome_cells_by_index(biomeIndex-1)
+		if cells.size() < cave.tileCoords.size():
+			return
+		
+		var cell = cells[rand.randi() % cells.size()]
+		if abs(cell.x) < minDistanceToCenter:
+			continue
+		
+		if not tileData.is_area_free(cell, cave.tileCoords):
+			continue
+		
+		addLandmark(cell, cave)
+		for c in cave.tileCoords:
+			var absCoord = Vector2(cell) + c
+			tileData.clear_resource(absCoord)
+		return
+
+func spawn_glass():
+	var possible_spawn_ranges = [[-1,0.48,0.62] , 
+		[-1,0.68,0.82] ,
+		[-1,0.88,1.0] ,
+		[1,0.45,0.62] ,
+		[1,0.68,0.82] ,
+		[1,0.88,1.0] ,]
+	possible_spawn_ranges.shuffle() 
+	var chosen_positions = possible_spawn_ranges.slice(0,4)
+	var maxLayer = startingIronCountByLayer.size()
+	var max_y = tileData.get_biome_cells_by_index(maxLayer-1)[-1].y
+	for c in chosen_positions:
+		var direction = c[0]
+		var start = Vector2(0,floor(max_y*randf_range(c[1],c[2]) ))
+		var last_available_position = start
+		var x = 0
+		
+		# Setting depth and then checking all tiles to the left / right to see where the glass can be placed
+		while abs(x) < 30:
+			if tileData.get_resourcev(start + Vector2(x,0) ) == 10:
+				last_available_position = start + Vector2(x,0)
+			x += direction
+		tileData.set_resourcev(last_available_position, data_mod.TILE_GLASS)
+		print("glass at : " , last_available_position)

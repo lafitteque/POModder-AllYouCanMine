@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hfan6j7bb0dq"
-path="res://.godot/imported/detonator_recolor.png-e4eb3de7f82f0a8d8e9166edc0c776f8.ctex"
+uid="uid://bc7vobkajdin2"
+path="res://.godot/imported/heavy_rock_cave_alpha.png-0f2aa2cca14fc027c7d15cc2b8b9562b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods-unpacked/POModder-AllYouCanMine/images/detonator_recolor.png"
-dest_files=["res://.godot/imported/detonator_recolor.png-e4eb3de7f82f0a8d8e9166edc0c776f8.ctex"]
+source_file="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock_cave_alpha.png"
+dest_files=["res://.godot/imported/heavy_rock_cave_alpha.png-0f2aa2cca14fc027c7d15cc2b8b9562b.ctex"]
 
 [params]
 

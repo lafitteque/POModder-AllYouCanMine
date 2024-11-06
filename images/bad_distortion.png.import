@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5vb3t7q68rdv"
-path="res://.godot/imported/mod_resource_sheet.png-d48be4d995f64f22531c00bff6438dbd.ctex"
+uid="uid://d1dgwf16tj73a"
+path="res://.godot/imported/bad_distortion.png-58877058cfdd1492cebf993d5144e488.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods-unpacked/POModder-AllYouCanMine/images/mod_resource_sheet.png"
-dest_files=["res://.godot/imported/mod_resource_sheet.png-d48be4d995f64f22531c00bff6438dbd.ctex"]
+source_file="res://mods-unpacked/POModder-AllYouCanMine/images/bad_distortion.png"
+dest_files=["res://.godot/imported/bad_distortion.png-58877058cfdd1492cebf993d5144e488.ctex"]
 
 [params]
 

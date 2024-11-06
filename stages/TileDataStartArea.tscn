@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bp7a828iulpti"]
 
-[ext_resource type="PackedScene" path="res://content/map/MapData.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://baa5rgies6g3d" path="res://content/map/MapData.tscn" id="1"]
 
 [node name="MapData" instance=ExtResource("1")]
 scale = Vector2(1, 1.11471)

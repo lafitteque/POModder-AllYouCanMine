@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cejvih2mjtfe4"
-path="res://.godot/imported/detonator.png-8497fa07fac737adce0198600a0080c1.ctex"
+uid="uid://et8hw0uf03da"
+path="res://.godot/imported/heavy_rock.png-f0b795e79b502d85a6709125c31d55be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods-unpacked/POModder-AllYouCanMine/images/detonator.png"
-dest_files=["res://.godot/imported/detonator.png-8497fa07fac737adce0198600a0080c1.ctex"]
+source_file="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock.png"
+dest_files=["res://.godot/imported/heavy_rock.png-f0b795e79b502d85a6709125c31d55be.ctex"]
 
 [params]
 
