@@ -1,7 +1,3 @@
-Mine_All assignment :
-- une personne dit que la mission n'a pas été validée parce qu'il lui manquait un bloc, mais que ce bloc n'existait pas.
-
-
 Thieves assignment :
 - les bonhommes font parfois du moonwalk
 
@@ -10,9 +6,14 @@ Achievement Useless bombs :
 - La vérification ne marche pas si la bombe explose en cercle (vérifie uniquement les lignes)
 
 
-Attention : Quand le jeu est pausé -> achievements easy?
 
-Extensions : Problèmes -> extension ne marche que en partie.
+BUG ?? : started playing an assignment (2nd new assignment from the mod) using artillery dome, drones, and iron worms. start 2nd fight and dome controls became non-responsive. I can't move or fire the weapon, or even get out of the dome to see upgrades. Esc still works but that is all. mouse also doesn't do anything unless in the Esc menu. The monsters were not affected and kept firing on the dome.
+MacBook Pro M1, mouse dome controls enabled except sword slice.
+Quitting the game was the only way to regain control
+As you can see from the screenshot, no dome controls are displayed 
+
+
+- Thieves : le temps de vie ne marche pas, améliorer les performances
 
 
 

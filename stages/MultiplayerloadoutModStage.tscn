@@ -1,7 +1,7 @@
 [gd_scene load_steps=31 format=3 uid="uid://ba0ww61h080jf"]
 
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutStageMod.gd" id="1_nrtji"]
-[ext_resource type="PackedScene" path="res://content/map/Map.tscn" id="2_djffl"]
+[ext_resource type="PackedScene" uid="uid://da6q6eo302qfl" path="res://content/map/Map.tscn" id="2_djffl"]
 [ext_resource type="PackedScene" path="res://content/worlds/world1/World1.tscn" id="3_i3eyx"]
 [ext_resource type="Script" path="res://stages/loadout/MultiplayerLoadoutCamera.gd" id="4_whlfv"]
 [ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="5_i45ha"]
@@ -707,6 +707,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/BlockGameMode/HBoxContainer/GameModeMarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 24
+
 [node name="BlockGuildReward" type="VBoxContainer" parent="UI"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -931,6 +936,11 @@ layout_mode = 2
 [node name="CustomAchievementsContainer" type="GridContainer" parent="UI/BlockCustomAchievements/VBoxContainer"]
 layout_mode = 2
 columns = 4
+
+[node name="ArrowsContainer" type="HBoxContainer" parent="UI/BlockCustomAchievements/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 24
 
 [node name="HintContainers" type="Control" parent="UI"]
 anchors_preset = 0

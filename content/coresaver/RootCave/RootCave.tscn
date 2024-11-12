@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=3 uid="uid://b4qx4paubbldg"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/generic_cave_coresaver.gd" id="1_jmrqm"]
+[ext_resource type="Script" path="res://content/map/Parallaxer.gd" id="2_kpq10"]
+[ext_resource type="Texture2D" uid="uid://c7q51oi3kubbw" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock_cave.png" id="3_wpwvj"]
+[ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="4_4meym"]
+[ext_resource type="AudioStream" uid="uid://g6cg4bul73qo" path="res://content/sounds/monster/Shifter_amb.wav" id="5_df8h8"]
+[ext_resource type="Texture2D" uid="uid://bc7vobkajdin2" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock_cave_alpha.png" id="6_ljhmp"]
+[ext_resource type="Texture2D" uid="uid://bpc5chxnv26hx" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/broken_relic.png" id="7_37rx4"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootRelicAttractor.gd" id="8_scmjm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w0yy2"]
+radius = 30.0
+
+[node name="RootCave" type="Node2D" groups=["cave", "saveable", "unstyled"]]
+z_index = -40
+texture_filter = 1
+script = ExtResource("1_jmrqm")
+
+[node name="Sprites" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 26.0
+offset_bottom = 35.0
+mouse_filter = 2
+script = ExtResource("2_kpq10")
+start_offset = 0.4
+scaling = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprites"]
+texture_filter = 1
+position = Vector2(75.5, 37)
+texture = ExtResource("3_wpwvj")
+hframes = 3
+
+[node name="Sprite2" type="Sprite2D" parent="Sprites"]
+texture_filter = 1
+position = Vector2(75.5, 37)
+texture = ExtResource("3_wpwvj")
+hframes = 3
+frame = 1
+
+[node name="Sprite3" type="Sprite2D" parent="Sprites"]
+texture_filter = 1
+position = Vector2(75.5, 37)
+texture = ExtResource("3_wpwvj")
+hframes = 3
+frame = 2
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(23, 23)
+
+[node name="Amb" parent="Marker2D" instance=ExtResource("4_4meym")]
+stream = ExtResource("5_df8h8")
+volume_db = -9.177
+pitch_scale = 0.65
+bus = &"Mine"
+randomVolume = 0.0
+randomPitch = 0.0
+maxAudibleDistance = 120.0
+minAudibleDistance = 36.0
+fadeInTime = 0.1
+fadeOutTime = 2.0
+loop = true
+
+[node name="AlphaMap" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(34.4375, 20.25)
+scale = Vector2(0.570219, 0.519444)
+texture = ExtResource("6_ljhmp")
+
+[node name="BrokenRelic" type="Sprite2D" parent="."]
+modulate = Color(0.321569, 0.156863, 0.290196, 0.337255)
+position = Vector2(13, 13)
+texture = ExtResource("7_37rx4")
+
+[node name="RelicAttractor" type="Area2D" parent="BrokenRelic"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_scmjm")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BrokenRelic/RelicAttractor"]
+shape = SubResource("CircleShape2D_w0yy2")
+
+[connection signal="body_entered" from="BrokenRelic/RelicAttractor" to="BrokenRelic/RelicAttractor" method="_on_body_entered"]
+[connection signal="body_exited" from="BrokenRelic/RelicAttractor" to="BrokenRelic/RelicAttractor" method="_on_body_exited"]

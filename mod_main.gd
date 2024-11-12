@@ -36,13 +36,10 @@ func _ready():
 		
 func modInit():
 	var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
-	var pathToModYamlUpgrades : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/upgrades.yaml"
-	#var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
-	Data.parseAssignmentYaml(pathToModYamlAssignments)
-	#Data.parseUpgradesYaml(pathToModYamlUpgrades)
+	var pathToModYamlProperties : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/properties.yaml"
+	Data.parsePropertiesYaml(pathToModYamlProperties)
 
 	ModLoaderLog.info("Trying to parse YAML: %s" % pathToModYamlAssignments, MYMODNAME_LOG)
-	ModLoaderLog.info("Trying to parse YAML: %s" % pathToModYamlUpgrades, MYMODNAME_LOG)
 	
 	data_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForAchievements.tscn").instantiate()
 	data_mod = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForMod.tscn").instantiate()
@@ -78,16 +75,16 @@ func manage_overwrites():
 	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/assignment-thieves.tres")
 	
 	var new_archetype_huge_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-huge.tres")
-	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/coresaver-huge.tres")
+	new_archetype_huge_coresaver.take_over_path("res://content/map/generation/archetypes/coresaver-huge.tres")
 	
 	var new_archetype_large_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-large.tres")
-	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/coresaver-large.tres")
+	new_archetype_large_coresaver.take_over_path("res://content/map/generation/archetypes/coresaver-large.tres")
 	
 	var new_archetype_medium_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-medium.tres")
-	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/coresaver-medium.tres")
+	new_archetype_medium_coresaver.take_over_path("res://content/map/generation/archetypes/coresaver-medium.tres")
 	
 	var new_archetype_small_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-small.tres")
-	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/coresaver-small.tres")
+	new_archetype_small_coresaver.take_over_path("res://content/map/generation/archetypes/coresaver-small.tres")
 	
 	var new_stage = load("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutModStage.tscn")
 	new_stage.take_over_path("res://stages/loadout/multiplayerloadoutmodstage.tscn")
@@ -111,9 +108,9 @@ func manage_overwrites():
 	
 	
 func _on_level_ready():
-	if Data.ofOr("assignment.id","") == "mineall":
-		var mine_all_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mine_all_data.tscn").instantiate()
-		add_child(mine_all_data)
+	
+	var mining_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mining_data.tscn").instantiate()
+	add_child(mining_data)
 		
 	## Actions that need an action from StageManagerExtender
 	await get_tree().create_timer(0.5).timeout

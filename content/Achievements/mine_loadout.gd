@@ -21,6 +21,6 @@ func _on_timer_timeout():
 		return
 	if tile_data.get_resource_cells_by_id(0).size() +\
 	tile_data.get_resource_cells_by_id(1).size()+\
-	tile_data.get_resource_cells_by_id(2).size() ==0  :
+	tile_data.get_resource_cells_by_id(2).size() <= 0  :
 		get_parent().unlockAchievement(id)
 		timer.queue_free()

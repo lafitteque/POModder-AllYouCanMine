@@ -1,57 +1,21 @@
 extends Map
 
 
-
-const TILE_EMPTY := -1
-const TILE_BORDER := 19
-const TILE_IRON := 0
-const TILE_WATER := 1
-const TILE_SAND := 2
-const TILE_GADGET := 3
-const TILE_RELIC := 4
-const TILE_NEST := 5
-const TILE_RELIC_SWITCH := 6
-const TILE_SUPPLEMENT := 7
-const TILE_CAVE := 9
-const TILE_DIRT_START := 10
-const TILE_DETONATOR := 11 # QLafitte Added
-const TILE_DESTROYER := 12 # QLafitte Added
-const TILE_MEGA_IRON := 13 # QLafitte Added
-
 var data_mod 
+var entrance_pos = null
 
-const DROP_FROM_TILES_SCENES := {
-	CONST.IRON: preload("res://content/drop/iron/IronDrop.tscn"),
-	CONST.WATER: preload("res://content/drop/water/WaterDrop.tscn"),
-	CONST.SAND: preload("res://content/drop/sand/SandDrop.tscn"),
-	"cavebomb" : preload("res://content/caves/bombcave/CaveBomb.tscn"),
-	"mega_iron": preload("res://mods-unpacked/POModder-AllYouCanMine/content/new_drops/MegaIronDrop.tscn"),
-	"nothing" : null
-}
-
-const APRIL_FOOLS_PROBABILITIES = [50.0, 5.0 , 2.0 , 1.0, 20.0]
 
 func _ready():
 	data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
 	super()
 	
-func weighted_random(weights) -> int:
-	var weights_sum := 0.0
-	for weight in weights:
-		weights_sum += weight
 	
-	var remaining_distance := randf() * weights_sum
-	for i in weights.size():
-		remaining_distance -= weights[i]
-		if remaining_distance < 0:
-			return i
-	
-	return 0
 
 
 func revealTile(coord:Vector2):
 	var typeId:int = tileData.get_resource(coord.x, coord.y)
 	var invalids := []
+	
 	if tileRevealedListeners.has(coord):
 		for listener in tileRevealedListeners[coord]:
 			if is_instance_valid(listener):
@@ -99,9 +63,7 @@ func revealTile(coord:Vector2):
 			revealTileVisually(coord) # QLafitte Added
 		"glass":
 			revealTileVisually(coord) # QLafitte Added
-	
-	
-	
+			
 	tiles[coord] = tile 
 	
 	if tilesByType.has(tile.type):
@@ -126,14 +88,14 @@ func revealTile(coord:Vector2):
 	
 func addDrop(drop):
 	if Data.ofOr("assignment.id","") == "aprilfools" and\
-	("type" in drop) and drop.type in [CONST.WATER, CONST.IRON,CONST.SAND]: #QLafitte Added
+	("type" in drop) and drop.type in [CONST.WATER, CONST.IRON,CONST.SAND] and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ): #QLafitte Added
 		var old_position = drop.global_position #QLafitte Added
 		drop = null #QLafitte Added
-		var all_keys = DROP_FROM_TILES_SCENES.keys() #QLafitte Added
-		var rand_type = all_keys[weighted_random(APRIL_FOOLS_PROBABILITIES)] #QLafitte Added
+		var all_keys = data_mod.DROP_FROM_TILES_SCENES.keys() #QLafitte Added
+		var rand_type = all_keys[data_mod.weighted_random(data_mod.APRIL_FOOLS_PROBABILITIES)] #QLafitte Added
 		if rand_type == "nothing":
 			return
-		drop = DROP_FROM_TILES_SCENES.get(rand_type).instantiate()#QLafitte Added
+		drop = data_mod.DROP_FROM_TILES_SCENES.get(rand_type).instantiate()#QLafitte Added
 		drop.global_position = old_position #QLafitte Added
 		if ("type" in drop) and drop.type in [CONST.WATER, CONST.IRON,CONST.SAND] :#QLafitte Added
 			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))#QLafitte Added
@@ -220,7 +182,7 @@ func destroyTile(tile, withDropsAndSound := true):
 	
 	onTileRemoved(tile.coord)
 #	for d in CONST.DIRECTIONS:
-#		tileCoordsToReveal.append(tile.coord + d)
+#		tileCoordsToReveal.append(tile.coord +" d)
 	tileCoordsToReveal.append(tile.coord)
 	floodRevealTiles()
 
@@ -230,7 +192,7 @@ func destroyTile(tile, withDropsAndSound := true):
 		add_child(sound)
 		sound.play()
 	if tile.type == "mega_iron":
-		var drop = DROP_FROM_TILES_SCENES.get(tile.type).instantiate()
+		var drop = data_mod.DROP_FROM_TILES_SCENES.get(tile.type).instantiate()
 		drop.position = tile.global_position + 0.6 * Vector2(GameWorld.HALF_TILE_SIZE - randf()*GameWorld.TILE_SIZE, GameWorld.HALF_TILE_SIZE - randf()*GameWorld.TILE_SIZE)
 		drop.apply_central_impulse(Vector2(0, 10).rotated(randf() * TAU))
 		call_deferred("addDrop", drop)
@@ -241,7 +203,8 @@ func getSceneForTileType(tileType:int) -> PackedScene:
 		return preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelicChamber/BadRelicChamber.tscn")
 	
 	return super(tileType)
-
+#
+	
 func init(fromDeserialize := false, defaultState := true):
 	super(fromDeserialize,defaultState)
 	if not fromDeserialize:
@@ -249,6 +212,7 @@ func init(fromDeserialize := false, defaultState := true):
 		var clusterCenters = getResourceClusterTopLeft(data_mod.TILE_BAD_RELIC)
 		for centerCoord in clusterCenters:
 			addChamber(centerCoord, getSceneForTileType(data_mod.TILE_BAD_RELIC))
+	
 	
 
 func generateCaves(minDistanceToCenter := 10):
@@ -291,7 +255,22 @@ func generateCaves(minDistanceToCenter := 10):
 		var maxLayer = startingIronCountByLayer.size()
 		addForcedCave(rand, heavy_rock_cave, maxLayer-1, 2)
 
+	if Level.loadout.modeId == "coresaver" and coresaver_endings.has("secret"):
+		var secret_room_tiles = tileData.get_resource_cells_by_id(data_mod.TILE_SECRET_ROOM)
+		for i in range(secret_room_tiles.size()-1,-1,-1):
+			if tileData.get_biomev(secret_room_tiles[i]) >1:
+				secret_room_tiles.pop_at(i)
+			
 		
+		# Add cave
+		var top_left = secret_room_tiles[0]
+		for cell in secret_room_tiles:
+			if cell.x <= top_left.x and cell.y <= top_left.y :
+				top_left = cell
+		var root_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootCave.tscn").instantiate()
+		addLandmark(top_left, root_cave)
+		root_cave.visible = true
+		# Add hint as BackgroundRender child
 		
 	## Added ^^^^^^^^
 	
@@ -320,8 +299,11 @@ func generateCaves(minDistanceToCenter := 10):
 	### Added vvvvvvvv	
 	if Level.loadout.modeId == "coresaver" and coresaver_endings.has("glass") :
 		spawn_glass()
+		var core_eater_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_eater_cave/CoreEaterCave.tscn").instantiate()
+		addCaveStartAndDirection(rand, core_eater_cave, Vector2.ZERO, Vector2.DOWN)
+	
+
 		
-						
 func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_layer = true):
 	cave.updateUsedTileCoords()
 
@@ -336,10 +318,15 @@ func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_la
 		if abs(cell.x) < minDistanceToCenter:
 			continue
 		
-		if not tileData.is_area_free(cell, cave.tileCoords):
+		var is_area_free = true
+		for c in cave.tileCoords:
+			var absCoord = Vector2(cell) + c
+			is_area_free = is_area_free and not (tileData.get_resourcev(absCoord) in [data_mod.TILE_BAD_RELIC ,  Data.TILE_EMPTY, data_mod.TILE_SECRET_ROOM])
+		if not is_area_free:
 			continue
 		
 		addLandmark(cell, cave)
+		print("landmark added")
 		for c in cave.tileCoords:
 			var absCoord = Vector2(cell) + c
 			tileData.clear_resource(absCoord)
@@ -354,7 +341,7 @@ func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_la
 			can_spawn = true
 			for c in cave.tileCoords:
 				var absCoord = cell + c
-				can_spawn = can_spawn and not (tileData.get_resourcev(absCoord) in [14, 15])
+				can_spawn = can_spawn and not (tileData.get_resourcev(absCoord) in [14, 15,-1])
 			
 			if can_spawn :
 				break
@@ -363,6 +350,7 @@ func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_la
 				var absCoord = Vector2(cell) + c
 				tileData.clear_resource(absCoord)
 			addLandmark(cell, cave)
+			print("landmark added")
 			return
 	
 	for _i in 50:
@@ -378,32 +366,108 @@ func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_la
 			continue
 		
 		addLandmark(cell, cave)
+		print("landmark added")
 		for c in cave.tileCoords:
 			var absCoord = Vector2(cell) + c
 			tileData.clear_resource(absCoord)
 		return
+		
+		
+func addCaveStartAndDirection(rand, cave, start, direction : Vector2):
+	cave.updateUsedTileCoords()
+	var maxLayer = startingIronCountByLayer.size()
+	var max_y = 0
+	for i in range(1000):
+		var pos = Vector2(randi_range(-15,15),max_y+5)
+		if $MapData.get_resourcev(pos) != 19 and $MapData.get_biomev(pos) != -1:
+			max_y +=2
+			
+	var cell
+	var can_spawn = false
+	var spawn_tries = 0
+	while !can_spawn:
+		cell = start
+		
+		# Look for a cell to start building the cave
+		var k = 0
+		while cell == start :
+			cell = find_in_direction(start + (-1)**k * k * Vector2(direction.y , direction.x),direction,floor(max_y*1.5))
+			k += 1
 
+		if tileData.get_resourcev(cell + Vector2.DOWN) != 19:
+			spawn_tries += 1
+			start = start + (-1)**spawn_tries * spawn_tries * Vector2(direction.y , direction.x)
+			continue
+			
+		can_spawn = true
+		for c in cave.tileCoords:
+			var absCoord = cell + c
+			can_spawn = can_spawn and not (tileData.get_resourcev(absCoord) in [14, 15,-1])
+		
+		spawn_tries += 1
+		start = start + (-1)**spawn_tries * spawn_tries * Vector2(direction.y , direction.x)
+	for c in cave.tileCoords:
+		var absCoord = Vector2(cell) + c
+		tileData.clear_resource(absCoord)
+	addLandmark(cell, cave)
+	return
+	
 func spawn_glass():
-	var possible_spawn_ranges = [[-1,0.48,0.62] , 
-		[-1,0.68,0.82] ,
-		[-1,0.88,1.0] ,
-		[1,0.45,0.62] ,
-		[1,0.68,0.82] ,
-		[1,0.88,1.0] ,]
+	var possible_spawn_ranges = [[Vector2.LEFT, 0.48, 0.62] , 
+		[Vector2.LEFT, 0.68, 0.82] ,
+		[Vector2.LEFT, 0.88, 1.0] ,
+		[Vector2.RIGHT, 0.45, 0.62] ,
+		[Vector2.RIGHT, 0.68, 0.82] ,
+		[Vector2.RIGHT, 0.88, 1.0] ,]
 	possible_spawn_ranges.shuffle() 
 	var chosen_positions = possible_spawn_ranges.slice(0,4)
 	var maxLayer = startingIronCountByLayer.size()
-	var max_y = tileData.get_biome_cells_by_index(maxLayer-1)[-1].y
+	var max_y = 0
+	for i in range(1000):
+		var pos = Vector2(randi_range(-15,15),max_y+5)
+		if $MapData.get_resourcev(pos) != 19 and $MapData.get_biomev(pos) != -1:
+			max_y +=2
+			
 	for c in chosen_positions:
 		var direction = c[0]
 		var start = Vector2(0,floor(max_y*randf_range(c[1],c[2]) ))
-		var last_available_position = start
-		var x = 0
+		var cell = start
+		var k = 0
+		while cell == start :
+			direction *= -1
+			cell = find_in_direction(start + k*Vector2.UP,direction)
+			k += 1
+		tileData.set_resourcev(cell, data_mod.TILE_GLASS)
+
+func find_in_direction(start,direction,max_distance_from_start = 30):
+	var moved = direction
+	var last_available_position = start
+	# Setting depth and then checking all tiles to the left / right to see where the glass can be placed
+	while abs(moved.x)+abs(moved.y) < max_distance_from_start:
+		if tileData.get_resourcev(start + moved ) == 10:
+			last_available_position = start + moved
+		moved += direction
 		
+	return last_available_position
+
+func find_wall_in_direction(start,direction,max_distance_from_start = 100):
+	var can_spawn = false
+	var last_available_position
+	while not can_spawn:
+		var moved = direction
+		var last_type = 19
+		last_available_position = start
 		# Setting depth and then checking all tiles to the left / right to see where the glass can be placed
-		while abs(x) < 30:
-			if tileData.get_resourcev(start + Vector2(x,0) ) == 10:
-				last_available_position = start + Vector2(x,0)
-			x += direction
-		tileData.set_resourcev(last_available_position, data_mod.TILE_GLASS)
-		print("glass at : " , last_available_position)
+		while abs(moved.x)+abs(moved.y) < max_distance_from_start:
+			if tileData.get_resourcev(start + moved ) == 19 and last_type != 19:
+				last_available_position = start + moved
+			last_type = tileData.get_resourcev(start + moved )
+			moved += direction
+		
+		can_spawn = true
+		for height in range(-3,4):
+			for depth in range(1,5):
+				can_spawn = can_spawn and tileData.get_resourcev(last_available_position) in [-1,19]
+		start += Vector2.UP
+		
+	return last_available_position

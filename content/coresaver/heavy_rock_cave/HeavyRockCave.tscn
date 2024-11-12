@@ -1,22 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://dj8i3hiql6ime"]
+[gd_scene load_steps=10 format=3 uid="uid://dj8i3hiql6ime"]
 
-[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.gd" id="1_bpjca"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.gd" id="1_0nmne"]
 [ext_resource type="Script" path="res://content/map/Parallaxer.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://c7q51oi3kubbw" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock_cave.png" id="3_2y4ge"]
+[ext_resource type="Texture2D" uid="uid://bpc5chxnv26hx" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/broken_relic.png" id="7_txhxf"]
 [ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="8"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RelicAttractor.gd" id="8_ojjdn"]
 [ext_resource type="AudioStream" uid="uid://g6cg4bul73qo" path="res://content/sounds/monster/Shifter_amb.wav" id="9"]
 [ext_resource type="Texture2D" uid="uid://bc7vobkajdin2" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock_cave_alpha.png" id="10_1h7ep"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b74f3"]
+radius = 30.0
 
 [node name="HeavyRockCave" type="Node2D" groups=["cave", "saveable", "unstyled"]]
 z_index = -40
 texture_filter = 1
-script = ExtResource("1_bpjca")
+script = ExtResource("1_0nmne")
 
 [node name="Sprites" type="Control" parent="."]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
-offset_right = 96.0
+offset_right = 70.0
 offset_bottom = 48.0
 mouse_filter = 2
 script = ExtResource("2")
@@ -65,3 +70,20 @@ texture_filter = 1
 position = Vector2(56, 29)
 scale = Vector2(0.75, 0.691667)
 texture = ExtResource("10_1h7ep")
+
+[node name="BrokenRelic" type="Sprite2D" parent="."]
+modulate = Color(0.321569, 0.156863, 0.290196, 0.337255)
+position = Vector2(52, 34)
+texture = ExtResource("7_txhxf")
+metadata/_edit_group_ = true
+
+[node name="RelicAttractor" type="Area2D" parent="BrokenRelic"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_ojjdn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BrokenRelic/RelicAttractor"]
+shape = SubResource("CircleShape2D_b74f3")
+
+[connection signal="body_entered" from="BrokenRelic/RelicAttractor" to="BrokenRelic/RelicAttractor" method="_on_body_entered"]
+[connection signal="body_exited" from="BrokenRelic/RelicAttractor" to="BrokenRelic/RelicAttractor" method="_on_body_exited"]

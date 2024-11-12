@@ -1,25 +1,44 @@
-- Copier coller le code des drop_bearer (débbugé) vers le mod version compatibilité
-
-- Ajouter la tile pillules
-
-- Ajouter des flêches pour changer de game mode
-
-- Ajouter un choix par défaut quand choix de coresaver dans le loadout
-
-- savefile change path to user://
-
-- When playing the "weird" map and starting with the condenser, trying to pick up the initial water that the condenser outputs causes me to get stuck to the condenser itself and I can't get free and progress. Have to restart the game when this happens, and basically can't use the condenser at all.
-
-- Faire en sorte que la vie des tiles dépende des tiles
-
-- Ajouter un affichage à l'écran quand un succès est obtenu
-
-- Changer les sons de Heavy Rock Cave
-
+VISUELS / SONS:
+- Changer les sons des Caves ?
 - Animation pour la bad_relic cassée
+- ajouter cables cassés à bad_relic
+- Ajouter indice visuel pour secret rooms
+- Caves sprites
+- Animation root
+- Animations core eater (de 1 à 4 + fin)
 
-- Finish popup coresaver à changer
+
+FONCTIONNALITES :
+- Ajouter la tuile pillules
+- savefile change path to user://
+- Faire en sorte que la vie des tuiles dépende des tiles
+- Debug le succes bombe (autoriser que bombe gadget et vérifier 8*8 autour avant et après)
+- avoir un gamemode par défaut
 
 
 
-0223236568
+
+ASSIGNMENTS :
+- Bigger everything (enemies + resources)
+- Pillules
+- Mega_iron
+- Secrets
+
+
+
+BALANCE :
+- Faire un archetype pour chaque taille
+- diminuer le nb de ressources
+- diminuer le nb de mega iron
+
+
+
+
+
+Pour l'autre mod :
+- ajouter un cap au nombre de shroom men dans l'autre mod + code de drop bearer et drop bearer manager
+- resources et pas ressources dans les trads dans l'autre mod
+
+
+
+++++ Rendre le mod compatible (tile hooks, achievements hooks)

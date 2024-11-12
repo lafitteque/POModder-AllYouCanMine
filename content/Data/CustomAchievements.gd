@@ -66,6 +66,10 @@ func change_stage(new_stage : String):
 			
 func unlockAchievement(achievementId : String):
 	assert( achievements_unlocked.has(achievementId), "ERROR: You try to unlock an achievement that does not exist.")
+	if ! achievements_unlocked[achievementId]:
+		var popup = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/Achievement_popup.tscn").instantiate()
+		popup.seTitle('achievement.' + achievementId.to_lower() + ".title")
+		StageManager.find_child("Canvas",true,false).add_child(popup)
 	achievements_unlocked[achievementId] = true
 	if StageManager.currentStage.name == "MultiplayerLoadoutModStage":
 		StageManager.currentStage.update_custom_achievements()

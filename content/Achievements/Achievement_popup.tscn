@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8r4pc4ecsya7"]
+
+[ext_resource type="Theme" path="res://gui/theme.tres" id="1_ko7o3"]
+[ext_resource type="StyleBox" path="res://gui/panels/panel_inside_dark.tres" id="2_bu4lo"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/Achievement_popup.gd" id="3_hhao5"]
+
+[node name="Popup" type="PanelContainer" groups=["locale"]]
+texture_filter = 1
+offset_right = 92.0
+offset_bottom = 62.0
+theme = ExtResource("1_ko7o3")
+theme_override_styles/panel = ExtResource("2_bu4lo")
+script = ExtResource("3_hhao5")
+titleLocId = "loadout.achievements.title"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="LabelTitle" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TITLE"
+horizontal_alignment = 1
+
+[connection signal="gui_input" from="." to="." method="_on_LoadoutChoice_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_LoadoutChoice_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_LoadoutChoice_mouse_exited"]

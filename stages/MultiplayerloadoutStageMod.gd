@@ -8,8 +8,18 @@ var saver_progress_id = "keeper_and_dome_progress"
 @onready var saver = get_node("/root/ModLoader/POModder-AllYouCanMine").saver
 
 var current_assignment_page = 1
-var assignments_per_page = 16
-@onready var max_page : int = int(Data.assignments.keys().size()/assignments_per_page) + 1
+var assignment_per_page = 16
+@onready var max_page_assignment : int = int(Data.assignments.keys().size()/assignment_per_page) + 1
+
+
+var current_game_mode_page = 1
+var game_mode_per_page = 3
+@onready var max_page_game_mode : int = int(Data.loadoutGameModes.size()/game_mode_per_page) + 1
+
+
+var current_custom_achievement_page = 1
+var custom_achievement_per_page = 24
+@onready var max_page_custom_achievement : int = int(data_achievements.CUSTOM_ACHIEVEMENTS.size()/custom_achievement_per_page) + 1
 
 func build(data:Array):
 	super(data)
@@ -47,6 +57,8 @@ func createMapDataFor(requiremnts) -> MapData:
 func fillGameModes():
 	super.fillGameModes()
 	
+	update_game_modes()
+	
 	update_achievements()
 	update_custom_achievements()
 	
@@ -55,17 +67,65 @@ func fillGameModes():
 	update_assignments()
 	
 
-	var arrow_containers = %AssignmentsContainer.get_parent().get_child(1)
-	
-	var left_arrow = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
-	left_arrow.find_child("Icon",true,false).flip_h = true
-	left_arrow.connect("select", previous_page)
-	arrow_containers.add_child(left_arrow)
-	
-	var right_arrow = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
-	arrow_containers.add_child(right_arrow)
-	right_arrow.connect("select", next_page)
+	## Create arrows for assignment pages
+	if max_page_assignment > 1:
+		var arrow_containers_assignment = %AssignmentsContainer.get_parent().get_child(1)
 
+		var left_arrow_assignment = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		left_arrow_assignment.find_child("Icon",true,false).flip_h = true
+		left_arrow_assignment.connect("select", previous_page_assignment)
+		arrow_containers_assignment.add_child(left_arrow_assignment)
+
+		var right_arrow_assignment = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		arrow_containers_assignment.add_child(right_arrow_assignment)
+		right_arrow_assignment.connect("select", next_page_assignment)
+
+	## Create arrows for game mode pages
+	if max_page_game_mode > 1:
+		var arrow_containers_game_mode = $UI/BlockGameMode/HBoxContainer/GameModeMarginContainer/VBoxContainer/HBoxContainer
+		
+		var left_arrow_game_mode = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		left_arrow_game_mode.find_child("Icon",true,false).flip_h = true
+		left_arrow_game_mode.connect("select", previous_page_game_mode)
+		arrow_containers_game_mode.add_child(left_arrow_game_mode)
+		
+		var right_arrow_game_mode = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		arrow_containers_game_mode.add_child(right_arrow_game_mode)
+		right_arrow_game_mode.connect("select", next_page_game_mode)
+		
+	
+	## Create arrows for custom achievement pages
+	if max_page_custom_achievement > 1:
+		var arrow_containers_custom_achievement = $UI/BlockCustomAchievements/VBoxContainer/ArrowsContainer
+
+		var left_arrow_custom_achievement = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		left_arrow_custom_achievement.find_child("Icon",true,false).flip_h = true
+		left_arrow_custom_achievement.connect("select", previous_page_custom_achievement)
+		arrow_containers_custom_achievement.add_child(left_arrow_custom_achievement)
+
+		var right_arrow_custom_achievement = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		arrow_containers_custom_achievement.add_child(right_arrow_custom_achievement)
+		right_arrow_custom_achievement.connect("select", next_page_custom_achievement)
+
+func update_game_modes():
+	var container = find_child("GameModeContainers")
+	
+	for child in container.get_children():
+		child.queue_free()
+	
+	for id in Data.loadoutGameModes.slice((current_game_mode_page-1)*game_mode_per_page,current_game_mode_page*game_mode_per_page):
+		var image = load("res://content/icons/loadout_" + id + ".png")
+		var e = preload("res://stages/loadout/LoadoutChoice.tscn").instantiate()
+		if GameWorld.isUnlocked(id):
+			e.setChoice("upgrades." + id + ".title", id, image, "upgrades." + id + ".desc")
+		else:
+			e.setChoice("upgrades." + id + ".title", id, image, "unlock.generic")
+			e.set_enabled(false)
+		container.add_child(e)
+		e.connect("select", gameModeSelected.bind(id))
+		e.connect("select", updateBlockVisibility)
+		
+		
 func fillDifficulties(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
 	var pgc = $UI.find_child(BlockDifficultyName,true,false).find_child("DifficultyContainers",true,false)
 	var difficulties := [-2, -1, 0, 2]
@@ -175,7 +235,7 @@ func update_custom_achievements():
 	for child in customAchievement_container.get_children():
 		child.free()
 	
-	for customAchievementId in data_achievements.CUSTOM_ACHIEVEMENTS:
+	for customAchievementId in data_achievements.CUSTOM_ACHIEVEMENTS.slice((current_custom_achievement_page-1)*custom_achievement_per_page,current_custom_achievement_page*custom_achievement_per_page):
 		var e = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/AchievementPanel.tscn").instantiate()
 		var title = "achievement." + customAchievementId.to_lower() + ".title"
 		var desc = "achievement." + customAchievementId.to_lower() + ".desc"
@@ -203,7 +263,7 @@ func update_assignments():
 	for child in %AssignmentsContainer.get_parent().get_parent().get_children():
 		if child is PanelContainer:
 			child.queue_free()
-	for assignmentId in Data.assignments.keys().slice((current_assignment_page-1)*16,current_assignment_page*16):
+	for assignmentId in Data.assignments.keys().slice((current_assignment_page-1)*assignment_per_page,current_assignment_page*assignment_per_page):
 		var e = preload("res://stages/loadout/AssignmentChoice.tscn").instantiate()
 		e.setAssignment(assignmentId)
 		e.connect("select", assignmentSelected.bind(assignmentId))
@@ -481,12 +541,30 @@ func startRun():
 
 
 
-func next_page():
-	current_assignment_page = min(max_page,current_assignment_page+1)
+func next_page_assignment():
+	current_assignment_page = min(max_page_assignment,current_assignment_page+1)
 	update_assignments()
-	print(current_assignment_page)
 	
-func previous_page():
+func previous_page_assignment():
 	current_assignment_page = max(1,current_assignment_page-1)
 	update_assignments()
-	print(current_assignment_page)
+	
+	
+	
+func next_page_game_mode():
+	current_game_mode_page = min(max_page_game_mode,current_game_mode_page+1)
+	update_game_modes()
+	
+func previous_page_game_mode():
+	current_game_mode_page = max(1,current_game_mode_page-1)
+	update_game_modes()
+	
+	
+	
+func next_page_custom_achievement():
+	current_custom_achievement_page = min(max_page_custom_achievement,current_custom_achievement_page+1)
+	update_custom_achievements()
+	
+func previous_page_custom_achievement():
+	current_custom_achievement_page = max(1,current_custom_achievement_page-1)
+	update_custom_achievements()
