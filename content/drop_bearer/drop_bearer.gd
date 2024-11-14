@@ -36,7 +36,7 @@ func _physics_process(delta):
 	
 	if cooldown <= 0.0:
 		die()
-		if drop :
+		if drop and is_instance_valid(drop):
 			drop.removePhysicsOverride(self)
 			drop.get_node("BoolCarried").queue_free()
 			drop.apply_central_impulse(Vector2(0, 5).rotated(randf() * TAU))
@@ -88,9 +88,16 @@ func _physics_process(delta):
 		var possible_keeper = drop.carriedBy[-1]
 		if possible_keeper is Keeper and "carryLines" in possible_keeper :
 			possible_keeper.carryLines[drop].points[-1] = drop.global_position
-
+		
 		drop = null
 		die()
+		var saver = get_node("/root/ModLoader/POModder-AllYouCanMine").saver
+		if !saver.save_dict.has("drop_bearer_stolen"):
+			saver.save_dict["drop_bearer_stolen"] = 0
+		
+		saver.save_dict["drop_bearer_stolen"] += 1
+		if saver.save_dict["drop_bearer_stolen"] >= 20:
+			get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("DROP_BEARER_STOLEN")
 		return
 	
 			

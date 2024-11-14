@@ -52,11 +52,38 @@ const ACHIEVEMENTS := [
 	"RUN_LOSEMANY"
 ]
 
-const CUSTOM_ACHIEVEMENTS = [
+var CUSTOM_ACHIEVEMENTS = [
 	"MINE_LOADOUT",
 	"USELESS_EXPLOSION",
 	"FAST_WHY",
 	"RELIC_WAIT",
 	"ALL_DOMES_ASSESSOR",
-	"ALL_DOMES_ENGINEER"
+	"ALL_DOMES_ENGINEER",
+	"ALL_DOMES_ASSESSOR2",
+	"ALL_DOMES_ENGINEER2",
+	"SECRET_ROOM",
+	"SECRET_ENDING",
+	"HEAVY_ROCK_ENDING",
+	"CORE_EATER_ENDING",
+	"DROP_BEARER_STOLEN",
+	"ALL_ASSIGNMENTS",
+	"ALL_CHAOS",
+	"WAKA_WAKA",
+	"DOUBLE_TROUBLE"
 ]
+
+var info_achievements = [
+	["MultiplayerLoadoutModStage", "MINE_LOADOUT"],
+	["LevelStage", "USELESS_EXPLOSION"],
+	["LevelStage", "FAST_WHY"],
+	["Relichunt", "RELIC_WAIT"],
+	["Coresaver", "SECRET_ROOM"],
+	["MultiplayerLoadoutModStage", "ALL_ASSIGNMENTS"],
+	["Coresaver", "WAKA_WAKA"],
+	["Coresaver", "DOUBLE_TROUBLE"]
+]
+
+func add_achievement(id : String , stage : String):
+	CUSTOM_ACHIEVEMENTS.append(id)
+	info_achievements.append([stage , id])
+

@@ -95,54 +95,6 @@ achievement.orchard_complete.desc,Unlock every battle ability of the orchard. ,D
 achievement.run_losemany.desc,Lose 10 runs. ,Perdre 10 parties,
 achievement.run_winmany.desc,Win 10 runs. ,Remporter 10 parties.,
 ,,,
-achievement.shield_strong.hint,,,
-achievement.resources_cobaltstack.hint,,,
-achievement.resources_cobaltrescue.hint,,,
-achievement.repellent_bigdelay.hint,,,
-achievement.relichunt_speedy.hint,,,
-achievement.prestige_win.hint,,,
-achievement.prestige_multiplier.hint,,,
-achievement.prestige_chunk.hint,,,
-achievement.pet_found.hint,,,
-achievement.orchard_long.hint,,,
-achievement.mine_all.hint,,,
-achievement.lift_jam.hint,,,
-achievement.lift_transport.hint,,,
-achievement.keeper_timely.hint,,,
-achievement.keeper_bottom.hint,,,
-achievement.keeper_marathon.hint,,,
-achievement.keeper2_sphereduration.hint,,,
-achievement.keeper2_reflections.hint,,,
-achievement.keeper2_ammo.hint,,,
-achievement.keeper2_bigbundle.hint,,,
-achievement.keeper1_speed.hint,,,
-achievement.keeper1_shoppingbag.hint,,,
-achievement.dome_lowhealth.hint,,,
-achievement.drillbert_treat.hint,,,
-achievement.converter_use.hint,,,
-achievement.blastmining_use.hint,,,
-achievement.condenser_use.hint,,,
-achievement.relichunt_relictaken.hint,,,
-achievement.keeper2_explode.hint,,,
-achievement.keeper2_splits.hint,,,
-achievement.relichunt_mapsmall.hint,,,
-achievement.relichunt_mapmedium.hint,,,
-achievement.relichunt_maplarge.hint,,,
-achievement.relichunt_beatfinale.hint,,,
-achievement.world3_unlock.hint,,,
-achievement.world2_unlock.hint,,,
-achievement.world4_unlock.hint,,,
-achievement.world5_unlock.hint,,,
-achievement.dome2_unlock.hint,,,
-achievement.prestige_unlock.hint,,,
-achievement.keeper2_unlock.hint,,,
-achievement.shield_complete.hint,,,
-achievement.repellent_complete.hint,,,
-achievement.orchard_complete.hint,,,
-achievement.run_losemany.hint,,,
-achievement.run_winmany.hint,,,
-,,,
-,,,
 ,,,
 achievement.mine_loadout.title,I needed to be sure,Je devais m’en assurer,Necesitaba saber
 achievement.mine_loadout.desc,Break all the resources in the training area.,Détruire toutes les ressources de la zone d’entraînement. ,Destruir todos los recursos del area de entrenamiento.
@@ -150,7 +102,7 @@ achievement.mine_loadout.hint,You need more mining training.,Vous avez besoin de
 ,,,
 achievement.useless_explosion.title,Sniper bomber,Sniper bombardier,Francotirador bombardero
 achievement.useless_explosion.desc,Break only one bloc with a bomb.,Casser un seul bloc avec une bombe.,Romper un solo bloque con una bomba.
-achievement.useless_explosion.hint,Just the one.,Une seule cible.,Un solo objetivo.
+achievement.useless_explosion.hint,Aim precisely and wait.,Visez précisément et attendez.,Apunta precisamente y espera.
 ,,,
 achievement.fast_why.title,Slow and steady wins the race,Tout vient à point à qui sait attendre,El tiempo es oro pero me pagan
 achievement.fast_why.desc,Move slowly without rest for 1 0000 m.,Se déplacer lentement sans s’arrêter sur 1 000 m.,Moverse despacio sobre 1 000 m sin pararse
@@ -160,15 +112,99 @@ achievement.relic_wait.title,The end is never the end…,Ce n’est pas fini…,
 achievement.relic_wait.desc,"In difficult mode, survive 5 minutes after uncovering the relic.","En mode difficile, survivre 5 minutes après avoir révélé la relique.","En modo dificil, sobrevive 5 minutos despues de haber desvelado la reliquia."
 achievement.relic_wait.hint,What a beatiful relic. Why move it ?,Quelle belle relique. Pourquoi la déplacer ?,Que bonita reliquia. Porque moverla ?
 ,,,
+achievement.all_domes_engineer.title,Finished with a jetpack,Terminé avec un jetpack,Acabado con un jetpack
+achievement.all_domes_engineer.desc,Finish a run with each dome with the engineer (Relic Hunt),Finir une partie avec chaque dôme et l’ingénieur (Chasse à la relique),Acabar una partida con cada cupula y el ingeniero (Caza de reliquia).
+achievement.all_domes_engineer.hint,Completion.,Complétion.,Complecion.
 ,,,
+achievement.all_domes_engineer2.title,Core and jetpack love,Amour des nouaux et jetpacks,Amor de los jetpacks y nucleos
+achievement.all_domes_engineer2.desc,Finish a run with each dome with the engineer (Core Saver),Finir une partie avec chaque dôme et l’ingénieur (Sauveteur de noyau),Acabar una partida con cada cupula y el ingeniero (Socorrista de nucleo).
+achievement.all_domes_engineer2.hint,Completion.,Complétion.,Complecion.
+,,,
+achievement.all_domes_assessor.title,Floating finish,Fin flotante,Final flotante
+achievement.all_domes_assessor.desc,Finish a run with each dome with the assessor (Relic Hunt),Finir une partie avec chaque dôme et l’assesseur (Chasse à la relique),Acabar una partida con cada cupula y el asesor (Caza de reliquia).
+achievement.all_domes_assessor.hint,Completion.,Complétion.,Complecion.
+,,,
+achievement.all_domes_assessor2.title,Floating core,Noyau flotant,Nucleo flotante
+achievement.all_domes_assessor2.desc,Finish a run with each dome with the assessor (Core Saver),Finir une partie avec chaque dôme et l’assesseur (Sauveteur de noyau),Acabar una partida con cada cupula y el asesor (Socorrista de nucleo).
+achievement.all_domes_assessor2.hint,Completion.,Complétion.,Complecion.
+,,,
+achievement.core_eater_ending.title,It seemed so innocent…,Il avait l’air si innocent…,Parecia tan inocente…
+achievement.core_eater_ending.desc,End a Core Saver run by feeding the Core Eater.,Terminer une partie de Sauveteur de noyau en nourrissant le gobeur de noyau.,Completa una partida de Socorrista de nucleo dandole de comer al Comenucleo.
+achievement.core_eater_ending.hint,Completion.,Complétion.,Complecion.
+,,,
+achievement.secret_ending.title,Another option,Une autre option,Otra opcion
+achievement.secret_ending.desc,End a Core Saver run with the help of the root.,Terminer une partie de Sauveteur de noyau à l’aide de la racine.,Completa una partida de Socorrista de nucleo con la ayuda de la raiz.
+achievement.secret_ending.hint,Completion.,Complétion.,Complecion.
+,,,
+achievement.heavy_rock_ending.title,It rocks !,Pierre qui ne roule pas,Duro como… la piedra
+achievement.heavy_rock_ending.desc,End a Core Saver run by swinging the heavy rock.,Terminer une partie de Sauveteur de noyau en tapant fort avec la pierre lourde.,Completa una partida de Socorrista de nucleo pegando fuerte con la piedra pesada.
+achievement.heavy_rock_ending.hint,Completion.,Complétion.,Complecion.
+,,,
+achievement.secret_room.title,Was it supposed to be here ?,Etait-ce censé être là ?,?Se supone que eso debia estar aqui ?
+achievement.secret_room.desc,Find a secret room.,Trouver une salle secrète,Encontrar una camara secreta.
+achievement.secret_room.hint,Is this a wall ?,Est-ce un mur ?,Es eso un muro ?
+,,,
+"Achievement,drop_bearer_stolen.title",It’s mine !,C’est à moi !,Es mio !
+achievement.drop_bearer_stolen.desc,Take back 20 drops from the shrooms.,Reprendre 20 ressources aux champignards.,Recupera 20 recursos de los amigosetas.
+achievement.drop_bearer_stolen.hint,Take it back from them.,Reprenez votre dû.,Que te lo dévuelvan !
+,,,
+achievement.all_assignments.title,Mission accomplished,Mission accomplie,Mision cumplida
+achievement.all_assignments.desc,Complete 23 guild assignments.,Compléter 23 missions de guilde.,Completa 23 misiones del gremio.
+achievement.all_assignments.hint,The guild needs you.,La guilde a besoin de vous.,El gremio os necesita.
+,,,
+achievement.all_chaos.title,Chaos,Chaos,Caos
+achievement.all_chaos.desc,Activate all the effects of the chaotic rock.,Activer tous les effets de la roche chaotique.,Activar todos los efectos de la roca caotica.
+achievement.all_chaos.hint,Gotta try them all.,Testez-les tous.,Pruebalos todos.
+,,,
+achievement.waka_waka.title,Waka Waka,Waka Waka,Waka Waka
+achievement.waka_waka.desc,Change the gravity twice in a single run.,Changer deux fois la gravité en une seule partie.,Cambiar dos veces la gravedad en una sola partida.
+achievement.waka_waka.hint,"Up, down, left, right.","Haut, bas, gauche, droite.","Arriba, abajo, a la izquierda, a la derecha."
+,,,
+achievement.double_trouble.title,Double Trouble.,Double problèmes.,Doble problemas.
+achievement.double_trouble.desc,Bring two mega irons at the same time to your dome.,Ramener deux super minerais de fer en même temps au dôme.,Recuperar dos super minerales de hierro al mismo tiempo.
+achievement.double_trouble.hint,What happens if I take two ?,Que se passe-t-il si j’en prends deux ?,Que pasa si tomo dos ?
+,,,
+,,,
+,,,
+loadout.coresaver.title,Core Saver,Sauveteur du noyau,Socorrista de nucleo
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+upgrades.coresaver.title,Core Saver,Sauveteur du noyau,Socorrista de nucleo
+upgrades.coresaver.desc,Find a way to destroy the corrupted relic.,Trouvez une manière de casser la relique corrompue.,Encuentra una forma de romper la reliquia corrupta.
+,,,
+loadout.progress.coresaver,Completion- Core Saver,Complétion – Sauveteur du noyau,Complecion – Socorrista de nucleo
+loadout.progress.relichunt,Completion - Relic Hunt,Complétion – Chasse à la relique,Complecion – Caza a la reliquia
+,,,
+loadout.custom_achievements.title,Mod Achievements,Succès de Mods,Logros de Mods
 ,,,
 assignment.condition.remainingtiles,Mine every block,Miner tous les blocs,Romper todos los bloques
+,,,
 assignment.mineall.title,Need for more room,Besoin de plus de place,Se necesita mas espacio
 assignment.mineall.desc,Mine every block in the mine.,Miner tous les blocs de la mine.,Romper todos los bloques de la mina.
+,,,
 assignment.detonators.title,Minefield,Terrain Miné,Campo de minas
 assignment.detonators.desc,The previous mission let a lot of explosives behind them.,La mission précédente a laissé des explosifs derrière elle.,La precedente mision ha dejado explosivos detras de si.
+,,,
 assignment.aprilfools.title,Weird deepness,Profondeurs étranges,Profundidades extranas
 assignment.aprilfools.desc,"Smtoehnig is wonrg hree, yet it feles filamiar. ",Il y a quelque chose d’étrange ici malgré un sentiment familier.,Hay algo extrano aqui. Pero todo parece como siempre.
+,,,
 assignment.goaltype.mineall,Mine every breakeable block.,Casser tous les blocs cassables.,Romper todos los bloques que se puedan romber.
+,,,
 assignment.thieves.title,Best friends forever,Meilleurs amis,Mejores amigos
 assignment.thieves.desc,"The shroomers in the mine are quite friendly, but they seem to love moving your resources.","Les champignards dans les mines sont assez sympathiques. Cependant, ils semblent avoir une tendance à balader les ressources.",Los amigosetas de la mina son bastante simpaticos pero mueven los recursos.
+,,,
+assignment.big.title,Oversized,On en a gros!,Minerazos
+assignment.big.desc,This planet has way bigger resources than usual. They will be harder to carry around.,Cette planette a des ressources bien plus grandes que d’habitude. Elles seront plus difficiles à transporter.,Los minerales de este planeta son mas grandes que de costumbre. Seran mas dificiles de transportar.
+,,,
+assignment.megairon.title,Dangerous resources,Ressources dangereuses,Recursos peligrosos
+assignment.megairon.desc,New iron ores lie in the mine. Be careful as the monsters can detect them.,De nouveaux minerais de fer se trouvent dans les mines. Soyez prudents car les monstres peuvent les détecter,Hay nuevos minerales de hierro en la mina. Ten cuidado porque los monstruos los pueden detectar. 
+,,,
+assignment.secrets.title,Chamber of secrets,La chambre des secrets,La camara secreta
+assignment.secrets.desc,Secrets hide behind the hard rock of this planet.,Des secrets se cachent derrière la roche dure de cette planète.,Hay secretos que se esconden detras de las rocas duras de este planeta.
+,,,
+assignment.chaos.title,Chaos,Chaos,Caos
+assignment.chaos.desc,Unknown devices have been found in the mines. They seem unpredictable.,Des mécanismes inconnus ont été trouvés dans les mines. Leur effet est imprédictible.,Se han encontrado mecanismos desconocidos en la mina. Sus efectos son imprevicibles.

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://brhbkmrrs26gg"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/effect_attractor.gd" id="1_crmfl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iyb5b"]
+radius = 50000.0
+
+[node name="EffectAttractor" type="Area2D"]
+collision_layer = 0
+collision_mask = 67108902
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
+gravity = 200.0
+script = ExtResource("1_crmfl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_iyb5b")

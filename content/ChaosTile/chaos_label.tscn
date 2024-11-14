@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://t4q4oiy6xvu5"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/chaos_label.gd" id="1_k54d5"]
+[ext_resource type="LabelSettings" uid="uid://2grf3j52umah" path="res://gui/fontsettings/NormalFontSettings.tres" id="1_y1r5y"]
+
+[node name="ChaosLabel" type="Label"]
+texture_filter = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.5
+offset_top = -18.5
+offset_right = 129.5
+offset_bottom = 18.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+text = "drops are smaller"
+label_settings = ExtResource("1_y1r5y")
+horizontal_alignment = 1
+autowrap_mode = 3
+script = ExtResource("1_k54d5")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

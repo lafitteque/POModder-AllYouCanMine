@@ -38,8 +38,7 @@ func modInit():
 	var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
 	var pathToModYamlProperties : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/properties.yaml"
 	Data.parsePropertiesYaml(pathToModYamlProperties)
-
-	ModLoaderLog.info("Trying to parse YAML: %s" % pathToModYamlAssignments, MYMODNAME_LOG)
+	Data.parseAssignmentYaml(pathToModYamlAssignments)
 	
 	data_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForAchievements.tscn").instantiate()
 	data_mod = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForMod.tscn").instantiate()
@@ -74,6 +73,15 @@ func manage_overwrites():
 	var new_archetype_thieves = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-thieves.tres")
 	new_archetype_thieves.take_over_path("res://content/map/generation/archetypes/assignment-thieves.tres")
 	
+	var new_archetype_secrets = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-secrets.tres")
+	new_archetype_secrets.take_over_path("res://content/map/generation/archetypes/assignment-secrets.tres")
+	
+	var new_archetype_megairon = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-megairon.tres")
+	new_archetype_megairon.take_over_path("res://content/map/generation/archetypes/assignment-megairon.tres")
+	
+	var new_archetype_chaos = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-chaos.tres")
+	new_archetype_chaos.take_over_path("res://content/map/generation/archetypes/assignment-chaos.tres")
+	
 	var new_archetype_huge_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-huge.tres")
 	new_archetype_huge_coresaver.take_over_path("res://content/map/generation/archetypes/coresaver-huge.tres")
 	
@@ -89,9 +97,9 @@ func manage_overwrites():
 	var new_stage = load("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutModStage.tscn")
 	new_stage.take_over_path("res://stages/loadout/multiplayerloadoutmodstage.tscn")
 
-	var custom_achievements = load("res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.tscn")
-	custom_achievements.take_over_path("res://systems/achievements/CustomAchievements.tscn")
-	
+	#var custom_achievements = load("res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.tscn")
+	#custom_achievements.take_over_path("res://systems/achievements/CustomAchievements.tscn")
+	#
 		
 	var tile = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
 	tile.take_over_path("res://content/map/tile/Tile.tscn")

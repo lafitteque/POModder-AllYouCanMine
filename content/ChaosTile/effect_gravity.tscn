@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcyfik4gms4yu"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/effect_gravity.gd" id="1_uq2l2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hx3qk"]
+radius = 500000.0
+
+[node name="effect_gravity" type="Area2D"]
+collision_layer = 0
+collision_mask = 67108902
+gravity_space_override = 3
+gravity = 200.0
+script = ExtResource("1_uq2l2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hx3qk")

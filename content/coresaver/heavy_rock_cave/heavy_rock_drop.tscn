@@ -18,13 +18,13 @@ z_index = 21
 texture_filter = 1
 collision_layer = 34
 collision_mask = 522
-mass = 20.0
+mass = 10.0
 physics_material_override = SubResource("1")
 gravity_scale = 0.5
 can_sleep = false
 script = ExtResource("1_ouhct")
 additionalSlowdown = 0.2
-carryInfluenceSize = 20.0
+carryInfluenceSize = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

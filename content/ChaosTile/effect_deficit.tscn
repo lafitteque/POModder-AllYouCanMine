@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlkp408uldj32"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/effect_deficit.gd" id="1_b82oi"]
+
+[node name="EffectDeficit" type="Node2D"]
+script = ExtResource("1_b82oi")

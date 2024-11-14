@@ -21,6 +21,7 @@ const TILE_BAD_RELIC = 14
 const TILE_GLASS = 15
 const TILE_FAKE_BORDER = 16
 const TILE_SECRET_ROOM = 17
+const TILE_CHAOS = 18
 
 const RESOURCES_ID = [TILE_IRON,TILE_WATER,TILE_SAND,TILE_MEGA_IRON]
 
@@ -41,7 +42,8 @@ const TILE_ID_TO_STRING_MAP := {
 	TILE_BAD_RELIC : "bad_relic",
 	TILE_GLASS : "glass",
 	TILE_FAKE_BORDER : "fake_border",
-	TILE_SECRET_ROOM : "secret_room"
+	TILE_SECRET_ROOM : "secret_room",
+	TILE_CHAOS : "chaos"
 } 
 
 const DROP_FROM_TILES_SCENES := {
@@ -54,6 +56,9 @@ const DROP_FROM_TILES_SCENES := {
 }
 
 const APRIL_FOOLS_PROBABILITIES = [40.0, 8.0 , 3.0 , 0.5, 1.0 ,20.0]
+
+
+var ALL_DROP_NAMES = [CONST.WATER, CONST.IRON,CONST.SAND , "mega_iron"]
 
 var generation_data = {
 	"detonator_rate":0,# from 0.0 to 99.99
@@ -98,7 +103,7 @@ func update_generation_data(a : MapArchetype):
 	mega_iron_rate_index *= 10
 	mega_iron_rate_index = floor(mega_iron_rate_index)
 	
-	## 7th decimalsof max_tile_count_deviation for mega_iron_rate_index
+	## 7th decimalsof max_tile_count_deviation for drop_bearer_rate_index
 	var drop_bearer_rate_index = a.max_tile_count_deviation*10**6
 	drop_bearer_rate_index -= floor(drop_bearer_rate_index)
 	drop_bearer_rate_index *= 10
@@ -116,11 +121,19 @@ func update_generation_data(a : MapArchetype):
 	secret_rooms *= 10
 	secret_rooms = floor(secret_rooms)
 	
+	## 3rd decimalsof viability_thin_top_length for chaos_rate
+	var chaos_rate_index = a.viability_thin_top_length*10**2
+	chaos_rate_index -= floor(chaos_rate_index)
+	chaos_rate_index *= 10
+	chaos_rate_index = floor(chaos_rate_index)
+	
 	
 	var detonator_rate = rate_list[detonator_rate_index]
 	var destroyer_rate = rate_list[destroyer_rate_index]
 	var mega_iron_rate = rate_list[mega_iron_rate_index]
 	var drop_bearer_rate = probability_list[drop_bearer_rate_index]
+	var chaos_rate = rate_list[chaos_rate_index]
+	
 	
 	generation_data["detonator_rate"] = detonator_rate
 	generation_data["destroyer_rate"] = destroyer_rate
@@ -128,14 +141,18 @@ func update_generation_data(a : MapArchetype):
 	generation_data["bad_relics"] = bad_relics
 	generation_data["drop_bearer_rate"] = drop_bearer_rate
 	generation_data["secret_rooms"] = secret_rooms
+	generation_data["chaos_rate"] = chaos_rate
 	
-	print("data : raw data , " , a.max_tile_count_deviation)
+	
+	print("data : raw data , " , a.max_tile_count_deviation , " ; " , a.viability_thin_top_width)
 	print("data : detonator_rate , " , detonator_rate)
 	print("data : destroyer_rate , " , destroyer_rate)
 	print("data : mega_iron_rate , " , mega_iron_rate)
 	print("data : bad_relics , " , bad_relics)
 	print("data : drop_bearer_rate , " , drop_bearer_rate)
 	print("data : secret_rooms , " , secret_rooms)
+	print("data : chaos_rate , " , chaos_rate)
+	
 	
 	
 func weighted_random(weights) -> int:

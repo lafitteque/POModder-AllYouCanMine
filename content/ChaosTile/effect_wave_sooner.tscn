@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://p7q0xs76omwq"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/effect_wave_sooner.gd" id="1_jimdb"]
+
+[node name="EffectWaveSooner" type="Node2D"]
+script = ExtResource("1_jimdb")

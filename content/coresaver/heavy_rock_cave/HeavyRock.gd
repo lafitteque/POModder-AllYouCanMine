@@ -16,7 +16,7 @@ func useHit(keeper:Keeper) -> bool:
 		return false
 	taken = true
 	
-	var drop = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockDrop.tscn").instantiate()
+	var drop = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/heavy_rock_drop.tscn").instantiate()
 	drop.position = global_position
 	Level.map.addDrop(drop)
 	keeper.attachCarry(drop)

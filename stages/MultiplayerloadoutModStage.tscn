@@ -10,11 +10,11 @@
 [ext_resource type="LabelSettings" path="res://gui/fontsettings/LargeFontSettings.tres" id="8_n7htd"]
 [ext_resource type="PackedScene" uid="uid://cqt3ev58y4qvj" path="res://stages/loadout/LoadoutChoice.tscn" id="9_jddxa"]
 [ext_resource type="Script" path="res://stages/loadout/ChoiceHintContainer.gd" id="10_rskjc"]
-[ext_resource type="LabelSettings" path="res://gui/fontsettings/NormalFontSettings.tres" id="11_l5blw"]
+[ext_resource type="LabelSettings" uid="uid://2grf3j52umah" path="res://gui/fontsettings/NormalFontSettings.tres" id="11_l5blw"]
 [ext_resource type="Theme" path="res://gui/theme.tres" id="12_ano3e"]
 [ext_resource type="FontVariation" path="res://gui/fonts/FontHeading.tres" id="13_833lr"]
 [ext_resource type="LabelSettings" uid="uid://c4kfcn5f8lcfk" path="res://gui/fontsettings/HeadingFontSettings.tres" id="14_5rxjy"]
-[ext_resource type="LabelSettings" path="res://gui/fontsettings/VeryLargeFontSettings.tres" id="15_w8x3m"]
+[ext_resource type="LabelSettings" uid="uid://cp5x4134na7pk" path="res://gui/fontsettings/VeryLargeFontSettings.tres" id="15_w8x3m"]
 [ext_resource type="FontVariation" path="res://gui/fonts/FontLarge.tres" id="16_3lkrv"]
 [ext_resource type="Script" path="res://stages/loadout/ModifiersBox.gd" id="17_xoslx"]
 [ext_resource type="PackedScene" path="res://stages/loadout/AssignmentDisplay.tscn" id="18_4da1i"]
@@ -111,6 +111,14 @@ shape = SubResource("3")
 
 [node name="CollisionShape5" type="CollisionShape2D" parent="Camera/StaticBody2D"]
 position = Vector2(1140, 13)
+shape = SubResource("3")
+
+[node name="CollisionShape5" type="CollisionShape2D" parent="Camera/StaticBody2D/CollisionShape5"]
+position = Vector2(-568, 543)
+shape = SubResource("3")
+
+[node name="CollisionShape5" type="CollisionShape2D" parent="Camera/StaticBody2D/CollisionShape5/CollisionShape5"]
+position = Vector2(588, 25)
 shape = SubResource("3")
 
 [node name="CollisionShape6" type="CollisionShape2D" parent="Camera/StaticBody2D"]
@@ -883,7 +891,7 @@ columns = 2
 layout_mode = 0
 offset_left = 5476.0
 offset_top = 1444.0
-offset_right = 8764.0
+offset_right = 7892.0
 offset_bottom = 3340.0
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/BlockAchievements"]
@@ -906,7 +914,9 @@ layout_mode = 2
 
 [node name="AchievementsContainer" type="GridContainer" parent="UI/BlockAchievements/VBoxContainer"]
 layout_mode = 2
-columns = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 4
 
 [node name="BlockCustomAchievements" type="VBoxContainer" parent="UI"]
 layout_mode = 0
@@ -984,6 +994,28 @@ offset_top = 1896.0
 offset_right = 2636.0
 offset_bottom = 2808.0
 theme_override_constants/separation = 48
+
+[node name="relichunt" type="VBoxContainer" parent="UI/BlockProgress"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/BlockProgress/relichunt"]
+texture_filter = 4
+layout_mode = 2
+theme = ExtResource("12_ano3e")
+theme_override_fonts/font = ExtResource("13_833lr")
+text = "loadout.progress.relichunt"
+label_settings = ExtResource("15_w8x3m")
+
+[node name="coresaver" type="VBoxContainer" parent="UI/BlockProgress"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="UI/BlockProgress/coresaver"]
+texture_filter = 4
+layout_mode = 2
+theme = ExtResource("12_ano3e")
+theme_override_fonts/font = ExtResource("13_833lr")
+text = "loadout.progress.coresaver"
+label_settings = ExtResource("15_w8x3m")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

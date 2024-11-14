@@ -1,7 +1,8 @@
 extends MultiplayerLoadoutStage
 class_name MultiplayerLoadoutStageMod
 
-var saver_progress_id = "keeper_and_dome_progress"
+var saver_progress_relichunt_id = "keeper_and_dome_progress_relichunt"
+var saver_progress_coresaver_id = "keeper_and_dome_progress_coresaver"
 
 @onready var data_achievements = get_node("/root/ModLoader/POModder-AllYouCanMine").data_achievements
 @onready var custom_achievements_manager = get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements
@@ -39,14 +40,15 @@ func createMapDataFor(requiremnts) -> MapData:
 				tileData.stack(preload("res://stages/loadout/TileDataModePrestige.tscn").instantiate(), Vector2(-9, 2))
 			"assignments":
 				tileData.stack(preload("res://stages/loadout/TileDataModeAssignments.tscn").instantiate(), Vector2(-9, 2))
-			"loadout":
-				tileData.stack(preload("res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/TileDataLoadoutAchievements.tscn").instantiate(), Vector2(4, 2))
 			"dome-opening":
 				tileData.stack(preload("res://stages/loadout/TileDataDomeOpening.tscn").instantiate(), Vector2(-1, 2))
 			"guildrewards":
 				tileData.stack(preload("res://stages/loadout/TileDataGuildRewards.tscn").instantiate(), Vector2(5, 13))
 			"coresaver":
 				tileData.stack(preload("res://stages/loadout/TileDataModeRelicHunt.tscn").instantiate(), Vector2(-9, 2))
+	if "loadout" in requiremnts:
+		tileData.stack(preload("res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/TileDataLoadoutAchievements.tscn").instantiate(), Vector2(4, 2))
+	
 	for coord in dugTileCoordinates:
 		var res = tileData.get_resourcev(coord)
 		if res >= 0 and res <= 10:
@@ -124,7 +126,8 @@ func update_game_modes():
 		container.add_child(e)
 		e.connect("select", gameModeSelected.bind(id))
 		e.connect("select", updateBlockVisibility)
-		
+	
+	gameModeSelected(Level.loadout.modeId)
 		
 func fillDifficulties(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
 	var pgc = $UI.find_child(BlockDifficultyName,true,false).find_child("DifficultyContainers",true,false)
@@ -150,25 +153,40 @@ func fillDifficulties(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
 
 	
 func update_keeper_progress():
-	## save_dict[saver_progress_id] is {"keeper}" : {"dome" : true , ...} , "keeper2" : ... }
+	## Add progress for relichunt
 	saver.load_data()
-	if !saver.save_dict.has(saver_progress_id): # if save_file is empty (first time)
-		saver.save_dict[saver_progress_id] = {}
+	if !saver.save_dict.has(saver_progress_relichunt_id): # if save_file is empty (first time)
+		saver.save_dict[saver_progress_relichunt_id] = {}
 		
-	var keeper_container = find_child("BlockProgress")
-	
-	for child in keeper_container.get_children():
+	var save_progress = saver.save_dict[saver_progress_relichunt_id]
+	var block_progress_relichunt = $UI/BlockProgress/relichunt
+	add_mode_progress(block_progress_relichunt, save_progress)
+
+
+	## Add progress for coresaver
+	if !saver.save_dict.has(saver_progress_relichunt_id): # if save_file is empty (first time)
+		saver.save_dict[saver_progress_relichunt_id] = {}
+		
+	save_progress = saver.save_dict[saver_progress_coresaver_id]
+	var block_progress_coresaver = $UI/BlockProgress/coresaver
+	add_mode_progress(block_progress_coresaver, save_progress)
+
+
+func add_mode_progress(ui_vbox, save_progress):
+	for child in ui_vbox.get_children():
+		if child is Label :
+			continue
 		child.free()
 		
 	for keeper in Data.loadoutKeepers:
 		var ui_dome_progress = preload("res://mods-unpacked/POModder-AllYouCanMine/content/dome_progress/UI_dome_progress.tscn").instantiate()
-		keeper_container.add_child(ui_dome_progress)
+		ui_vbox.add_child(ui_dome_progress)
 		ui_dome_progress.find_child("Label").text = tr("upgrades." + keeper + ".title")
 		var keeper_image = ui_dome_progress.find_child("TextureRect")
 		keeper_image.texture = load("res://content/icons/loadout_" + keeper + "-skin0.png")
 		keeper_image.custom_minimum_size = keeper_image.get_minimum_size()*3
 		
-		var save_progress = saver.save_dict[saver_progress_id]
+		
 		if !save_progress.has(keeper): # if save_file is empty (first time)
 			save_progress[keeper] = {}
 		
@@ -219,13 +237,12 @@ func update_achievements():
 		var e = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/AchievementPanel.tscn").instantiate()
 		var title = "achievement." + achievementId.to_lower() + ".title"
 		var desc = "achievement." + achievementId.to_lower() + ".desc"
-		var hint = "achievement." + achievementId.to_lower() + ".hint"
 		achievement_container.add_child(e)
 		if Steam.getAchievement(achievementId)["achieved"]:
 			e.setChoice(title, achievementId, null, desc)
 			e.completed()
 		else :
-			e.setChoice(title, achievementId, null, hint)
+			e.setChoice(title, achievementId, null, "")
 			
 	
 	

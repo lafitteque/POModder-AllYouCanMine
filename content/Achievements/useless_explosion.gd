@@ -11,9 +11,9 @@ var timer : Timer
 var second_timer 
 
 var delta = 0.5
-var max_kill_tiles = 0
-var min_kill_tiles = 0
-var previous_tiles
+var max_kill_tiles = 3
+var min_kill_tiles = 3
+var previous_tile_count = 0
 
 @onready var map = StageManager.currentStage.MAP
 
@@ -26,12 +26,12 @@ func _ready():
 	
 func _on_timer_timeout():
 	for saveable in get_tree().get_nodes_in_group("saveable"):
-		if "untilExplosion" in saveable:
+		if "untilExplosion" in saveable and 'animationSuffix' in saveable:
 			cave_bomb = saveable
 			var number_times 
 			second_timer = Timer.new()
 			second_timer.autostart = true
-			second_timer.wait_time = 0.1
+			second_timer.wait_time = 0.05
 			second_timer.timeout.connect(verify_kill_count)
 			add_child(second_timer)
 			cave_bomb_pos = cave_bomb.global_position
@@ -40,19 +40,12 @@ func _on_timer_timeout():
 func verify_kill_count():
 	if is_instance_valid(cave_bomb) :
 		cave_bomb_pos = cave_bomb.global_position
-		previous_tiles = map.tiles
+		previous_tile_count = map.tileData.get_remaining_mineable_tile_count()
 		return
-	second_timer.queue_free()
-	var kill_count = 0
-	var pos = cave_bomb_pos
-	for dir in [Vector2i.UP , Vector2i.RIGHT , Vector2i.DOWN , Vector2i.LEFT ]:
-		var startCoord = Vector2(map.getTileCoord(pos) + dir)
-		for i in range(0,30):
-			var coord = startCoord + Vector2(dir * i)
-			if previous_tiles.has(coord) and Data.isDestructable(previous_tiles.get(coord)):
-				kill_count +=1
+	await get_tree().create_timer(1.0).timeout
+	var kill_count = previous_tile_count - map.tileData.get_remaining_mineable_tile_count()
 	if kill_count <= max_kill_tiles and kill_count >= min_kill_tiles:
 		get_parent().unlockAchievement(id)
 		timer.queue_free()
-	else : 
+	else:
 		timer.start()

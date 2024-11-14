@@ -1,35 +1,30 @@
 VISUELS / SONS:
 - Changer les sons des Caves ?
 - Animation pour la bad_relic cassée
-- ajouter cables cassés à bad_relic
 - Ajouter indice visuel pour secret rooms
-- Caves sprites
+- Caves sprites (heavy rock prévoir un emplacement)
 - Animation root
 - Animations core eater (de 1 à 4 + fin)
 
-
-FONCTIONNALITES :
-- Ajouter la tuile pillules
-- savefile change path to user://
-- Faire en sorte que la vie des tuiles dépende des tiles
-- Debug le succes bombe (autoriser que bombe gadget et vérifier 8*8 autour avant et après)
-- avoir un gamemode par défaut
-
-
-
-
-ASSIGNMENTS :
-- Bigger everything (enemies + resources)
-- Pillules
-- Mega_iron
-- Secrets
-
+- Une image pour le mod
+- Une vidéo pour le mod (+ compte ytube)
 
 
 BALANCE :
-- Faire un archetype pour chaque taille
-- diminuer le nb de ressources
-- diminuer le nb de mega iron
+- Tout tester
+- Vérifier les maparchetypes (chaos tiles)
+
+
+TRADS :
+- Erreurs accents et ponctuation espagnol + succes espagnol
+
+
+AUTRES :
+- Essayer d'enlever un max le code d'origine dans les extensions et remplacements
+
+
+SUCCES :
+- opti pour ne pas les faire tourner s'ils sont déjà complétés
 
 
 
@@ -41,4 +36,8 @@ Pour l'autre mod :
 
 
 
-++++ Rendre le mod compatible (tile hooks, achievements hooks)
+
+PLUS TARD :
+- troll resources
+- Rendre le mod compatible : tutos pour achievements et chaos
+- ajouter cables cassés à bad_relic

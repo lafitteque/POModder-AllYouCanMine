@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4dych7dxnncx"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/effect_earthquake.gd" id="1_luijt"]
+
+[node name="EffectEarthquake" type="Node2D"]
+script = ExtResource("1_luijt")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.7
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

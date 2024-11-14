@@ -22,6 +22,7 @@ func shrink():
 	shrinkTween.tween_callback(Data.changeByInt.bind("inventory." + type, iron_value)).set_delay(outDuration*0.6)
 	shrinkTween.tween_callback(queue_free).set_delay(outDuration)
 	Data.changeByInt("inventory.floating" + type, -1)
+	Data.changeByInt("inventory.mega_iron_taken", 1)
 	
 	if is_in_group("saveable"):
 		remove_from_group("saveable")

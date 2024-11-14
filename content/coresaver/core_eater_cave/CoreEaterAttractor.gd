@@ -14,5 +14,6 @@ func _physics_process(delta):
 		Data.apply("inventory.relic", 1)
 		await get_tree().create_timer(0.2).timeout
 		Data.apply("monsters.wavepresent", false)
+		get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("CORE_EATER_ENDING")
 		queue_free()
 

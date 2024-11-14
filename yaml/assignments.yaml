@@ -50,3 +50,54 @@ thieves:
     - monsters.additionalwaveweight = 30
     - monsters.minimumtimebetweenmonsters = 0.08
 
+big:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: regular-large
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.8
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.3
+    - monsters.additionalwaveweight = 8
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+secrets:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-secrets
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.8
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.3
+    - monsters.additionalwaveweight = 8
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+megairon:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-megairon
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.8
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.3
+    - monsters.additionalwaveweight = 8
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+chaos:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-chaos
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.8
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.3
+    - monsters.additionalwaveweight = 8
+    - monsters.minimumtimebetweenmonsters = 0.08

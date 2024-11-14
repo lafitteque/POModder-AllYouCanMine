@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dfgvlkrmtoff"]
 
 [ext_resource type="PackedScene" uid="uid://dnwyvrvffgtu3" path="res://content/drop/iron/IronDrop.tscn" id="1_07u0c"]
-[ext_resource type="PackedScene" uid="uid://ceaphal7o8fot" path="res://mods-unpacked/POModder-AllYouCanMine/content/destroyer_tile/Destroyer.tscn" id="2_pjibh"]
+[ext_resource type="PackedScene" uid="uid://duo5n8xspigo1" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTile.tscn" id="2_ncjpm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rh6ne"]
 resource_local_to_scene = true
@@ -35,5 +35,12 @@ position = Vector2(107, 78)
 mass = 0.01
 physics_material_override = SubResource("PhysicsMaterial_5jf46")
 
-[node name="Destroyer" parent="." instance=ExtResource("2_pjibh")]
-position = Vector2(134, 136)
+[node name="ChaosTile" parent="." instance=ExtResource("2_ncjpm")]
+position = Vector2(270, 129)
+
+[node name="RigidBody2D" type="StaticBody2D" parent="."]
+collision_layer = 67108974
+collision_mask = 67108910
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+polygon = PackedVector2Array(0, 12, 0, 1082, 1919, 1087, 1919, 2, -223, -4, -229, 47, 1871, 44, 1868, 1021, 46, 1012, 58, -4)

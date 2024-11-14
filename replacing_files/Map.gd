@@ -40,6 +40,8 @@ func revealTile(coord:Vector2):
 	tile.coord = coord
 		
 	tile.hardness = tileData.get_hardness(coord.x, coord.y)
+	if typeId == 18:
+		print("debug")
 	tile.type = data_mod.TILE_ID_TO_STRING_MAP.get(typeId, "dirt")
 
 	match tile.type:
@@ -63,7 +65,9 @@ func revealTile(coord:Vector2):
 			revealTileVisually(coord) # QLafitte Added
 		"glass":
 			revealTileVisually(coord) # QLafitte Added
-			
+		"chaos":
+			revealTileVisually(coord) # QLafitte Added
+				
 	tiles[coord] = tile 
 	
 	if tilesByType.has(tile.type):
@@ -88,7 +92,7 @@ func revealTile(coord:Vector2):
 	
 func addDrop(drop):
 	if Data.ofOr("assignment.id","") == "aprilfools" and\
-	("type" in drop) and drop.type in [CONST.WATER, CONST.IRON,CONST.SAND] and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ): #QLafitte Added
+	("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ): #QLafitte Added
 		var old_position = drop.global_position #QLafitte Added
 		drop = null #QLafitte Added
 		var all_keys = data_mod.DROP_FROM_TILES_SCENES.keys() #QLafitte Added
@@ -97,13 +101,19 @@ func addDrop(drop):
 			return
 		drop = data_mod.DROP_FROM_TILES_SCENES.get(rand_type).instantiate()#QLafitte Added
 		drop.global_position = old_position #QLafitte Added
-		if ("type" in drop) and drop.type in [CONST.WATER, CONST.IRON,CONST.SAND] :#QLafitte Added
+		if ("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES :#QLafitte Added
 			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))#QLafitte Added
-	#elif Data.of("assignment.id") is String and Data.of("assignment.id") == "newmission4" and\
-	#("type" in drop) and drop.type in [CONST.WATER, CONST.IRON,CONST.SAND]:#QLafitte Added
-		#var dropbearer = preload("res://mods-unpacked/POModder-MoreGuildMissions/content/drop_bearer/DropBearer.tscn").instantiate()#QLafitte Added
-		#dropbearer.global_position = drop.global_position#QLafitte Added
-		#add_child(dropbearer)
+	
+	if Data.ofOr("assignment.id","") == "big" and("type" in drop) and \
+	drop.type in data_mod.ALL_DROP_NAMES and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ):
+		add_child(drop)	
+		for i in 10:
+			await get_tree().create_timer(0.1).timeout
+			for child in drop.get_children():
+				if "scale" in child:
+					child.scale = Vector2(1.1 + 0.1*i, 1.1 + 0.1*i)
+		return
+		
 	add_child(drop)		
 
 
