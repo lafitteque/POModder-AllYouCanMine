@@ -23,7 +23,7 @@ func activate():
 		for drop in get_tree().get_nodes_in_group("drops"):
 			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))
 		
-	get_node("/root/ModLoader/POModder-AllYouCanMine").saver["chaos_uses"]["bigger_drops"] = true
+	get_node("/root/ModLoader/POModder-AllYouCanMine").saver.save_dict["chaos_uses"]["bigger_drops"] = true
 	get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.update_chaos_achievement()
 	
 	

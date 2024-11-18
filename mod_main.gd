@@ -64,8 +64,13 @@ func modInit():
 	
 # Called when the node enters the scene tree for the first time.
 func manage_overwrites():
+	### Adding new map archetypes for assignments
+	
 	var new_archetype_detonators = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-detonators.tres")
 	new_archetype_detonators.take_over_path("res://content/map/generation/archetypes/assignment-detonators.tres")
+
+	var new_archetype_destroyer = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-destroyer.tres")
+	new_archetype_destroyer.take_over_path("res://content/map/generation/archetypes/assignment-destroyer.tres")
 
 	var new_archetype_aprilfools = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-aprilfools.tres")
 	new_archetype_aprilfools.take_over_path("res://content/map/generation/archetypes/assignment-aprilfools.tres")
@@ -82,6 +87,10 @@ func manage_overwrites():
 	var new_archetype_chaos = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-chaos.tres")
 	new_archetype_chaos.take_over_path("res://content/map/generation/archetypes/assignment-chaos.tres")
 	
+	
+	
+	### Adding new map archetypes for custom Game Mode
+	
 	var new_archetype_huge_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-huge.tres")
 	new_archetype_huge_coresaver.take_over_path("res://content/map/generation/archetypes/coresaver-huge.tres")
 	
@@ -93,14 +102,21 @@ func manage_overwrites():
 	
 	var new_archetype_small_coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/coresaver-small.tres")
 	new_archetype_small_coresaver.take_over_path("res://content/map/generation/archetypes/coresaver-small.tres")
+
+
+
+	### Custom Game Mode (simply a copy of relichunt) :
+	
+	var coresaver = preload("res://content/gamemode/relichunt/Relichunt.tscn")
+	coresaver.take_over_path("res://content/gamemode/coresaver/Coresaver.tscn")
+	
+	
+	
+	### Taking over vanilla files : (main source of Mod incompatibilities)
 	
 	var new_stage = load("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutModStage.tscn")
 	new_stage.take_over_path("res://stages/loadout/multiplayerloadoutmodstage.tscn")
-
-	#var custom_achievements = load("res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.tscn")
-	#custom_achievements.take_over_path("res://systems/achievements/CustomAchievements.tscn")
-	#
-		
+	
 	var tile = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
 	tile.take_over_path("res://content/map/tile/Tile.tscn")
 	
@@ -110,10 +126,7 @@ func manage_overwrites():
 	var level_stage = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/LevelStage.tscn")
 	level_stage.take_over_path("res://stages/level/LevelStage.tscn")
 	
-	var coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/Coresaver.tscn")
-	coresaver.take_over_path("res://content/gamemode/coresaver/Coresaver.tscn")
-	
-	
+
 	
 func _on_level_ready():
 	

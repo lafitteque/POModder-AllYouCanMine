@@ -10,6 +10,8 @@ var delta = 1
 var timer : Timer
 
 func _ready():
+	if get_parent().achievements_unlocked[id]:
+		return
 	if Level.loadout.difficulty< -1:
 		return
 	timer = Timer.new()

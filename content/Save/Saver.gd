@@ -98,28 +98,26 @@ func _exit_tree():
 	
 func update_progress_achievements():
 	#await get_tree().create_timer(1).timeout
-	if Level.loadout.modeId == "relichunt":
-		var domes_completed = 0
-		for dome in Data.loadoutDomes.slice(0, 4) :
-			domes_completed += min(1 , save_dict[saver_progress_relichunt_id][Data.loadoutKeepers[0]][dome].keys().size())
-		if domes_completed == 4:
-			custom_achievements_manager.unlockAchievement("ALL_DOMES_ENGINEER")
-			
-		domes_completed = 0
-		for dome in Data.loadoutDomes.slice(0, 4) :
-			domes_completed += min(1 , save_dict[saver_progress_relichunt_id][Data.loadoutKeepers[1]][dome].keys().size())
-		if domes_completed == 4:
-			custom_achievements_manager.unlockAchievement("ALL_DOMES_ASSESSOR")	
+	var domes_completed = 0
+	for dome in Data.loadoutDomes.slice(0, 4) :
+		domes_completed += min(1 , save_dict[saver_progress_relichunt_id][Data.loadoutKeepers[0]][dome].keys().size())
+	if domes_completed == 4:
+		custom_achievements_manager.unlockAchievement("ALL_DOMES_ENGINEER")
+		
+	domes_completed = 0
+	for dome in Data.loadoutDomes.slice(0, 4) :
+		domes_completed += min(1 , save_dict[saver_progress_relichunt_id][Data.loadoutKeepers[1]][dome].keys().size())
+	if domes_completed == 4:
+		custom_achievements_manager.unlockAchievement("ALL_DOMES_ASSESSOR")	
 				
-	if Level.loadout.modeId == "coresaver":
-		var domes_completed = 0
-		for dome in Data.loadoutDomes.slice(0, 4) :
-			domes_completed += min(1 , save_dict[saver_progress_relichunt_id][Data.loadoutKeepers[0]][dome].keys().size())
-		if domes_completed == 4:
-			custom_achievements_manager.unlockAchievement("ALL_DOMES_ENGINEER2")
-			
-		domes_completed = 0
-		for dome in Data.loadoutDomes.slice(0, 4) :
-			domes_completed += min(1 , save_dict[saver_progress_relichunt_id][Data.loadoutKeepers[1]][dome].keys().size())
-		if domes_completed == 4:
-			custom_achievements_manager.unlockAchievement("ALL_DOMES_ASSESSOR2")		
+	domes_completed = 0
+	for dome in Data.loadoutDomes.slice(0, 4) :
+		domes_completed += min(1 , save_dict[saver_progress_coresaver_id][Data.loadoutKeepers[0]][dome].keys().size())
+	if domes_completed == 4:
+		custom_achievements_manager.unlockAchievement("ALL_DOMES_ENGINEER2")
+		
+	domes_completed = 0
+	for dome in Data.loadoutDomes.slice(0, 4) :
+		domes_completed += min(1 , save_dict[saver_progress_coresaver_id][Data.loadoutKeepers[1]][dome].keys().size())
+	if domes_completed == 4:
+		custom_achievements_manager.unlockAchievement("ALL_DOMES_ASSESSOR2")		

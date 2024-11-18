@@ -102,4 +102,7 @@ func hit(dir:Vector2, dmg:float):
 		if chaos and is_instance_valid(chaos) and !chaos.used:
 			chaos.activate()
 			
+		if type == "fake_border":
+			Data.changeByInt("inventory.mined_fake_borders", 1)
+			
 	super.hit(dir,dmg)

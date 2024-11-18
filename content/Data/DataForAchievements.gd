@@ -77,10 +77,10 @@ var info_achievements = [
 	["LevelStage", "USELESS_EXPLOSION"],
 	["LevelStage", "FAST_WHY"],
 	["Relichunt", "RELIC_WAIT"],
-	["Coresaver", "SECRET_ROOM"],
+	["CoreSaver", "SECRET_ROOM"],
 	["MultiplayerLoadoutModStage", "ALL_ASSIGNMENTS"],
-	["Coresaver", "WAKA_WAKA"],
-	["Coresaver", "DOUBLE_TROUBLE"]
+	["CoreSaver", "WAKA_WAKA"],
+	["CoreSaver", "DOUBLE_TROUBLE"]
 ]
 
 func add_achievement(id : String , stage : String):

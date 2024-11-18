@@ -7,12 +7,17 @@ var id = "DOUBLE_TROUBLE"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if get_parent().achievements_unlocked[id]:
+		set_physics_process(false)
+		return
+		
 	Data.listen(self,"inventory.mega_iron_taken")
+	
 
-
-func PropertyChange(property : String , new_value, old_value):
+func propertyChanged(property : String , old_value , new_value):
 	if property == "inventory.mega_iron_taken" and cooldown > 0:
 		get_parent().unlockAchievement(id)
+		set_physics_process(false)
 	elif  property == "inventory.mega_iron_taken":
 		cooldown = allowed_time
 

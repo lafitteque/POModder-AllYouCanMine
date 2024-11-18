@@ -1,58 +1,152 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4qx4paubbldg"]
+[gd_scene load_steps=22 format=3 uid="uid://c4606cr5dhhaj"]
 
-[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/generic_cave_coresaver.gd" id="1_jmrqm"]
-[ext_resource type="Script" path="res://content/map/Parallaxer.gd" id="2_kpq10"]
-[ext_resource type="Texture2D" uid="uid://c7q51oi3kubbw" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock_cave.png" id="3_wpwvj"]
-[ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="4_4meym"]
-[ext_resource type="AudioStream" uid="uid://g6cg4bul73qo" path="res://content/sounds/monster/Shifter_amb.wav" id="5_df8h8"]
-[ext_resource type="Texture2D" uid="uid://bc7vobkajdin2" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock_cave_alpha.png" id="6_ljhmp"]
-[ext_resource type="Texture2D" uid="uid://bpc5chxnv26hx" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/broken_relic.png" id="7_37rx4"]
-[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootRelicAttractor.gd" id="8_scmjm"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.gd" id="1_hvv2y"]
+[ext_resource type="Script" path="res://content/map/Parallaxer.gd" id="2_vwlk4"]
+[ext_resource type="Texture2D" uid="uid://c073eieh2x0qc" path="res://mods-unpacked/POModder-AllYouCanMine/images/root_cave/Fond.png" id="3_xpyq4"]
+[ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="4_d2mtr"]
+[ext_resource type="Texture2D" uid="uid://b3f4c7eiwmk3h" path="res://mods-unpacked/POModder-AllYouCanMine/images/root_cave/Parallax.png" id="4_x6h12"]
+[ext_resource type="AudioStream" uid="uid://g6cg4bul73qo" path="res://content/sounds/monster/Shifter_amb.wav" id="5_adjcb"]
+[ext_resource type="Texture2D" uid="uid://d2egaujyjpamf" path="res://mods-unpacked/POModder-AllYouCanMine/images/root_cave/root_chamber-Sheet.png" id="5_db28h"]
+[ext_resource type="Texture2D" uid="uid://bierwlkas2lpn" path="res://mods-unpacked/POModder-AllYouCanMine/images/root_cave/Devant.png" id="6_2v87s"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootRelicAttractor.gd" id="8_cy560"]
+[ext_resource type="Texture2D" uid="uid://bx10fppoubmgs" path="res://mods-unpacked/POModder-AllYouCanMine/images/root_cave/alpha.png" id="9_jidec"]
+[ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="11_mslks"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_w0yy2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5avy3"]
+atlas = ExtResource("5_db28h")
+region = Rect2(0, 0, 164, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djid8"]
+atlas = ExtResource("5_db28h")
+region = Rect2(164, 0, 164, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csump"]
+atlas = ExtResource("5_db28h")
+region = Rect2(328, 0, 164, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjqiq"]
+atlas = ExtResource("5_db28h")
+region = Rect2(492, 0, 164, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rciit"]
+atlas = ExtResource("5_db28h")
+region = Rect2(656, 0, 164, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lljq8"]
+atlas = ExtResource("5_db28h")
+region = Rect2(820, 0, 164, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7meu6"]
+atlas = ExtResource("5_db28h")
+region = Rect2(984, 0, 164, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rnau"]
+atlas = ExtResource("5_db28h")
+region = Rect2(1148, 0, 164, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eix2f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5avy3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djid8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csump")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjqiq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rciit")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lljq8")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7meu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rnau")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b74f3"]
 radius = 30.0
 
 [node name="RootCave" type="Node2D" groups=["cave", "saveable", "unstyled"]]
 z_index = -40
 texture_filter = 1
-script = ExtResource("1_jmrqm")
+script = ExtResource("1_hvv2y")
 
 [node name="Sprites" type="Control" parent="."]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
-offset_right = 26.0
-offset_bottom = 35.0
+offset_right = 96.0
+offset_bottom = 48.0
 mouse_filter = 2
-script = ExtResource("2_kpq10")
-start_offset = 0.4
-scaling = 0.5
+script = ExtResource("2_vwlk4")
+start_offset = 0.1
+scaling = 0.8
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprites"]
 texture_filter = 1
-position = Vector2(75.5, 37)
-texture = ExtResource("3_wpwvj")
-hframes = 3
+texture = ExtResource("3_xpyq4")
+centered = false
+offset = Vector2(-30, -24)
 
 [node name="Sprite2" type="Sprite2D" parent="Sprites"]
 texture_filter = 1
-position = Vector2(75.5, 37)
-texture = ExtResource("3_wpwvj")
-hframes = 3
-frame = 1
+texture = ExtResource("4_x6h12")
+centered = false
+offset = Vector2(-30, -24)
+
+[node name="root" type="AnimatedSprite2D" parent="Sprites"]
+sprite_frames = SubResource("SpriteFrames_eix2f")
+animation = &"attack"
+centered = false
+offset = Vector2(-30, -24)
 
 [node name="Sprite3" type="Sprite2D" parent="Sprites"]
 texture_filter = 1
-position = Vector2(75.5, 37)
-texture = ExtResource("3_wpwvj")
-hframes = 3
-frame = 2
+texture = ExtResource("6_2v87s")
+centered = false
+offset = Vector2(-30, -24)
+
+[node name="AlphaMap" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+scale = Vector2(1.0061, 1)
+texture = ExtResource("9_jidec")
+centered = false
+offset = Vector2(-24, -24)
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(23, 23)
+position = Vector2(51, 16)
 
-[node name="Amb" parent="Marker2D" instance=ExtResource("4_4meym")]
-stream = ExtResource("5_df8h8")
+[node name="RelicAttractor" type="Area2D" parent="Marker2D"]
+position = Vector2(6, -6)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_cy560")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Marker2D/RelicAttractor"]
+shape = SubResource("CircleShape2D_b74f3")
+
+[node name="Amb" parent="Marker2D" instance=ExtResource("4_d2mtr")]
+stream = ExtResource("5_adjcb")
 volume_db = -9.177
 pitch_scale = 0.65
 bus = &"Mine"
@@ -64,26 +158,8 @@ fadeInTime = 0.1
 fadeOutTime = 2.0
 loop = true
 
-[node name="AlphaMap" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-position = Vector2(34.4375, 20.25)
-scale = Vector2(0.570219, 0.519444)
-texture = ExtResource("6_ljhmp")
+[node name="ScriptTween" parent="." instance=ExtResource("11_mslks")]
 
-[node name="BrokenRelic" type="Sprite2D" parent="."]
-modulate = Color(0.321569, 0.156863, 0.290196, 0.337255)
-position = Vector2(13, 13)
-texture = ExtResource("7_37rx4")
-
-[node name="RelicAttractor" type="Area2D" parent="BrokenRelic"]
-collision_layer = 0
-collision_mask = 2
-script = ExtResource("8_scmjm")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BrokenRelic/RelicAttractor"]
-shape = SubResource("CircleShape2D_w0yy2")
-
-[connection signal="body_entered" from="BrokenRelic/RelicAttractor" to="BrokenRelic/RelicAttractor" method="_on_body_entered"]
-[connection signal="body_exited" from="BrokenRelic/RelicAttractor" to="BrokenRelic/RelicAttractor" method="_on_body_exited"]
+[connection signal="animation_finished" from="Sprites/root" to="Marker2D/RelicAttractor" method="_on_root_animation_finished"]
+[connection signal="body_entered" from="Marker2D/RelicAttractor" to="Marker2D/RelicAttractor" method="_on_body_entered"]
+[connection signal="body_exited" from="Marker2D/RelicAttractor" to="Marker2D/RelicAttractor" method="_on_body_exited"]

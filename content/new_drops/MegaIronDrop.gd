@@ -54,6 +54,7 @@ func shred(addToInventory := true):
 		shredTween.set_parallel().tween_property($Sprite2D, "scale", Vector2.ZERO, outDuration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	if addToInventory:
 		shredTween.tween_callback(Data.changeByInt.bind("inventory." + type, iron_value)).set_delay(outDuration*0.6)
+		Data.changeByInt("inventory.mega_iron_taken", 1)
 	Data.changeByInt("inventory.floating" + type, -1)
 	
 	# Adding particle_lifetime so the particles get time to finish their thing

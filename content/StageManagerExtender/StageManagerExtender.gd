@@ -5,12 +5,12 @@ var stage = null
 @onready var saver = get_node("/root/ModLoader/POModder-AllYouCanMine").saver
 @onready var data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
 
+func _ready():
+	StageManager.stage_started.connect(stage_changed)
 
-func _on_timer_timeout():
-	if !stage or StageManager.currentStage.name != stage.name:
-		stage_changed()
 		
 func stage_changed():
+	await get_tree().create_timer(0.3).timeout
 	stage = StageManager.currentStage
 	#await get_tree().create_timer(1)
 	saver.change_stage()

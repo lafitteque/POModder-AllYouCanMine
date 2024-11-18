@@ -107,6 +107,7 @@ func addDrop(drop):
 	if Data.ofOr("assignment.id","") == "big" and("type" in drop) and \
 	drop.type in data_mod.ALL_DROP_NAMES and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ):
 		add_child(drop)	
+		Style.init(drop)
 		for i in 10:
 			await get_tree().create_timer(0.1).timeout
 			for child in drop.get_children():
@@ -115,7 +116,8 @@ func addDrop(drop):
 		return
 		
 	add_child(drop)		
-
+	Style.init(drop)
+	
 
 func destroyTile(tile, withDropsAndSound := true):
 	Data.changeByInt("map.tilesDestroyed", 1)
@@ -211,7 +213,8 @@ func destroyTile(tile, withDropsAndSound := true):
 func getSceneForTileType(tileType:int) -> PackedScene:
 	if tileType == data_mod.TILE_BAD_RELIC:
 		return preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelicChamber/BadRelicChamber.tscn")
-	
+	elif tileType == data_mod.TILE_FAKE_BORDER:
+		return preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/hint_secret.tscn")
 	return super(tileType)
 #
 	
@@ -258,6 +261,7 @@ func generateCaves(minDistanceToCenter := 10):
 			cavePackeScenes.insert(0, preload("res://content/caves/drillicave/DrillbertCave.tscn"))
 	
 	# Added vvvvvvvvv
+			
 	var coresaver_endings = data_mod.get_endings()
 	
 	if Level.loadout.modeId == "coresaver" and coresaver_endings.has("heavy_rock") :
@@ -277,10 +281,12 @@ func generateCaves(minDistanceToCenter := 10):
 		for cell in secret_room_tiles:
 			if cell.x <= top_left.x and cell.y <= top_left.y :
 				top_left = cell
-		var root_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootCave.tscn").instantiate()
+		var root_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootCave.tscn").instantiate()#preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootCave.tscn").instantiate()
+		for coord in tileData.get_resource_cells_by_id(data_mod.TILE_SECRET_ROOM):
+			tileData.set_resourcev(coord, Data.TILE_DIRT_START)
 		addLandmark(top_left, root_cave)
 		root_cave.visible = true
-		# Add hint as BackgroundRender child
+		print("root cave : " , top_left)
 		
 	## Added ^^^^^^^^
 	
@@ -312,8 +318,15 @@ func generateCaves(minDistanceToCenter := 10):
 		var core_eater_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_eater_cave/CoreEaterCave.tscn").instantiate()
 		addCaveStartAndDirection(rand, core_eater_cave, Vector2.ZERO, Vector2.DOWN)
 	
+	# Add hints for secrets
+	for coord in tileData.get_hardness_cells_by_grade(7):
+		for i in range(-2,3):
+			for j in range(-1,2):	
+				var new_coord = coord+Vector2i(i,j)
+				if tileData.get_resourcev(new_coord) == Data.TILE_DIRT_START :
+					addChamber(new_coord, preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/hint_secret.tscn"))
 
-		
+				
 func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_layer = true):
 	cave.updateUsedTileCoords()
 

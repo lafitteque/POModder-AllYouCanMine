@@ -24,6 +24,19 @@ detonators:
     - monsters.additionalwaveweight = 20
     - monsters.minimumtimebetweenmonsters = 0.08
 	
+destroyer:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-destroyer
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.1
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 2.5
+    - monsters.additionalwaveweight = 20
+    - monsters.minimumtimebetweenmonsters = 0.08
+
 aprilfools:
   tier: 0
   goaltype: relic

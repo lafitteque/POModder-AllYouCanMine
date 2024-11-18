@@ -19,6 +19,5 @@ func _process(delta):
 		var count = tile_data.get_remaining_mineable_tile_count()
 		Data.apply("inventory.remainingtiles", count)
 		Data.apply("inventory.remaining_core_eaters", tile_data.get_resource_cells_by_id(data_mod.TILE_GLASS).size() )
-		Data.apply("inventory.mined_fake_borders", tile_data.get_resource_cells_by_id(data_mod.TILE_FAKE_BORDER).size())
 		if count == 0:
 			queue_free()

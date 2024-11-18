@@ -10,6 +10,7 @@ layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 label_settings = ExtResource("1_f02lx")
 horizontal_alignment = 1

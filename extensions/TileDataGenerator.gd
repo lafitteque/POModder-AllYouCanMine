@@ -3,7 +3,7 @@ extends "res://content/map/generation/TileDataGenerator.gd"
 const TILE_DETONATOR = 11
 const TILE_DESTROYER = 12
 const TILE_MEGA_IRON = 13
-const TILE_BAD_RELIC = 14 #QLafitte Added
+const TILE_BAD_RELIC = 14 
 const TILE_FAKE_BORDER = 16
 const TILE_SECRET_ROOM = 17
 const TILE_CHAOS = 18
@@ -11,7 +11,7 @@ const TILE_CHAOS = 18
 var data_mod
 
 
-const rate_list = [0 , 0.1 , 0.5 , 1 , 5 , 10 , 25 , 50 , 75 ]
+const rate_list = [0 , 0.5 , 1 , 3 , 5 , 10 , 25 , 50 , 75 ]
 
 func get_generation_data(a):
 	## 4th decimal of max_tile_count_deviation for detonator rate
@@ -131,7 +131,7 @@ func generate_resources(rand):
 	endTimer()
 	
 	### Added vvvvvv
-	
+
 	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,detonator_rate, TILE_DETONATOR)
 
 	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,destroyer_rate, TILE_DESTROYER)
@@ -291,10 +291,26 @@ func generate_secret_room(start : Vector2 , dir : Vector2 , dimensions : Vector2
 		y_direction = dir
 		x_direction = Vector2.RIGHT
 	
-	### Prepare all the border tiles to carve the cave later	
+	# Offset so that the secret room doesn't block the way 
+	# (the generation will overwrite some breakable tiles)
+	var offset = 2
+	
+	## Create tunnel entrance
+	for x in range(offset) : 
+		for y in range(-1,2):
+			pos = entrance_pos+x * x_direction + y*y_direction
+			if y == 0:
+				$MapData.set_hardnessv(pos , 7)
+			else :
+				$MapData.set_hardnessv(pos , 5)
+				
+			$MapData.set_resourcev( pos,19)
+			$MapData.set_biomev(pos, biome)
+			
+	### Prepare all the border tiles to carve the cave later
 	for x in range(-abs(x_direction.x - dir.x),dimensions.x+2) : 
 		for y in range(-abs(y_direction.y - dir.y),dimensions.y+2):
-			pos = entrance_pos+x * x_direction + y*y_direction
+			pos = entrance_pos+(x + offset) * x_direction + y*y_direction
 			$MapData.set_resourcev( pos, 19)
 			$MapData.set_hardnessv(pos , 5)
 			$MapData.set_biomev(pos, biome)
@@ -303,11 +319,14 @@ func generate_secret_room(start : Vector2 , dir : Vector2 , dimensions : Vector2
 	$MapData.set_hardnessv(entrance_pos ,7)
 	$MapData.set_biomev(entrance_pos, biome)
 
+	$MapData.set_resourcev(entrance_pos + offset*x_direction, -1)
+	$MapData.set_hardnessv(entrance_pos+ offset*x_direction ,1)
+	$MapData.set_biomev(entrance_pos+ offset*x_direction, biome)
 	
 	### Carving the cave
 	for x in range(abs(dir.x),dimensions.x+1) : 
 		for y in range(abs(dir.y),dimensions.y+1):
-			pos = entrance_pos+x * x_direction + y*y_direction
+			pos = entrance_pos + (x + offset)* x_direction + y*y_direction
 			$MapData.set_resourcev( pos, TILE_SECRET_ROOM)
 			$MapData.set_hardnessv(pos , 1)
 			$MapData.set_biomev(pos, biome)
@@ -317,10 +336,11 @@ func find_wall_in_direction(start,direction,max_distance_from_start = 100):
 	var last_available_position = start
 
 	var moved = direction
-	var last_type = 19
+	var last_type = 10
 	# Setting depth and then checking all tiles to the left / right to see where the glass can be placed
 	while abs(moved.x)+abs(moved.y) < max_distance_from_start:
-		if $MapData.get_resourcev(start + moved ) == 19 and last_type != 19:
+		if $MapData.get_resourcev(start + moved ) == 19 and last_type <= 18 \
+		and last_type >= 0 :
 			last_available_position = start + moved
 		last_type = $MapData.get_resourcev(start + moved )
 		moved += direction

@@ -1,32 +1,15 @@
 VISUELS / SONS:
-- Changer les sons des Caves ?
-- Animation pour la bad_relic cassée
-- Ajouter indice visuel pour secret rooms
-- Caves sprites (heavy rock prévoir un emplacement)
-- Animation root
-- Animations core eater (de 1 à 4 + fin)
-
 - Une image pour le mod
 - Une vidéo pour le mod (+ compte ytube)
 
 
 BALANCE :
 - Tout tester
-- Vérifier les maparchetypes (chaos tiles)
 
-
-TRADS :
-- Erreurs accents et ponctuation espagnol + succes espagnol
 
 
 AUTRES :
 - Essayer d'enlever un max le code d'origine dans les extensions et remplacements
-
-
-SUCCES :
-- opti pour ne pas les faire tourner s'ils sont déjà complétés
-
-
 
 
 
@@ -39,5 +22,5 @@ Pour l'autre mod :
 
 PLUS TARD :
 - troll resources
-- Rendre le mod compatible : tutos pour achievements et chaos
+- Tutos pour achievements et chaos
 - ajouter cables cassés à bad_relic

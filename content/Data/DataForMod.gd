@@ -67,14 +67,20 @@ var generation_data = {
 	"destroyer_rate":0 # from 0.0 to 99.99
 }
 
-const rate_list = [0 , 0.1 , 0.5 , 1 , 5 , 10 , 25 , 50 , 75 ]
-const probability_list = [0 , 0.001 , 0.005 , 0.01 , 0.05 , 0.10 , 0.25 , 0.50, 1 ]
+var chaos_effects = ["gravity" , "attractor",\
+				 "earthquake", "smaller_drops",\
+				 "bigger_drops", "deficit" , "jackpot",\
+				"wave_sooner", "wave_later"]
+				
+				
+const rate_list = [0 , 0.1 , 0.5 , 1 , 3 , 10 , 25 , 50 , 75, 99 ]
+const probability_list = [0 , 0.001 , 0.005 , 0.01 , 0.05 , 0.10 , 0.25 , 0.50, 0.75 , 1 ]
 
 
 func get_endings():
 	#var endings = ["glass" , "heavy_rock", "secret"]
 	#endings.remove_at(randi() % 3)
-	var endings = ["heavy_rock" , "secret"]
+	var endings = ["secret" , "glass"]
 	return endings
 	
 	
@@ -168,3 +174,5 @@ func weighted_random(weights) -> int:
 	
 	return 0
 
+func addChaosEffect(effectName : String):
+	chaos_effects.append(effectName)

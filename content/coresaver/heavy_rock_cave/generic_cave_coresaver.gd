@@ -1,5 +1,6 @@
 extends "res://content/caves/Cave.gd"
 
+	
 func onRevealed():
 	find_child("Amb").play()
 	

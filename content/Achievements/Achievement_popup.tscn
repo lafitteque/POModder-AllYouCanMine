@@ -4,7 +4,7 @@
 [ext_resource type="StyleBox" path="res://gui/panels/panel_inside_dark.tres" id="2_bu4lo"]
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/Achievement_popup.gd" id="3_hhao5"]
 
-[node name="Popup" type="PanelContainer" groups=["locale"]]
+[node name="Popup" type="PanelContainer"]
 texture_filter = 1
 offset_right = 92.0
 offset_bottom = 62.0

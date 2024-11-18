@@ -17,7 +17,7 @@ var achievement_stage = {
 	"Prestige" : [],
 	"Assignments" : [],
 	"Relichunt" : [],
-	"Coresaver" : [],
+	"CoreSaver" : [],
 	"MultiplayerLoadoutStage" : [],
 	"TitleStage":[],
 	"LandingSequence":[],
@@ -62,7 +62,7 @@ func change_stage(new_stage : String):
 		var new_child = achievement.instantiate()
 		add_child(new_child)
 		all_children.append(new_child)
-		
+		print("custom achievement loaded : ", new_child.name)
 	
 	if new_stage == "LevelStage":
 		print(Level.mode.name)
@@ -72,7 +72,7 @@ func change_stage(new_stage : String):
 					var new_child = achievement.instantiate()
 					add_child(new_child)
 					all_children.append(new_child)
-			
+					print("custom achievement loaded : ", new_child.name)
 			
 func unlockAchievement(achievementId : String):
 	assert( achievements_unlocked.has(achievementId), "ERROR: You try to unlock an achievement that does not exist.")
