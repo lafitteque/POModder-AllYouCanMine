@@ -308,9 +308,7 @@ func gameModeSelected(id:String):
 			if GameWorld.lastLoadoutsByMode.has(id):
 				setLoadout(GameWorld.lastLoadoutsByMode.get(id))
 		"coresaver":
-			print("coresaver matched")
 			if GameWorld.lastLoadoutsByMode.has(id):
-				print("GameWorld.lastLoadoutsByMode.has(id) OK")
 				var coresaver_loadout = GameWorld.lastLoadoutsByMode.get("relichunt").duplicate()
 				coresaver_loadout.difficulty = 3
 				coresaver_loadout.modeId = "coresaver"
@@ -486,7 +484,6 @@ func fillMapSizes(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
 		mapSizeSelected(conf)			
 		
 func mapSizeSelected(id):
-	print("mapSizeSelected : " , id)
 	resetPersistMetaCooldown()
 	Audio.sound("gui_select")
 	Level.loadout.modeConfig[CONST.MODE_CONFIG_MAP_ARCHETYPE] = id

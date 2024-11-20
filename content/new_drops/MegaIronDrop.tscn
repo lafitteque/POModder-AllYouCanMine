@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://content/drop/MineralDrop.tscn" id="1_i0rh4"]
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/new_drops/MegaIronDrop.gd" id="2_o1hqv"]
-[ext_resource type="Texture2D" uid="uid://c8vk30v2jsr1" path="res://mods-unpacked/POModder-AllYouCanMine/images/mega_iron_smol.png" id="2_phljp"]
+[ext_resource type="Texture2D" uid="uid://co8fpr7i7wd8d" path="res://mods-unpacked/POModder-AllYouCanMine/images/mega_iron_smol.png" id="2_phljp"]
 [ext_resource type="AudioStream" uid="uid://dm60tqk6lu7i0" path="res://content/sounds/drops/Bump2.wav" id="3_17571"]
 [ext_resource type="AudioStream" uid="uid://dko4u08gfx64u" path="res://content/sounds/drops/Irontest_01.wav" id="4_0lw73"]
 [ext_resource type="AudioStream" uid="uid://cec4rwmxtfsmw" path="res://content/sounds/drops/Irontest_02.wav" id="5_dq4yf"]

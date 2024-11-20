@@ -55,7 +55,7 @@ const DROP_FROM_TILES_SCENES := {
 	"nothing" : null
 }
 
-const APRIL_FOOLS_PROBABILITIES = [40.0, 8.0 , 3.0 , 0.5, 1.0 ,20.0]
+const APRIL_FOOLS_PROBABILITIES = [40.0, 8.0 , 3.0 , 0.5, 1.0 ,15.0]
 
 
 var ALL_DROP_NAMES = [CONST.WATER, CONST.IRON,CONST.SAND , "mega_iron"]
@@ -73,14 +73,13 @@ var chaos_effects = ["gravity" , "attractor",\
 				"wave_sooner", "wave_later"]
 				
 				
-const rate_list = [0 , 0.1 , 0.5 , 1 , 3 , 10 , 25 , 50 , 75, 99 ]
+const rate_list = [0 , 0.1 , 0.5 , 0.7 , 3 , 10 , 25 , 50 , 75, 99 ]
 const probability_list = [0 , 0.001 , 0.005 , 0.01 , 0.05 , 0.10 , 0.25 , 0.50, 0.75 , 1 ]
 
 
 func get_endings():
-	#var endings = ["glass" , "heavy_rock", "secret"]
-	#endings.remove_at(randi() % 3)
-	var endings = ["secret" , "glass"]
+	var endings = ["glass" , "heavy_rock", "secret"]
+	endings.remove_at(randi() % 3)
 	return endings
 	
 	

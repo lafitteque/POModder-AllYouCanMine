@@ -22,9 +22,6 @@ func activate():
 	
 	StageManager.get_parent().add_child(label)
 	label.text = tr("chaos."+effect_name)
-	#label.global_position = global_position
-	print(tr("chaos."+effect_name) , "activated")
-	
 	add_child(effect)
 	effect.activate()
 	used = true

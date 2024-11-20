@@ -1,4 +1,21 @@
-extends RelicAttractor
+extends Area2D
+
+var condition_fulfilled = true
+var attraction_speed = 15.0
+var bad_relic = null
+var bad_relic_present = false
+var len_to_move = 1000.0
+
+func _on_body_entered(body):
+	if body is Drop and body.type == "bad_relic":
+		bad_relic = body
+		bad_relic_present = true
+
+
+func _on_body_exited(body):
+	if body is Drop and body.type == "bad_relic":
+		bad_relic = null
+		bad_relic_present = false
 
 func _ready():
 	condition_fulfilled = true
@@ -6,7 +23,15 @@ func _ready():
 
 	
 func _physics_process(delta):
-	super(delta)
+	if !bad_relic_present:
+		return
+	if bad_relic.carriedBy.size() > 0 or  !condition_fulfilled:
+		return
+		
+	var to_move = (global_position - bad_relic.global_position)
+	len_to_move = to_move.length()
+	bad_relic.linear_velocity =  to_move/len_to_move*max(attraction_speed,len_to_move/delta)
+	
 	if len_to_move < 10.0:
 		await get_tree().create_timer(0.2).timeout
 		$"../../Sprites".start_offset = 0.0
@@ -17,7 +42,10 @@ func _physics_process(delta):
 		await get_tree().create_timer(0.6).timeout
 		for relic in get_tree().get_nodes_in_group("relic"):
 			if relic.type == "bad_relic":
-				relic.find_child("Sprite2D").texture = load("res://mods-unpacked/POModder-AllYouCanMine/images/broken_relic.png")
+				var broken_relic = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelic/BadRelicBroken.tscn").instantiate()
+				add_child(broken_relic)
+				broken_relic.global_position = relic.global_position
+				relic.queue_free()
 
 		Data.apply("inventory.relic", 1)
 		Data.apply("monsters.wavepresent", false)

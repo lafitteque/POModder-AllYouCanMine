@@ -14,7 +14,6 @@ func prepareGameMode(modeId, levelStartData):
 		var archetypeName:String = levelStartData.loadout.modeConfig.get(CONST.MODE_CONFIG_MAP_ARCHETYPE, "regular-medium")
 		archetypeName = "coresaver-"+archetypeName.rsplit("-")[1]	
 		levelStartData.mapArchetype = load("res://mods-unpacked/POModder-AllYouCanMine/overwrites/" + archetypeName + ".tres").duplicate()
-		print("loaded archetype for core saver : " , "res://mods-unpacked/POModder-AllYouCanMine/overwrites/" + archetypeName + ".tres")
 	levelStartData.mapArchetype.cobalt_rate *= 1.0 - 0.1 * levelStartData.loadout.difficulty
 
 	if not levelStartData.loadout.worldId or levelStartData.loadout.worldId == "":

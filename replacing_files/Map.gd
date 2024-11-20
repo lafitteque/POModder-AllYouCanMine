@@ -40,8 +40,6 @@ func revealTile(coord:Vector2):
 	tile.coord = coord
 		
 	tile.hardness = tileData.get_hardness(coord.x, coord.y)
-	if typeId == 18:
-		print("debug")
 	tile.type = data_mod.TILE_ID_TO_STRING_MAP.get(typeId, "dirt")
 
 	match tile.type:
@@ -79,7 +77,7 @@ func revealTile(coord:Vector2):
 	# Allow border tiles to fade correctly at edges of the map
 	visibleTileCoords[coord] = typeId
 	
-	if Data.ofOr("assignment.id","") == "aprilfools":
+	if Level.mode and Level.mode.name == "Assignment" and Data.ofOr("assignment.id","") == "aprilfools":
 		if tile.type in [CONST.IRON, CONST.SAND, CONST.WATER,
 		 "detonator", "destroyer" , "mega_iron"]: #Qlafitte Added
 			var vec_list = [\
@@ -91,7 +89,7 @@ func revealTile(coord:Vector2):
 			tile.initResourceSprite(vec_list[rand_index]) #Qlafitte Added
 	
 func addDrop(drop):
-	if Data.ofOr("assignment.id","") == "aprilfools" and\
+	if Level.mode and Level.mode.name == "Assignment" and Data.ofOr("assignment.id","") == "aprilfools" and\
 	("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ): #QLafitte Added
 		var old_position = drop.global_position #QLafitte Added
 		drop = null #QLafitte Added
@@ -104,7 +102,7 @@ func addDrop(drop):
 		if ("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES :#QLafitte Added
 			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))#QLafitte Added
 	
-	if Data.ofOr("assignment.id","") == "big" and("type" in drop) and \
+	if Level.mode and Level.mode.name == "Assignment" and Data.ofOr("assignment.id","") == "big" and("type" in drop) and \
 	drop.type in data_mod.ALL_DROP_NAMES and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ):
 		add_child(drop)	
 		Style.init(drop)
@@ -261,16 +259,19 @@ func generateCaves(minDistanceToCenter := 10):
 			cavePackeScenes.insert(0, preload("res://content/caves/drillicave/DrillbertCave.tscn"))
 	
 	# Added vvvvvvvvv
-			
+	
 	var coresaver_endings = data_mod.get_endings()
 	
-	if Level.loadout.modeId == "coresaver" and coresaver_endings.has("heavy_rock") :
+	var secret_room_tiles = tileData.get_resource_cells_by_id(data_mod.TILE_SECRET_ROOM)
+	var coresaver_is_reloading = secret_room_tiles.size() == 0
+	
+	if !coresaver_is_reloading and  Level.loadout.modeId == "coresaver" and coresaver_endings.has("heavy_rock") :
 		var heavy_rock_cave =  preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.tscn").instantiate()
 		var maxLayer = startingIronCountByLayer.size()
 		addForcedCave(rand, heavy_rock_cave, maxLayer-1, 2)
+		
 
-	if Level.loadout.modeId == "coresaver" and coresaver_endings.has("secret"):
-		var secret_room_tiles = tileData.get_resource_cells_by_id(data_mod.TILE_SECRET_ROOM)
+	if !coresaver_is_reloading and Level.loadout.modeId == "coresaver" and coresaver_endings.has("secret") :
 		for i in range(secret_room_tiles.size()-1,-1,-1):
 			if tileData.get_biomev(secret_room_tiles[i]) >1:
 				secret_room_tiles.pop_at(i)
@@ -281,12 +282,15 @@ func generateCaves(minDistanceToCenter := 10):
 		for cell in secret_room_tiles:
 			if cell.x <= top_left.x and cell.y <= top_left.y :
 				top_left = cell
-		var root_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootCave.tscn").instantiate()#preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootCave.tscn").instantiate()
+		var root_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/RootCave.tscn").instantiate()
 		for coord in tileData.get_resource_cells_by_id(data_mod.TILE_SECRET_ROOM):
 			tileData.set_resourcev(coord, Data.TILE_DIRT_START)
+		root_cave.updateUsedTileCoords()
 		addLandmark(top_left, root_cave)
+		for c in root_cave.tileCoords:
+			var absCoord = Vector2(top_left) + c
+			tileData.clear_resource(absCoord)
 		root_cave.visible = true
-		print("root cave : " , top_left)
 		
 	## Added ^^^^^^^^
 	
@@ -313,7 +317,7 @@ func generateCaves(minDistanceToCenter := 10):
 				cave.queue_free()
 
 	### Added vvvvvvvv	
-	if Level.loadout.modeId == "coresaver" and coresaver_endings.has("glass") :
+	if !coresaver_is_reloading and Level.loadout.modeId == "coresaver" and coresaver_endings.has("glass") :
 		spawn_glass()
 		var core_eater_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_eater_cave/CoreEaterCave.tscn").instantiate()
 		addCaveStartAndDirection(rand, core_eater_cave, Vector2.ZERO, Vector2.DOWN)
@@ -349,7 +353,6 @@ func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_la
 			continue
 		
 		addLandmark(cell, cave)
-		print("landmark added")
 		for c in cave.tileCoords:
 			var absCoord = Vector2(cell) + c
 			tileData.clear_resource(absCoord)
@@ -373,7 +376,6 @@ func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_la
 				var absCoord = Vector2(cell) + c
 				tileData.clear_resource(absCoord)
 			addLandmark(cell, cave)
-			print("landmark added")
 			return
 	
 	for _i in 50:
@@ -389,7 +391,6 @@ func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_la
 			continue
 		
 		addLandmark(cell, cave)
-		print("landmark added")
 		for c in cave.tileCoords:
 			var absCoord = Vector2(cell) + c
 			tileData.clear_resource(absCoord)
@@ -402,7 +403,7 @@ func addCaveStartAndDirection(rand, cave, start, direction : Vector2):
 	var max_y = 0
 	for i in range(1000):
 		var pos = Vector2(randi_range(-15,15),max_y+5)
-		if $MapData.get_resourcev(pos) != 19 and $MapData.get_biomev(pos) != -1:
+		if not( $MapData.get_resourcev(pos) in [16, 17, 19]) and $MapData.get_biomev(pos) != -1:
 			max_y +=2
 			
 	var cell
@@ -448,7 +449,7 @@ func spawn_glass():
 	var max_y = 0
 	for i in range(1000):
 		var pos = Vector2(randi_range(-15,15),max_y+5)
-		if $MapData.get_resourcev(pos) != 19 and $MapData.get_biomev(pos) != -1:
+		if not( $MapData.get_resourcev(pos) in [16, 17, 19]) and $MapData.get_biomev(pos) != -1:
 			max_y +=2
 			
 	for c in chosen_positions:
@@ -482,7 +483,7 @@ func find_wall_in_direction(start,direction,max_distance_from_start = 100):
 		last_available_position = start
 		# Setting depth and then checking all tiles to the left / right to see where the glass can be placed
 		while abs(moved.x)+abs(moved.y) < max_distance_from_start:
-			if tileData.get_resourcev(start + moved ) == 19 and last_type != 19:
+			if tileData.get_resourcev(start + moved ) == 19 and not( last_type in [16, 17, 19]):
 				last_available_position = start + moved
 			last_type = tileData.get_resourcev(start + moved )
 			moved += direction

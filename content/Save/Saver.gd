@@ -40,12 +40,10 @@ func change_stage():
 	update_progress_achievements()
 	
 func propertyChanged(property:String, oldValue, newValue):
-	print("property changed : " , property ," ; ", oldValue , " ; " , newValue)
 	Data.listen(self, "game.over")
 	match property:
 		"game.over":
 			if Level and Level.dome != null and Data.ofOr("game.over","") == "won" and Level.loadout.modeId == "coresaver":
-				print("save data game.over")
 				var keeperId = Level.loadout.keepers.front().keeperId
 				var mapsize = Level.loadout.modeConfig.get(CONST.MODE_CONFIG_MAP_ARCHETYPE, "")
 				match Level.loadout.difficulty:
@@ -59,7 +57,6 @@ func propertyChanged(property:String, oldValue, newValue):
 						save_dict[saver_progress_coresaver_id][keeperId][Level.domeId()][mapsize] = 4
 				save_data()
 			elif Level and Level.dome != null and Data.ofOr("game.over","") == "won" and Level.loadout.modeId == "relichunt":
-				print("save data game.over")
 				var keeperId = Level.loadout.keepers.front().keeperId
 				var mapsize = Level.loadout.modeConfig.get(CONST.MODE_CONFIG_MAP_ARCHETYPE, "")
 				match Level.loadout.difficulty:
@@ -75,7 +72,6 @@ func propertyChanged(property:String, oldValue, newValue):
 				# Game Duration : GameWorld.runTime
 				# Inventory : Data.of(inventory.")
 				#print("dome name : " , Level.domeId())
-				#save_dict[saver_progress_id][]
 
 		
 func load_data():

@@ -30,7 +30,6 @@ func _ready():
 	data_achievements = get_node("/root/ModLoader/POModder-AllYouCanMine").data_achievements
 	
 	for info in data_achievements.info_achievements:
-		print("res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/" + info[1].to_lower()+ ".tscn")
 		achievement_stage[info[0]].append(load("res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/" + info[1].to_lower()+ ".tscn"))
 	
 	
@@ -62,18 +61,15 @@ func change_stage(new_stage : String):
 		var new_child = achievement.instantiate()
 		add_child(new_child)
 		all_children.append(new_child)
-		print("custom achievement loaded : ", new_child.name)
 	
 	if new_stage == "LevelStage":
-		print(Level.mode.name)
 		for key in achievement_stage.keys():
 			if Level.mode.name == key:
 				for achievement in achievement_stage[key]:
 					var new_child = achievement.instantiate()
 					add_child(new_child)
 					all_children.append(new_child)
-					print("custom achievement loaded : ", new_child.name)
-			
+					
 func unlockAchievement(achievementId : String):
 	assert( achievements_unlocked.has(achievementId), "ERROR: You try to unlock an achievement that does not exist.")
 	if achievements_unlocked[achievementId]:

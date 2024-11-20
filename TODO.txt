@@ -1,26 +1,27 @@
 VISUELS / SONS:
-- Une image pour le mod
+- Une image pour le mod 
 - Une vidéo pour le mod (+ compte ytube)
-
+- image pour le mode de jeu ingame
 
 BALANCE :
 - Tout tester
 
 
-
-AUTRES :
-- Essayer d'enlever un max le code d'origine dans les extensions et remplacements
-
-
-
-Pour l'autre mod :
-- ajouter un cap au nombre de shroom men dans l'autre mod + code de drop bearer et drop bearer manager
-- resources et pas ressources dans les trads dans l'autre mod
-
-
+BUG :
+- Un gadget a spawn sur la coreeater cave
+- Broken relic image ne veut pas apparaitre Quand compilé
 
 
 PLUS TARD :
 - troll resources
 - Tutos pour achievements et chaos
 - ajouter cables cassés à bad_relic
+- Assignment : dans le noir
+- Assignment : Tuiles resources visibles que par le contour ( enlever le sprite)
+- Tile qui change la dureté des roches autour
+- perso explosions qd il tombe
+- Etendre le gamemode avec des branches de spécialisations à chaque game (tirage d'une version du perso unique à chaque run)
+- Boss
+- Vagues spéciales à un changement de biome
+- Tiles qui créent un chemin facile (un détour de tiles moins solides qui incitent le joueur à ne pas faire des lignes droites)
+- Assignments défis de combat

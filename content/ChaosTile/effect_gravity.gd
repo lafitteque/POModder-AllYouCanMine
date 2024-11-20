@@ -10,5 +10,7 @@ func activate():
 	get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.update_chaos_achievement()
 	
 	await get_tree().create_timer(life_time).timeout
+	for drop in get_tree().get_nodes_in_group("drops"):
+		drop.apply_central_impulse(Vector2(0, 20).rotated(randf() * TAU))
 	get_parent().kill()
 	

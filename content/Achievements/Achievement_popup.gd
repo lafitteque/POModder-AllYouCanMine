@@ -14,8 +14,6 @@ var cooldown_depop = 7.0
 func _ready():
 	position = get_viewport().get_visible_rect().size - Vector2(size.x,0)
 	target_pos = get_viewport().get_visible_rect().size - size
-	print('start : ' , position)
-	print('target : ' , target_pos)
 	Style.init(self)
 
 func set_scale(value) -> void:

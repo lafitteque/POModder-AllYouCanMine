@@ -3,7 +3,6 @@ extends HBoxContainer
 var sprite_width = 18
 
 func set_map_size_to(map_size : String , col : int):
-	print(map_size, col)
 	match map_size:
 		CONST.MAP_SMALL:
 			$small.texture = load("res://mods-unpacked/POModder-AllYouCanMine/images/progress_map" + str(col) + ".png")

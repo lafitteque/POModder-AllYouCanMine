@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" path="res://content/sounds/monster/ambience/BattleAmbience.tscn" id="12_xbjjr"]
 [ext_resource type="PackedScene" path="res://systems/audio/EffectHandler.tscn" id="13_r3prg"]
 [ext_resource type="PackedScene" path="res://stages/level/PlayerCanvas.tscn" id="14_i5beo"]
-[ext_resource type="PackedScene" uid="uid://rg7v5rvndkia" path="res://stages/level/Cheats.tscn" id="15_my01q"]
+[ext_resource type="PackedScene" path="res://stages/level/Cheats.tscn" id="15_my01q"]
 
 [sub_resource type="ShaderMaterial" id="1"]
 resource_local_to_scene = true

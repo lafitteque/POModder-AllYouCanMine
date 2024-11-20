@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://c4606cr5dhhaj"]
 
-[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.gd" id="1_hvv2y"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/generic_cave_coresaver.gd" id="1_jjani"]
 [ext_resource type="Script" path="res://content/map/Parallaxer.gd" id="2_vwlk4"]
 [ext_resource type="Texture2D" uid="uid://c073eieh2x0qc" path="res://mods-unpacked/POModder-AllYouCanMine/images/root_cave/Fond.png" id="3_xpyq4"]
 [ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="4_d2mtr"]
@@ -87,7 +87,7 @@ radius = 30.0
 [node name="RootCave" type="Node2D" groups=["cave", "saveable", "unstyled"]]
 z_index = -40
 texture_filter = 1
-script = ExtResource("1_hvv2y")
+script = ExtResource("1_jjani")
 
 [node name="Sprites" type="Control" parent="."]
 clip_contents = true

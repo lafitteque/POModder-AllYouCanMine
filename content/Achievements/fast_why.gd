@@ -36,7 +36,6 @@ func _on_timer_timeout():
 		
 	if min_speed < speed and speed < max_speed:
 		total_distance += speed*delta
-		print(total_distance)
 	else :
 		total_distance = 0
 		

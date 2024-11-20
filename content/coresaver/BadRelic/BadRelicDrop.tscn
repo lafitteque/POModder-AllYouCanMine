@@ -1,14 +1,15 @@
-[gd_scene load_steps=20 format=3 uid="uid://vhoyyba7f7g5"]
+[gd_scene load_steps=21 format=3 uid="uid://vhoyyba7f7g5"]
 
 [ext_resource type="Script" path="res://content/drop/Drop.gd" id="1_wsgvi"]
 [ext_resource type="Texture2D" uid="uid://b348gpkclhwkk" path="res://content/drop/relic/relic.png" id="2_4b6at"]
+[ext_resource type="Texture2D" uid="uid://dj42bdhg0sm1a" path="res://mods-unpacked/POModder-AllYouCanMine/images/broken_relic.png" id="2_rqmia"]
 [ext_resource type="Texture2D" uid="uid://b87gy6ps3waj1" path="res://content/drop/relic/carried.png" id="3_qxaqt"]
 [ext_resource type="Material" path="res://content/shared/HighlightShader.tres" id="4_k1bef"]
 [ext_resource type="Texture2D" uid="uid://chmaxs735l6hy" path="res://content/drop/relic/focussed.png" id="5_pckle"]
 [ext_resource type="PackedScene" path="res://content/shared/drops/DropEnterTrigger.tscn" id="6_8yprt"]
 [ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="7_pcpol"]
 [ext_resource type="Material" path="res://content/drop/relic/distortion_material.tres" id="8_jw8ij"]
-[ext_resource type="Texture2D" uid="uid://d1dgwf16tj73a" path="res://mods-unpacked/POModder-AllYouCanMine/images/bad_distortion.png" id="9_cbmnh"]
+[ext_resource type="Texture2D" uid="uid://dltd4r56wpafb" path="res://mods-unpacked/POModder-AllYouCanMine/images/bad_distortion.png" id="9_cbmnh"]
 [ext_resource type="AudioStream" uid="uid://rdycunoibxav" path="res://content/sounds/Locations/ChamberRelic/Wave_01.wav" id="10_py2vp"]
 [ext_resource type="AudioStream" uid="uid://ddt6mttwwpuy6" path="res://content/sounds/relic-pulse.wav" id="11_s4bjd"]
 
@@ -125,6 +126,11 @@ independentAcceleration = 0.2
 additionalSlowdown = 0.4
 carryableType = "gadget"
 carryInfluenceSize = 2.0
+
+[node name="Broken" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0.5, 0.5)
+texture = ExtResource("2_rqmia")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

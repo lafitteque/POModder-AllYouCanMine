@@ -1,5 +1,4 @@
 extends Area2D
-class_name RelicAttractor
 
 var condition_fulfilled = true
 var attraction_speed = 15.0

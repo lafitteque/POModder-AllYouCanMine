@@ -1,20 +1,20 @@
 [gd_scene load_steps=67 format=3 uid="uid://dricu67wlqrad"]
 
-[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/generic_cave_coresaver.gd" id="1_4w3j8"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RootCave/generic_cave_coresaver.gd" id="1_klgdu"]
 [ext_resource type="Script" path="res://content/map/Parallaxer.gd" id="2_foc7x"]
-[ext_resource type="Texture2D" uid="uid://dm0ekwi10vwlq" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/Fond.png" id="3_b4sts"]
-[ext_resource type="Texture2D" uid="uid://plpq75iff41y" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/Colonnes_fond.png" id="4_dt330"]
+[ext_resource type="Texture2D" uid="uid://xkc8ra0lp1g2" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/Fond.png" id="3_b4sts"]
+[ext_resource type="Texture2D" uid="uid://bp87x0cxpjpme" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/Colonnes_fond.png" id="4_dt330"]
 [ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="4_vjnwf"]
 [ext_resource type="AudioStream" uid="uid://g6cg4bul73qo" path="res://content/sounds/monster/Shifter_amb.wav" id="5_3bibd"]
-[ext_resource type="Texture2D" uid="uid://bvqh3et2pqljw" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/eater_3.png" id="5_7i2wc"]
-[ext_resource type="Texture2D" uid="uid://ccij32578ow4k" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/Colonnes_devant.png" id="5_wtnhi"]
-[ext_resource type="Texture2D" uid="uid://dv6r1aciowa8b" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/Devant.png" id="6_8fdws"]
-[ext_resource type="Texture2D" uid="uid://f7vav7btm1sb" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/eater_4.png" id="6_hb8yi"]
-[ext_resource type="Texture2D" uid="uid://jl8hixk3kwva" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/eater_1.png" id="7_ua76b"]
-[ext_resource type="Texture2D" uid="uid://xorgtdrlp7k0" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/eater_2.png" id="8_7pqh4"]
+[ext_resource type="Texture2D" uid="uid://bvj1k7vut68fy" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/eater_3.png" id="5_7i2wc"]
+[ext_resource type="Texture2D" uid="uid://cevovvuak4gy8" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/Colonnes_devant.png" id="5_wtnhi"]
+[ext_resource type="Texture2D" uid="uid://b5a4qyfvfj6pc" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/Devant.png" id="6_8fdws"]
+[ext_resource type="Texture2D" uid="uid://bksg2ba2mv2it" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/eater_4.png" id="6_hb8yi"]
+[ext_resource type="Texture2D" uid="uid://bqfpmpgrsnmvb" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/eater_1.png" id="7_ua76b"]
+[ext_resource type="Texture2D" uid="uid://b3e4ejogcgmae" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/eater_2.png" id="8_7pqh4"]
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_eater_cave/CoreEaterAttractor.gd" id="8_fjrpt"]
-[ext_resource type="Texture2D" uid="uid://c1sfu247l272t" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/alpha.png" id="10_4x354"]
-[ext_resource type="Texture2D" uid="uid://0fmi1kmqtk1i" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/ending-Sheet.png" id="15_iivcf"]
+[ext_resource type="Texture2D" uid="uid://fkosnf1nn3ae" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/alpha.png" id="10_4x354"]
+[ext_resource type="Texture2D" uid="uid://dw4maiq106l08" path="res://mods-unpacked/POModder-AllYouCanMine/images/Core_eater_cave/ending-Sheet.png" id="15_iivcf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4y767"]
 atlas = ExtResource("5_7i2wc")
@@ -320,9 +320,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_w0yy2"]
-radius = 30.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jxjto"]
 atlas = ExtResource("15_iivcf")
 region = Rect2(0, 0, 164, 164)
@@ -399,10 +396,13 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_w0yy2"]
+radius = 30.0
+
 [node name="CoreEaterCave" type="Node2D" groups=["cave", "saveable", "unstyled"]]
 z_index = -40
 texture_filter = 1
-script = ExtResource("1_4w3j8")
+script = ExtResource("1_klgdu")
 
 [node name="Sprites" type="Control" parent="."]
 clip_contents = true
@@ -455,6 +455,12 @@ position = Vector2(-22, -22)
 texture = ExtResource("6_8fdws")
 centered = false
 
+[node name="ending" type="AnimatedSprite2D" parent="Sprites"]
+visible = false
+z_index = 42
+position = Vector2(17, 28)
+sprite_frames = SubResource("SpriteFrames_34w11")
+
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(16, 27)
 metadata/_edit_group_ = true
@@ -487,12 +493,6 @@ position = Vector2(-4, -17)
 scale = Vector2(0.841463, 0.958333)
 texture = ExtResource("10_4x354")
 centered = false
-
-[node name="ending" type="AnimatedSprite2D" parent="."]
-visible = false
-z_index = 42
-position = Vector2(17, 28)
-sprite_frames = SubResource("SpriteFrames_34w11")
 
 [connection signal="body_entered" from="Marker2D/RelicAttractor" to="Marker2D/RelicAttractor" method="_on_body_entered"]
 [connection signal="body_exited" from="Marker2D/RelicAttractor" to="Marker2D/RelicAttractor" method="_on_body_exited"]

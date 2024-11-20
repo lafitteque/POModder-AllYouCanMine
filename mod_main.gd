@@ -35,6 +35,7 @@ func _ready():
 
 		
 func modInit():
+	#GameWorld.devMode = true
 	var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
 	var pathToModYamlProperties : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/properties.yaml"
 	Data.parsePropertiesYaml(pathToModYamlProperties)
@@ -132,7 +133,6 @@ func _on_level_ready():
 	
 	var mining_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mining_data.tscn").instantiate()
 	add_child(mining_data)
-		
 	## Actions that need an action from StageManagerExtender
 	await get_tree().create_timer(0.5).timeout
 	if data_mod.generation_data["drop_bearer_rate"] > 0:

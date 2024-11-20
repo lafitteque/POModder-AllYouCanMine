@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8l1okn0xkhy3"]
+
+[ext_resource type="Texture2D" uid="uid://b13xi457vam1n" path="res://mods-unpacked/POModder-AllYouCanMine/images/broken_relic.png" id="2_kxk26"]
+
+[node name="BadRelicBroken" type="Sprite2D"]
+modulate = Color(1, 0.490196, 0.490196, 1)
+z_index = 21
+texture_filter = 1
+texture = ExtResource("2_kxk26")

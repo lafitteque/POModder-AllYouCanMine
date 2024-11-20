@@ -10,7 +10,10 @@ func _on_body_entered(body):
 			await get_tree().create_timer(0.2).timeout
 			for relic in get_tree().get_nodes_in_group("relic"):
 				if relic.type == "bad_relic":
-					relic.find_child("Sprite2D").texture = load("res://mods-unpacked/POModder-AllYouCanMine/images/broken_relic.png")
+					var broken_relic = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelic/BadRelicBroken.tscn").instantiate()
+					add_child(broken_relic)
+					broken_relic.global_position = relic.global_position
+					relic.queue_free()
 			Data.apply("monsters.wavepresent", false)
 			get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("HEAVY_ROCK_ENDING")
 			

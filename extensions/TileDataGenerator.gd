@@ -56,15 +56,15 @@ func get_generation_data(a):
 	var chaos_rate = rate_list[chaos_rate_index]
 	
 	
-	print("raw max_tile_count_deviation : ", a.max_tile_count_deviation)
-	print("raw viability_thin_top_width : ", a.viability_thin_top_width)
-	print("raw viability_thin_top_length : " , a.viability_thin_top_length)
-	print("computed detonator_rate " , detonator_rate)
-	print("computed destroyer_rate " , destroyer_rate)
-	print("computed mega_iron_rate " , mega_iron_rate)
-	print("computed bad_relics " , bad_relics)
-	print("computed secret_rooms " , secret_rooms)
-	print("computed chaos_rate " , chaos_rate)
+	#print("raw max_tile_count_deviation : ", a.max_tile_count_deviation)
+	#print("raw viability_thin_top_width : ", a.viability_thin_top_width)
+	#print("raw viability_thin_top_length : " , a.viability_thin_top_length)
+	#print("computed detonator_rate " , detonator_rate)
+	#print("computed destroyer_rate " , destroyer_rate)
+	#print("computed mega_iron_rate " , mega_iron_rate)
+	#print("computed bad_relics " , bad_relics)
+	#print("computed secret_rooms " , secret_rooms)
+	#print("computed chaos_rate " , chaos_rate)
 	
 	return [detonator_rate , mega_iron_rate , mega_iron_rate, bad_relics, secret_rooms,chaos_rate]
 	

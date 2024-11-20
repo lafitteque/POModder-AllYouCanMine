@@ -24,7 +24,6 @@ func _on_timer_timeout():
 	var relic_chamber = StageManager.currentStage.find_child("RelicChamber",true,false)
 	if relic_chamber and relic_chamber.currentState>=2 and !GameWorld.paused:
 		wait_time+= delta 
-		print("wait_time : " , wait_time)
 	if wait_time>=time_to_unlock:
 		get_parent().unlockAchievement(id)
 		timer.queue_free()

@@ -2,7 +2,7 @@
 	"name": "AllYouCanMine",
 	"namespace": "POModder",
 	"version_number": "1.0.0",
-	"description": "Extension to the main game",
+	"description": "Adds new assignments, new tiles, new areas in the loadout, new custom ingame achievements and a new gamemode.",
 	"website_url": "https://",
 	"dependencies": [],
 	"extra": {

@@ -15,12 +15,10 @@ func stage_changed():
 	#await get_tree().create_timer(1)
 	saver.change_stage()
 	custom_achievements_manager.change_stage(stage.name)
-	print(stage.name)
 	match stage.name:
 		"MultiplayerLoadoutStage":
 			#StageManager.sceneCache["stages/loadout/multiplayerloadoutmod"] = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutStageMod.tscn")
 			StageManager.startStage("mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutMod")
 		"LandingSequence":
-			print("Update generation data")
 			data_mod.update_generation_data(stage.levelStartData.mapArchetype)
 

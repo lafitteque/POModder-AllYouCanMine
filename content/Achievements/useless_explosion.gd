@@ -29,7 +29,6 @@ func _ready():
 func _on_timer_timeout():
 	for carryable in get_tree().get_nodes_in_group("carryable"):
 		if !("untilExplosion" in carryable and 'animationSuffix' in carryable) :
-			print(carryable.name)
 			return
 		if is_instance_valid(second_timer):
 			return

@@ -6,6 +6,60 @@ var chaos = null
 
 @onready var data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
 
+func deserialize(data: Dictionary):
+	super(data)
+	
+	if ! type in ["mega_iron", "detonator", "destroyer", "bad_relic", "glass", "fake_border", "secret_room", "chaos"]:
+		return
+		
+	match type :
+		"mega_iron": #QLafitte Added
+			set_meta("destructable", true)
+			customInitResourceSprite(Vector2(randi_range(0,1),1))
+			$AnimatedSprite2D.queue_free()
+		"detonator": #QLafitte Added
+			set_meta("destructable", true)
+			detonator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/detonator_tile/Detonator.tscn").instantiate()#QLafitte Added
+			StageManager.currentStage.MAP.add_child(detonator)#QLafitte Added
+			detonator.global_position = global_position#QLafitte Added
+			customInitResourceSprite(Vector2(1,0))
+			$AnimatedSprite2D.queue_free()
+		"destroyer":
+			set_meta("destructable", true)
+			destroyer = load("res://mods-unpacked/POModder-AllYouCanMine/content/destroyer_tile/Destroyer.tscn").instantiate()#QLafitte Added
+			StageManager.currentStage.MAP.add_child(destroyer)#QLafitte Added
+			destroyer.global_position = global_position#QLafitte Added
+			customInitResourceSprite(Vector2(2,0))	
+			$AnimatedSprite2D.queue_free()	
+		"chaos": #QLafitte Added
+			set_meta("destructable", true)
+			chaos = preload("res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTile.tscn").instantiate()#QLafitte Added
+			StageManager.currentStage.MAP.add_child(chaos)#QLafitte Added
+			chaos.global_position = global_position#QLafitte Added
+			customInitResourceSprite(Vector2(2,1))
+			$AnimatedSprite2D.queue_free()
+		"bad_relic":
+			set_meta("destructable", true)
+			customInitResourceSprite(Vector2(3,randi_range(0,1)))
+			$AnimatedSprite2D.queue_free()
+		"glass":
+			set_meta("destructable", true)
+			play_animation()
+		"fake_border":
+			set_meta("destructable", true)
+			res_sprite.hide()
+			res_sprite.queue_free()
+			res_sprite = null
+			$AnimatedSprite2D.queue_free()
+		"secret_room":
+			set_meta("destructable", true)
+			res_sprite.hide()
+			res_sprite.queue_free()
+			res_sprite = null
+			$AnimatedSprite2D.queue_free()
+		_ :
+			$AnimatedSprite2D.queue_free()
+	
 func setType(type:String):
 	if hardness == 7 and type == CONST.BORDER:
 		set_meta("destructable", true)
