@@ -1,15 +1,17 @@
 VISUELS / SONS:
 - Une image pour le mod 
 - Une vidéo pour le mod (+ compte ytube)
-- image pour le mode de jeu ingame
 
 BALANCE :
 - Tout tester
 
 
 BUG :
-- Un gadget a spawn sur la coreeater cave
-- Broken relic image ne veut pas apparaitre Quand compilé
+- Un gadget a spawn sur la coreeater cave (balek?)
+
+Autre mod :
+- gérer les resources rate des challenges (weird notamment)
+- Ajouter serialize et deserialize aux tiles
 
 
 PLUS TARD :
@@ -25,3 +27,7 @@ PLUS TARD :
 - Vagues spéciales à un changement de biome
 - Tiles qui créent un chemin facile (un détour de tiles moins solides qui incitent le joueur à ne pas faire des lignes droites)
 - Assignments défis de combat
+- Redessiner core eater cave + core eater ending
+- Assignment avec de la roche très dure et que blastmining + blastsuit boostés
+- Assignment avec que les drills (foreur) mais avec pleins de mini drills
+- Assignment tiny map

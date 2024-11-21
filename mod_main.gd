@@ -127,7 +127,11 @@ func manage_overwrites():
 	var level_stage = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/LevelStage.tscn")
 	level_stage.take_over_path("res://stages/level/LevelStage.tscn")
 	
-
+	
+	### Other stuff
+	
+	var coresaver_icon = preload("res://mods-unpacked/POModder-AllYouCanMine/images/coresaver.png")
+	coresaver_icon.take_over_path("res://content/icons/loadout_coresaver.png")
 	
 func _on_level_ready():
 	
