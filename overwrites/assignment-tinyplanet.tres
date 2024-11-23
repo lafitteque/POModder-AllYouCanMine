@@ -1,0 +1,73 @@
+[gd_resource type="Resource" script_class="MapArchetype" load_steps=5 format=3 uid="uid://50dq0r0ap2u2"]
+
+[ext_resource type="Script" path="res://content/map/generation/MapArchetype.gd" id="1"]
+[ext_resource type="FastNoiseLite" path="res://content/map/generation/noises/viability_large_noise.tres" id="2"]
+[ext_resource type="FastNoiseLite" path="res://content/map/generation/noises/viability_small_noise.tres" id="3"]
+[ext_resource type="FastNoiseLite" path="res://content/map/generation/noises/hardness_noise.tres" id="4"]
+
+[resource]
+script = ExtResource("1")
+viabilityLargeRange = Vector3(180, 30, 1.5)
+viabilitySmallRange = Vector3(200, 20, 1.5)
+generateResources = true
+width = 20
+depth = 25
+tileCount = 400
+max_tile_count_deviation = 0.015
+viability_large_noise = ExtResource("2")
+viability_small_noise = ExtResource("3")
+hardness_noise = ExtResource("4")
+first_biome_size = 320
+biome_max_size = 550
+biome_size_multiplier = 1
+biome_size_addition = 120
+biome_cleanup_passes = 1
+viability_large_noise_strength = 182.076
+viability_small_noise_strength = 171.253
+viability_base = 150.0
+viability_thin_top_length = 10.0
+viability_thin_top_width = 22.0
+viability_thin_top_strength = 200.0
+viability_stop_depth_factor = 0.1
+viability_stop_width_factor = 0.07
+keep_core_strength = 2.0
+keep_core_falloff_y = 0.5
+stop_depth_at_fraction = 0.5
+stop_depth_factor = 10.0
+stop_depth_exponent = 2.0
+stop_width_at_fraction = 0.5
+stop_width_factor = 10.0
+stop_width_exponent = 2.0
+entry_tightening_until = 0.6
+entry_tightening_y_exp = 3.0
+entry_tightening_x_exp = 2.0
+thin_top_factor = 32.0
+hardness_scale = 5.0
+hardness_offset = 0.0
+hardness_min = 0
+hardness_max = 4
+iron_cluster_rate = 9.1
+water_rate = 8.0
+cobalt_rate = 3.0
+iron_cluster_removal_rate = 0.1
+water_removal_rate = 0.0
+cobalt_removal_rate = 0.0
+iron_cluster_size_base = 1.5
+iron_cluster_size_per_y = 0.2
+iron_cluster_size_randomness = 0.02
+relics = 1
+relic_switches = 2
+relic_switch_distance_range = Vector2(10, 20)
+relic_switch_angle_range_pi = Vector2(-0.2, 0.2)
+relic_depth_step = 1
+gadgets = 2
+gadget_first_depth = 15
+gadget_depth_step = 17
+powercores = 0
+powercore_first_depth = 15
+powercore_depth_step = 17
+hole_size_base = 5.0
+hole_size_per_biome = 1.0
+hole_size_randomness = 0.3005
+holes_per_biome = 2
+holes_per_biome_randomness = 0.0

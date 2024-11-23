@@ -14,6 +14,17 @@ Autre mod :
 - Ajouter serialize et deserialize aux tiles
 
 
+
+Traductions :
+- traduire les titres des upgrades de pyromaniac (blast et suit)
+
+Images : 
+- Recopier images suit blaster et blast mining pour pyromaniac upgrades
+
+
+BUGS:
+- Faire en sorte que worldmodifierpyromaniac fonctionne
+
 PLUS TARD :
 - troll resources
 - Tutos pour achievements et chaos

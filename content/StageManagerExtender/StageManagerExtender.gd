@@ -15,6 +15,10 @@ func stage_changed():
 	#await get_tree().create_timer(1)
 	saver.change_stage()
 	custom_achievements_manager.change_stage(stage.name)
+	
+	if stage.name != "LevelStage":
+		Engine.time_scale = 1
+		
 	match stage.name:
 		"MultiplayerLoadoutStage":
 			#StageManager.sceneCache["stages/loadout/multiplayerloadoutmod"] = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutStageMod.tscn")

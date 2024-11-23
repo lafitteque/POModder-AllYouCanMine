@@ -338,8 +338,6 @@ func gameModeSelected(id:String):
 
 		
 func updateBlockVisibility(forceRebuild := false):
-	super()
-	return
 	if not initialized:
 		return
 		

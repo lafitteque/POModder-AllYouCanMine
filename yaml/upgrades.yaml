@@ -1,0 +1,102 @@
+
+
+
+worldmodifierpyromaniac:
+  type: worldmodifier
+  gadgets: [suitblasterassignment, blastminingassignment]
+  eraseupgradelimits: [mining]
+  
+blastMiningAssignment:
+  type: gadget
+  scenes: 
+    cellar: content/gadgets/blastMining/MiningStation.tscn
+  addslots: [blastminingsupplement]
+  takeslots: [cellar]
+  propertyChanges:
+    - blastMining.growthTime = 1.0
+    - blastMining.radius = 2.5
+    - blastMining.explodeOnImpact = false/h
+    - blastMining.waterPerCharge = 1
+    - blastMining.damage = 5000/h
+    - blastMining.stickyCharge = false/h
+    - blastMining.bombsize = 1
+    - blastMining.bombs = 1
+blastMiningBlastAssignment1:
+  cost: iron=2
+  propertyChanges: 
+    - blastMining.radius = 3.5
+    - blastMining.bombsize += 1
+  predecessors: [blastMiningAssignment]
+blastMiningBlastAssignment2:
+  cost: iron=4
+  propertyChanges: 
+    - blastMining.radius = 4.0
+    - blastMining.bombsize += 1
+  predecessors: [blastMiningBlastAssignment1]
+blastMiningBlastAssignment3:
+  cost: iron=6
+  propertyChanges: 
+    - blastMining.radius = 4.5
+    - blastMining.bombsize += 1
+  predecessors: [blastMiningBlastAssignment2]
+blastMiningProductionTimeAssignment1:
+  cost: iron=2
+  repeatable:
+    - times = 3
+    - cost.iron += 2
+  propertyChanges: 
+    - blastMining.growthTime -= 0.2
+  predecessors: [blastMiningBlastAssignment1]
+blastMiningStickyChargeAssignment:
+  cost: iron=2
+  propertyChanges: 
+    - blastMining.stickyCharge = true
+  locks: [blastMiningImpactDetonation]
+  predecessors: [blastMiningAssignment]
+blastMiningImpactDetonationAssignment:
+  cost: iron=2
+  propertyChanges: 
+    - blastMining.explodeOnImpact = true
+  locks: [blastMiningStickyCharge]
+  predecessors: [blastMiningAssignment]
+
+
+suitblasterAssignment:
+  type: gadget
+  scenes:
+    keepersuit: content/gadgets/suitblaster/SuitBlaster.tscn
+    hud: content/gadgets/suitblaster/SuitBlasterHud.tscn
+  addslots: [suitblastersupplement]
+  takeslots: [keepersuit]
+  propertyChanges:
+    - suitblaster.damage = 5000
+    - suitblaster.chargespeed = 2.0
+    - suitblaster.maxcharge = 1.0
+    - suitblaster.chargespeedpercharge = 0.0/h
+    - suitblaster.radius = 1.5
+    - suitblaster.directionalexplosions = false/h
+suitblasterRadiusAssignment:
+  cost: iron=2
+  repeatable:
+    - times = 4
+    - cost.iron += 3
+  propertyChanges: 
+    - suitblaster.radius += 0.5
+  predecessors: [suitblasterMaxChargeAssignment]
+suitblasterMaxChargeAssignment:
+  cost: iron=2
+  propertyChanges: 
+    - suitblaster.maxcharge += 1.0
+    - suitblaster.chargespeedpercharge = 0.25
+  repeatable:
+    - times = 5
+    - cost.iron += 3
+  predecessors: [suitblasterAssignment]
+suitblasterSpeedAssignment1:
+  cost: iron=2
+    repeatable:
+    - times = 5
+    - cost.iron += 3
+  propertyChanges: 
+    - suitblaster.chargespeed += 0.5
+  predecessors: [suitblasterAssignment]

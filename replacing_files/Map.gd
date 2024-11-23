@@ -16,6 +16,13 @@ func revealTile(coord:Vector2):
 	var typeId:int = tileData.get_resource(coord.x, coord.y)
 	var invalids := []
 	
+	### if tile is marker iron (in order to have exactly one iron per layer
+	### used to know the layer numner), remove iron
+	if Data.ofOr("assignment.id","") == "speleologist" and typeId == Data.TILE_IRON:
+		typeId = Data.TILE_DIRT_START
+		tileData.set_resourcev(Vector2(coord.x, coord.y), Data.TILE_DIRT_START) 
+		tileData.set_hardnessv(Vector2(coord.x, coord.y), 1) 
+		
 	if tileRevealedListeners.has(coord):
 		for listener in tileRevealedListeners[coord]:
 			if is_instance_valid(listener):
@@ -268,7 +275,7 @@ func generateCaves(minDistanceToCenter := 10):
 	if !coresaver_is_reloading and  Level.loadout.modeId == "coresaver" and coresaver_endings.has("heavy_rock") :
 		var heavy_rock_cave =  preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.tscn").instantiate()
 		var maxLayer = startingIronCountByLayer.size()
-		addForcedCave(rand, heavy_rock_cave, maxLayer-1, 2)
+		addForcedCave(rand, heavy_rock_cave, maxLayer-1, 2,false)
 		
 
 	if !coresaver_is_reloading and Level.loadout.modeId == "coresaver" and coresaver_endings.has("secret") :
@@ -294,6 +301,31 @@ func generateCaves(minDistanceToCenter := 10):
 		
 	## Added ^^^^^^^^
 	
+	if Data.ofOr("assignment.id","") == "speleologist":
+		cavePackeScenes = []
+		for cave in cavePackeScenes:
+			print(cave.instantiate().name)
+		var caves = [preload("res://content/caves/treecave/IronTreeCave.tscn"),
+			preload("res://content/caves/cobaltcave/CobaltCave.tscn"),
+			preload("res://content/caves/watercave/WaterCave.tscn")]
+			
+		var availableCaves:Array
+		var caveCount := {}
+		var maxLayer = startingIronCountByLayer.size()
+		
+		for cave in caves:
+			for i in maxLayer:
+				cavePackeScenes.insert(0, cave)
+
+		for layerIndex in maxLayer+1:
+			if availableCaves.is_empty():
+				availableCaves = cavePackeScenes.duplicate()
+			for cavePackedScene in availableCaves:
+				var cave = cavePackedScene.instantiate() # yeah this is shit, but probably not noticable
+				addForcedCave(rand, cave, layerIndex, 3,false)
+				availableCaves.erase(cavePackedScene)
+		return
+		
 	var availableCaves:Array
 	var caveCount := {}
 	var maxLayer = startingIronCountByLayer.size()
@@ -335,7 +367,7 @@ func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_la
 	cave.updateUsedTileCoords()
 
 	# try for a few times to find a suitable spot for the cave
-	for _i in 50:
+	for _i in 150:
 		var cells = tileData.get_biome_cells_by_index(biomeIndex)
 		if cells.size() < cave.tileCoords.size():
 			accept_higher_layer = true

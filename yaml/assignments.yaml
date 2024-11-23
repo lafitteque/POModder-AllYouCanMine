@@ -114,3 +114,57 @@ chaos:
     - monstermodifiers.totalrunweightmodifier = 1.3
     - monsters.additionalwaveweight = 8
     - monsters.minimumtimebetweenmonsters = 0.08
+
+tinyplanet:
+  tier: 0
+  goaltype: property
+  goalvalue: inventory.remainingtiles == 0
+  eraseupgradelimits: [primaryweapon, hostile]
+  freegadgets: 2
+  mapArchetype: assignment-tinyplanet
+  worldModifiers: worldmodifiernomonsters
+  propertyChanges:
+    - game.fixedtimelimit = 6
+  challengePropertyChanges:
+    - game.fixedtimelimit = 5
+
+speed:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: regular-large
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.6
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.1
+    - monsters.additionalwaveweight = 2
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+pyromaniac:
+  tier: -1
+  goaltype: relic
+  upgradeLimits: hostile
+  eraseupgradelimits: [mining]
+  freegadgets: 0
+  mapArchetype: assignment-pyromaniac
+  worldModifiers: worldmodifierpyromaniac
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.2
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 2.2
+    - monsters.additionalwaveweight = 10
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+speleologist:
+  tier: 0
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-speleologist
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.6
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.1
+    - monsters.additionalwaveweight = 2
+    - monsters.minimumtimebetweenmonsters = 0.08

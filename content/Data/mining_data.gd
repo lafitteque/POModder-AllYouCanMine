@@ -22,5 +22,7 @@ func _process(delta):
 		Data.apply("inventory.remaining_core_eaters", tile_data.get_resource_cells_by_id(data_mod.TILE_GLASS).size() )
 		if count == 0:
 			queue_free()
-	else :
+	elif StageManager.currentStage.name == "LevelStage":
 		tile_data = StageManager.currentStage.MAP.tileData
+	else : 
+		queue_free()

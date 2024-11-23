@@ -17,6 +17,12 @@ var data_mod
 var custom_achievements 
 var saver
 
+var blast_mining_assignment
+var blast_suit_assignment
+
+var pathToModYamlUpgrades : String
+
+
 func _init():
 	ModLoaderLog.info("Init", MYMODNAME_LOG)
 	dir = ModLoaderMod.get_unpacked_dir() + MYMODNAME_MOD_DIR
@@ -38,8 +44,18 @@ func modInit():
 	#GameWorld.devMode = true
 	var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
 	var pathToModYamlProperties : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/properties.yaml"
+	pathToModYamlUpgrades = "res://mods-unpacked/POModder-AllYouCanMine/yaml/upgrades.yaml"
+	
 	Data.parsePropertiesYaml(pathToModYamlProperties)
 	Data.parseAssignmentYaml(pathToModYamlAssignments)
+	Data.parseUpgradesYaml(pathToModYamlUpgrades)
+	
+	
+	blast_mining_assignment = Data.upgrades["blastminingassignment"]
+	blast_suit_assignment = Data.upgrades["suitblasterassignment"]
+	
+	Data.upgrades.erase("blastminingassignment")
+	Data.upgrades.erase("suitblasterassignment")
 	
 	data_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForAchievements.tscn").instantiate()
 	data_mod = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForMod.tscn").instantiate()
@@ -88,7 +104,14 @@ func manage_overwrites():
 	var new_archetype_chaos = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-chaos.tres")
 	new_archetype_chaos.take_over_path("res://content/map/generation/archetypes/assignment-chaos.tres")
 	
+	var new_archetype_tiny = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-tinyplanet.tres")
+	new_archetype_tiny.take_over_path("res://content/map/generation/archetypes/assignment-tinyplanet.tres")
 	
+	var new_archetype_pyromaniac = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-pyromaniac.tres")
+	new_archetype_pyromaniac.take_over_path("res://content/map/generation/archetypes/assignment-pyromaniac.tres")
+	
+	var new_archetype_speleologist = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-speleologist.tres")
+	new_archetype_speleologist.take_over_path("res://content/map/generation/archetypes/assignment-speleologist.tres")
 	
 	### Adding new map archetypes for custom Game Mode
 	
@@ -128,12 +151,59 @@ func manage_overwrites():
 	level_stage.take_over_path("res://stages/level/LevelStage.tscn")
 	
 	
-	### Other stuff
+	### Coresaver Icon
 	
 	var coresaver_icon = preload("res://mods-unpacked/POModder-AllYouCanMine/images/coresaver.png")
 	coresaver_icon.take_over_path("res://content/icons/loadout_coresaver.png")
 	
+	
+	### Blist Miner (pyromaniac) Icons (copy from vanilla game)
+	
+	var blastmining = preload("res://content/icons/blastmining.png")
+	blastmining.take_over_path("res://content/icons/blastminingassignment.png")
+
+
+	var blastminingblast1 = preload("res://content/icons/blastminingblast1.png")
+	blastminingblast1.take_over_path("res://content/icons/blastminingblastassignment1.png")
+	
+	var blastminingblast2 = preload("res://content/icons/blastminingblast2.png")
+	blastminingblast2.take_over_path("res://content/icons/blastminingblastassignment2.png")
+	
+	var blastminingblast3 = preload("res://content/icons/blastminingblast3.png")
+	blastminingblast3.take_over_path("res://content/icons/blastminingblastassignment3.png")
+	
+	var blast_time = preload("res://content/icons/blastminingproductiontime1.png")
+	blast_time.take_over_path("res://content/icons/blastminingproductiontimeassignment1.png")
+	
+	var blast_sticky = preload("res://content/icons/blastminingstickycharge.png")
+	blast_sticky.take_over_path("res://content/icons/blastminingstickychargeassignment.png")		
+		
+	var blast_impact = preload("res://content/icons/blastminingimpactdetonation.png")
+	blast_impact.take_over_path("res://content/icons/blastminingimpactdetonationassignment.png")		
+		
+		
+	### Same for Suit Blaster (pyromaniac)
+	var suitblaster = preload("res://content/icons/suitblaster.png")
+	suitblaster.take_over_path("res://content/icons/suitblasterassignment.png")
+	
+	var suitblaster_radius = preload("res://content/icons/suitblasterradius1.png")
+	suitblaster_radius.take_over_path("res://content/icons/suitblasterradiusassignment.png")
+	
+	var suitblaster_max_charge = preload("res://content/icons/suitblastermaxcharge.png")
+	suitblaster_max_charge.take_over_path("res://content/icons/suitblastermaxchargeassignment.png")
+	
+	var suitblaster_speed = preload("res://content/icons/suitblasterspeed1.png")
+	suitblaster_speed.take_over_path("res://content/icons/suitblasterspeedassignment.png")
+	
+	
 func _on_level_ready():
+	if Data.worldModifiers.has("worldmodifierpyromaniac") and Data.ofOr("assignment.id","") != "pyromaniac":
+		Data.worldModifiers.erase("worldmodifierpyromaniac")
+		Data.gadgets.erase("blastminingassignment")
+		Data.gadgets.erase("blastersuitassignment")
+	elif !Data.worldModifiers.has("worldmodifierpyromaniac") and Data.ofOr("assignment.id","") == "pyromaniac":
+		Data.parseUpgradesYaml(pathToModYamlUpgrades)
+	
 	
 	var mining_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mining_data.tscn").instantiate()
 	add_child(mining_data)
@@ -142,3 +212,25 @@ func _on_level_ready():
 	if data_mod.generation_data["drop_bearer_rate"] > 0:
 		var drop_bearer_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer_manager.tscn").instantiate()
 		StageManager.currentStage.MAP.add_child(drop_bearer_manager)
+		
+	if Data.ofOr("assignment.id","") == "speed":
+		Engine.time_scale = 2
+		# back to 1 in StageManager.gd
+	if Level.loadout.modeId == CONST.MODE_ASSIGNMENTS:
+		for modifierId in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+			var modifier = Data.worldModifiers[modifierId]
+			for gadgetId in modifier.get("gadgets", {}):
+				if Data.gadgets.has(gadgetId) and !GameWorld.upgrades.has(gadgetId):
+					GameWorld.addUpgrade(gadgetId)
+			for upgradeId in modifier.get("upgrades", {}):
+				if Data.upgrades.has(upgradeId) and !GameWorld.upgrades.has(upgradeId):
+					GameWorld.addUpgrade(upgradeId)
+	#if Data.ofOr("assignment.id","") == "pyromaniac":
+		#Data.upgrades["blastminingassignment"] = blast_mining_assignment
+		#Data.upgrades["suitblasterassignment"] = blast_suit_assignment
+		#GameWorld.addUpgrade("blastminingassignment")
+		#GameWorld.addUpgrade("suitblasterassignment")
+	#elif  Data.upgrades.has("blastminingassignment"):
+		#Data.upgrades.erase("blastminingassignment")
+		#Data.upgrades.erase("suitblasterassignment")
+
