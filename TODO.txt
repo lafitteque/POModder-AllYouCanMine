@@ -1,11 +1,12 @@
 VISUELS / SONS:
 - Une image pour le mod 
 - Une vidéo pour le mod (+ compte ytube)
+- refaire le heavy rock
 
 BALANCE :
 - Tout tester
 - Déjà testé : aprilfools, SuperHot, BFF, pyromaniac, speed, tinyplanet, autonomous, 
-
+- Minefield : plus de bombes, plus petites
 
 
 
