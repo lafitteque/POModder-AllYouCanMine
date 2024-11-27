@@ -196,6 +196,10 @@ assignment.aprilfools.title,Weird deepness,Profondeurs étranges,Profundidades e
 assignment.aprilfools.desc,"Smtoehnig is wonrg hree, yet it feles filamiar. ",Il y a quelque chose d’étrange ici malgré un sentiment familier.,Hay algo extraño aqui. Pero todo parece como siempre.
 ,,,
 assignment.goaltype.mineall,Mine every breakeable block.,Casser tous les blocs cassables.,Romper todos los bloques que se puedan romper.
+assignment.goaltype.gametime,Survive during %d minutes.,Survivre pendant %d minutes.,Sobrevive durante %d minutos.
+,,,
+,,,
+,,,
 ,,,
 assignment.thieves.title,Best friends forever,Meilleurs amis,Mejores amigos
 assignment.thieves.desc,"The shroomers in the mine are quite friendly, but they seem to love moving your resources.","Les champignards dans les mines sont assez sympathiques. Cependant, ils semblent avoir une tendance à balader les ressources.",Los amigosetas de la mina son bastante simpáticos pero mueven los recursos.
@@ -215,6 +219,28 @@ assignment.chaos.desc,Unknown devices have been found in the mines. They seem un
 assignment.destroyer.title,Destruction,Destruction,Destrucción
 assignment.destroyer.desc,"Be careful, a new technology has been detected in these mines. It seems to have the ability to destroy the resources.","Soyez prudent, une nouvelle technologie a été détectée dans les mines. Elle semble être capable de détruire les ressources.","Tén cuidado, se ha detectado una nueva tecnología en las minas.Parece ser capaz de destruir los recursos."
 ,,,
+assignment.tinyplanet.title,Tiny Planet,Petite planète,Pequeño planeta
+assignment.tinyplanet.desc,We don’t have much time to mine out all the rocks on this planet.,Nous n’avons pas beaucoup de temps pour miner toutes les roches de cette planète.,No tenemos mucho tiempo para minar todas las rocas de este planeta.
+,,,
+assignment.pyromaniac.title,Pyromaniac,Pyromane,Pirómano
+assignment.pyromaniac.desc,You can’t upgrade your mining tools. You’ll have to use special versions of two gadgets : blast mining and suit blaster.,Vous ne pouvez pas améliorer vos outils de minage. Vous devrez utiliser ces versions spéciales de deux gadgets : forage par explosion et blaster de combinaison,No puedes mejorar tus herramientas de minería. Tendras que servirte de las versiones especiales de explosivos de minería y bláster de traje.
+,,,
+assignment.speleologist.title,Speleologist,Spéléologue,Speleólogo
+assignment.speleologist.desc,This planet has no resources outside of some caves. Explore and find them to gather resources.,Cette planette n’a pas de ressources hormis dans quelques grottes. Explorez et trouvez ces grottes pour collecter des ressources.,Este planeta no tiene recursos aparte de algunas cuevas que sí tienen. Explora y encuentralas para colectar recursos.
+,,,
+assignment.speed.title,Speed !,Vite !,Rápido !
+assignment.speed.desc,Time flows faster on this planet.,Le temps s’écoule plus rapidement sur cette planète.,El tiempo va más rápido en este planeta.
+,,,
+assignment.superhot.title,Super Hot,Super Chaud,Muy caliente
+assignment.superhot.desc,The dome is equiped with super lasers. Your precision will be enhanced while you don’t fire. But beware of the enemies that are stronger than ever.,"Le dome est équipé de super lasers. Votre précision est augmentée tant que vous ne tirez pas. Cependant, faites attention aux ennemis qui sont plus forts que jamais.",La cúpula tiene super laseres. Tu precisión esta aumentada mientras no disparas. Pero ten cuidado con los enemigos que son más fuerte que nunca.
+,,,
+assignment.debt.title,Bankrupt,Faillite,Arruinado
+assignment.debt.desc,The bank will take iron from you regularly. Spend carefuly of your life will come to an end if you have no iron left.,La banque va vous prélever du fer régulièrement. Dépensez avec prudence ou votre vie prendra fin si vous n’avez plus de fer.,El banco va a tomarte hierro reuglarmente. Gasta prudentemente o tu vida acabara al si no te queda hierro.
+,,,
+assignment.autonomous.title,Autonomous,Autonome,Autónomo
+assignment.autonomous.desc,"There are no resources on this planet, you will have to make everything by yourself. A technological support will be given to you.","Il n’y a pas de ressources sur cette planète, vous devrez vous en sortir par vos propres moyens. Une aide technologique vous sera fournie.","No hay recursos en este planeta, tendras que apañartelas. Una ayuda tecnológica te sera dada."
+,,,
+,,,
 ,,,
 ,,,
 chaos.attractor,Attraction,Attraction,Atracción
@@ -226,3 +252,38 @@ chaos.deficit,Bad luck,Mauvaise pioche,Mala suerte
 chaos.jackpot,Good luck,Bonne pioche,Pura potra
 chaos.bigger_drops,Bigger drops,Grosses ressources,Grandes recursos
 chaos.smaller_drops,Smaller drops,Petites ressources,Pequeños recursos
+,,,
+,,,
+upgrades.blastminingassignment.title,Blast Mining,Forage par explosion,Explosivos de minería
+upgrades.blastminingassignment.desc,Produce blast charges for explosive mining. Carry them into mines and release to detonate.,Produit des charges explosives pour miner. Transportez-les dans les mines et relâchez-les pour qu’elles explosent.,Produce cargas explosivas para la minería explosiva. Llévalas a las minas y suéltalas para que detonen.
+,,,
+upgrades.blastminingblastassignment1.title,Blast 1,Explosion 1,Explosivo 1
+upgrades.blastminingblastassignment1.desc,Increase the blast strength.,Augmente la puissance du souffle de l’explosion.,Aumenta la potencia de la explosión.
+,,,
+upgrades.blastminingblastassignment2.title,Blast 2,Explosion 2,Explosivo 2
+upgrades.blastminingblastassignment2.desc,Further increase the blast strength.,Augmente encore plus la puissance du souffle de l’explosion.,Aumenta aún más la potencia de la explosión.
+,,,
+upgrades.blastminingblastassignment3.title,Blast 3,Explosion 3,Explosivo 3
+upgrades.blastminingblastassignment3.desc,Upgrade the blast charges to extreme strength.,Améliores les charges d’explosion pour obtenir une force extrême.,Mejora las cargas explosivas para que detonén con una potencia extrema.
+,,,
+upgrads.blastminingproductiontimeassignment1.title,Production Time,Production accélérée,Tiempo de producción
+upgrads.blastminingproductiontimeassignment1.desc,Reduce the time needed to create a blast charge.,Réduit le temps nécessaire pour produire une charge explosive.,Reduce el tiempo necesario para crear una carga explosiva.
+,,,
+upgrades.blastminingstickychargeassignment.title,Sticky Directional Charges,Charges directionnelles adhésives.,Cargas direccionales adhesivas
+upgrades.blastminingstickychargeassignment.desc,Charges stick to the first wall they touch and blast a tunnel instead of a circular explosion.,"Les charges explosives se collent au premier mur qu’elles touchent, et leur déflagration n’est pas circulaire, mais en forme de tunnel.",Las cargas se pegan a las primera rocas que tocan y detonan en forma de túnel y no circulármente.
+,,,
+upgrades.blastminingimpactdetonationassignment.title,Impact Detonation,Déflagration à l’impact,Detonación al impactar.
+upgrades.blastminingimpactdetonationassignment.desc,The blast charge will ewplode on impact with a surface. The explosion will be offset into the direction of the impact.,La charge explosive se déclenche dès qu’elle entre en contact avec une surface. L’explosion est compensée dans la direction de l’impact.,Las cargas explosivas detonan al impactar con una superficie. La explosión se hara en la dirección del impacto.
+,,,
+,,,
+upgrades.suitblasterassignment.title,Suit Blaster,Blaster de combinaison,Bláster de traje
+upgrades.suitblasterassignment.desc,Install a mining blaster into your suit which acan explosively destroy rocks around you.,"Installez dans votre combinaison un blaster minier, capable de faire exploser les rochers qui vous entourent.",Instala un bláster de minería en tu traje que puede destruir explosivamente las rocas que te rodean.
+,,,
+upgrades.suitblastermaxchargeassignment.title,More Charges,Plus de charges,Más cargas
+upgrades.suitblastermaxchargeassignment.desc,"Increase how many charges you can store in your suit. The more charges you have ready, the faster additional ones will charge.","Augmentez le nombre de charges que vous pouvez stocker dans votre combinaison. Plus vous avez de charges prêtes, plus les charges supplémentaires se chargent rapidement.",Aumenta el número de cargas que puedes almacenar en tu traje. Cuantas más tengas preparadasm más rapido se cargarán las adicionales.
+,,,
+upgrades.suitblasterradiusassignment.title,Explosion Radius,Rayon d’explosion ,Radio de explosión
+upgrades.suitblasterradiusassignment.desc,Increase the blast radius.,Augmentez le rayon de l’explosion.,Aumenta el radio de explosión 
+,,,
+upgrades.suitblasterspeedassignment1.title,Charge Speed,Vitesse de charge.,Velocidad de carga 
+upgrades.suitblasterspeedassignment1.desc,Improve how quickly the suit charges a blast.,Améliorez la vitesse à laquelle la combinaison charge une explosion.,Mejora la rapidez con la que el traje carga una explosión.

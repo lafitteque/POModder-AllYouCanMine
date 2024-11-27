@@ -3,7 +3,7 @@ extends Map
 
 var data_mod 
 var entrance_pos = null
-
+var last_drop = null
 
 func _ready():
 	data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
@@ -16,6 +16,8 @@ func revealTile(coord:Vector2):
 	var typeId:int = tileData.get_resource(coord.x, coord.y)
 	var invalids := []
 	
+	if typeId == data_mod.TILE_DESTROYER:
+		print("map : reveal destroyer")
 	### if tile is marker iron (in order to have exactly one iron per layer
 	### used to know the layer numner), remove iron
 	if Data.ofOr("assignment.id","") == "speleologist" and typeId == Data.TILE_IRON:
@@ -59,19 +61,19 @@ func revealTile(coord:Vector2):
 		CONST.WATER:
 			tile.richness = Data.ofOr("map.waterrichness", 2.5)
 			revealTileVisually(coord)
-		"detonator":# QLafitte Added
-			revealTileVisually(coord) # QLafitte Added
-		"destroyer":# QLafitte Added
-			revealTileVisually(coord) # QLafitte Added
-		"mega_iron":# QLafitte Added
+		"detonator":
+			revealTileVisually(coord) 
+		"destroyer":
+			revealTileVisually(coord) 
+		"mega_iron":
 			tile.richness = Data.ofOr("map.ironrichness", 2)
-			revealTileVisually(coord) # QLafitte Added
+			revealTileVisually(coord) 
 		"bad_relic":
-			revealTileVisually(coord) # QLafitte Added
+			revealTileVisually(coord) 
 		"glass":
-			revealTileVisually(coord) # QLafitte Added
+			revealTileVisually(coord) 
 		"chaos":
-			revealTileVisually(coord) # QLafitte Added
+			revealTileVisually(coord) 
 				
 	tiles[coord] = tile 
 	
@@ -84,42 +86,52 @@ func revealTile(coord:Vector2):
 	# Allow border tiles to fade correctly at edges of the map
 	visibleTileCoords[coord] = typeId
 	
-	if Level.mode and Level.mode.name == "Assignment" and Data.ofOr("assignment.id","") == "aprilfools":
+	if "worldmodifieraprilfools" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) :
 		if tile.type in [CONST.IRON, CONST.SAND, CONST.WATER,
-		 "detonator", "destroyer" , "mega_iron"]: #Qlafitte Added
+		 "detonator", "destroyer" , "mega_iron"]: 
 			var vec_list = [\
 				Vector2(5, 0) , Vector2(randi_range(2, 6), 11) , \
 				Vector2(2, 3) , Vector2(randi_range(2, 3), 7) , \
 				Vector2(4, 1), Vector2(4, 1), Vector2(4, 2),\
 				Vector2(4, 2), Vector2(5, 0)]
-			var rand_index = randi_range(0,8) #Qlafitte Added
-			tile.initResourceSprite(vec_list[rand_index]) #Qlafitte Added
+			var rand_index = randi_range(0,8) 
+			tile.initResourceSprite(vec_list[rand_index]) 
 	
 func addDrop(drop):
-	if Level.mode and Level.mode.name == "Assignment" and Data.ofOr("assignment.id","") == "aprilfools" and\
-	("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ): #QLafitte Added
-		var old_position = drop.global_position #QLafitte Added
-		drop = null #QLafitte Added
-		var all_keys = data_mod.DROP_FROM_TILES_SCENES.keys() #QLafitte Added
-		var rand_type = all_keys[data_mod.weighted_random(data_mod.APRIL_FOOLS_PROBABILITIES)] #QLafitte Added
+	if "worldmodifieraprilfools" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) and\
+	("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES and drop.carriedBy.size() == 0:
+		if drop.global_position.y <= 20 :
+			add_child(drop)	
+			return
+		var old_position = drop.global_position 
+		var all_keys = data_mod.DROP_FROM_TILES_SCENES.keys() 
+		var rand_type = all_keys[data_mod.weighted_random(data_mod.APRIL_FOOLS_PROBABILITIES)]
 		if rand_type == "nothing":
 			return
-		drop = data_mod.DROP_FROM_TILES_SCENES.get(rand_type).instantiate()#QLafitte Added
-		drop.global_position = old_position #QLafitte Added
-		if ("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES :#QLafitte Added
-			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))#QLafitte Added
+		drop = data_mod.DROP_FROM_TILES_SCENES.get("iron").instantiate() #rand_type).instantiate()
+		drop.global_position = old_position 
+		if ("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES :
+			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))
 	
-	if Level.mode and Level.mode.name == "Assignment" and Data.ofOr("assignment.id","") == "big" and("type" in drop) and \
-	drop.type in data_mod.ALL_DROP_NAMES and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ):
+	if "worldmodifierbigdrops" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) and("type" in drop) and \
+	drop.type in data_mod.ALL_DROP_NAMES and drop.global_position.y >= 20 and drop.carriedBy.size() == 0 :
 		add_child(drop)	
 		Style.init(drop)
 		for i in 10:
 			await get_tree().create_timer(0.1).timeout
 			for child in drop.get_children():
 				if "scale" in child:
-					child.scale = Vector2(1.1 + 0.1*i, 1.1 + 0.1*i)
+					child.scale = Vector2(1.0 + 0.1*i, 1.1 + 0.1*i)
 		return
 		
+	if "worldmodifiersmalldrops" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) and("type" in drop) and \
+	drop.type in data_mod.ALL_DROP_NAMES and !(drop.global_position.y <= 0 or drop.carriedBy.size()>0 ):
+		add_child(drop)	
+		Style.init(drop)
+		for child in drop.get_children():
+			if "scale" in child:
+				child.scale = Vector2(0.5 , 0.5)
+		return
 	add_child(drop)		
 	Style.init(drop)
 	

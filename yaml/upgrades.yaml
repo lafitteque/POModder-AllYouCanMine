@@ -1,11 +1,33 @@
-
-
-
 worldmodifierpyromaniac:
   type: worldmodifier
   gadgets: [suitblasterassignment, blastminingassignment]
   eraseupgradelimits: [mining]
   
+
+worldmodifierautonomous:
+  type: worldmodifier
+  gadgets: [condenser, converter]
+  upgrades: [converterIronToCobalt, condenserSpeed1, condenserSpeed2, converterefficientwater, converterefficientwatershort]
+  eraseupgradelimits: [carry]
+
+worldmodifiersuperhot:
+  type: worldmodifier
+  upgrades: [laserStrength1, laserStrength2, laserStrength3, laserStrength4, laserhitprojectiles, laserMove1, laserMove2, laserMove3]
+  eraseupgradelimits: [primaryweapon]
+
+worldmodifierspeed:
+  type: worldmodifier
+  
+worldmodifieraprilfools:
+  type: worldmodifier
+
+worldmodifiersmalldrops:
+  type: worldmodifier
+
+worldmodifierbigdrops:
+  type: worldmodifier
+
+
 blastMiningAssignment:
   type: gadget
   scenes: 
@@ -94,9 +116,12 @@ suitblasterMaxChargeAssignment:
   predecessors: [suitblasterAssignment]
 suitblasterSpeedAssignment1:
   cost: iron=2
-    repeatable:
+  repeatable:
     - times = 5
     - cost.iron += 3
   propertyChanges: 
     - suitblaster.chargespeed += 0.5
+  predecessors: [suitblasterAssignment]
+suitblasterEnd:
+  cost: iron=999
   predecessors: [suitblasterAssignment]

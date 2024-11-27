@@ -4,41 +4,44 @@ VISUELS / SONS:
 
 BALANCE :
 - Tout tester
-
+- Déjà testé : aprilfools, SuperHot, BFF, pyromaniac, speed, tinyplanet
 
 BUG :
-- Un gadget a spawn sur la coreeater cave (balek?)
+- Un gadget a spawn sur la coreeater cave (balek? ou changer l'archetype)
+- image broken relic ne marche pas
+- réimporter mod spritesheet (il y avait une image d'origine dedans)
+- Achievements trop grands (ajouter des flêches)
+
 
 Autre mod :
 - gérer les resources rate des challenges (weird notamment)
-- Ajouter serialize et deserialize aux tiles
+- faire un archetype pour mineall avec moins de roches
 
 
 
-Traductions :
-- traduire les titres des upgrades de pyromaniac (blast et suit)
+PLUS TARD Assignments :
+- wiggle (épée incontrolable)
+- glass cannon (dome tesla)
+- ??? (dome trajectoire courbe)
 
-Images : 
-- Recopier images suit blaster et blast mining pour pyromaniac upgrades
-
-
-BUGS:
-- Faire en sorte que worldmodifierpyromaniac fonctionne
-
-PLUS TARD :
+PLUS TARD nouvelles tiles :
+- Faire en sorte que les profondeurs soient plus sombre et ajouter des tuiles de lumiere
 - troll resources
-- Tutos pour achievements et chaos
-- ajouter cables cassés à bad_relic
-- Assignment : dans le noir
-- Assignment : Tuiles resources visibles que par le contour ( enlever le sprite)
 - Tile qui change la dureté des roches autour
-- perso explosions qd il tombe
+- Tiles qui créent un chemin facile (un détour de tiles moins solides qui incitent le joueur à ne pas faire des lignes droites)
+
+PLUS TARD CoreSaver
+- Redessiner core eater cave + core eater ending
+- ajouter cables cassés à bad_relic
 - Etendre le gamemode avec des branches de spécialisations à chaque game (tirage d'une version du perso unique à chaque run)
 - Boss
 - Vagues spéciales à un changement de biome
-- Tiles qui créent un chemin facile (un détour de tiles moins solides qui incitent le joueur à ne pas faire des lignes droites)
-- Assignments défis de combat
-- Redessiner core eater cave + core eater ending
-- Assignment avec de la roche très dure et que blastmining + blastsuit boostés
-- Assignment avec que les drills (foreur) mais avec pleins de mini drills
-- Assignment tiny map
+- Tutos pour moddeurs : achievements et chaos
+
+PLUS TARD Nouveau Perso
+- perso explosions qd il tombe, convertit les ressources en les écrasant
+- perso scientifique : corrode les murs pour les détruire, installe des tuiles pour créer un chemin de remontée aux ressources (attracteurs successifs)
+
+PLUS TARD COMPATIBILITE:
+- Achievements et player ajouter des flèches
+- Changer le système de save pour qu'il généralise à d'autres keepers

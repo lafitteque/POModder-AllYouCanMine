@@ -33,7 +33,8 @@ func _init():
 		ModLoaderMod.add_translation(trans_dir + "translations." + loc + ".translation")
 	ModLoaderMod.install_script_extension(ext_dir + "AssignmentDisplay.gd")
 	ModLoaderMod.install_script_extension(ext_dir + "TileDataGenerator.gd")
-
+	ModLoaderMod.install_script_extension(ext_dir + "laser_superhot.gd")
+	ModLoaderMod.install_script_extension(ext_dir + "StageManager.gd")
 	
 func _ready():
 	ModLoaderLog.info("Done", MYMODNAME_LOG)
@@ -82,7 +83,9 @@ func modInit():
 # Called when the node enters the scene tree for the first time.
 func manage_overwrites():
 	### Adding new map archetypes for assignments
-	
+	var new_archetype_mineall = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-mineall.tres")
+	new_archetype_mineall.take_over_path("res://content/map/generation/archetypes/assignment-mineall.tres")
+
 	var new_archetype_detonators = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-detonators.tres")
 	new_archetype_detonators.take_over_path("res://content/map/generation/archetypes/assignment-detonators.tres")
 
@@ -112,6 +115,13 @@ func manage_overwrites():
 	
 	var new_archetype_speleologist = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-speleologist.tres")
 	new_archetype_speleologist.take_over_path("res://content/map/generation/archetypes/assignment-speleologist.tres")
+	
+	var new_archetype_autonomous = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-autonomous.tres")
+	new_archetype_autonomous.take_over_path("res://content/map/generation/archetypes/assignment-autonomous.tres")
+	
+	var new_archetype_superhot = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-superhot.tres")
+	new_archetype_superhot.take_over_path("res://content/map/generation/archetypes/assignment-superhot.tres")
+	
 	
 	### Adding new map archetypes for custom Game Mode
 	
@@ -193,27 +203,30 @@ func manage_overwrites():
 	suitblaster_max_charge.take_over_path("res://content/icons/suitblastermaxchargeassignment.png")
 	
 	var suitblaster_speed = preload("res://content/icons/suitblasterspeed1.png")
-	suitblaster_speed.take_over_path("res://content/icons/suitblasterspeedassignment.png")
+	suitblaster_speed.take_over_path("res://content/icons/suitblasterspeedassignment1.png")
 	
 	
 func _on_level_ready():
-	if Data.worldModifiers.has("worldmodifierpyromaniac") and Data.ofOr("assignment.id","") != "pyromaniac":
-		Data.worldModifiers.erase("worldmodifierpyromaniac")
+	### Erase the upgrades that are specific to certain worldmodifiers
+	if Data.worldModifiers.has("worldmodifierpyromaniac") and \
+	! ("worldmodifierpyromaniac" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) ):
+		print(Data.gadgets)
 		Data.gadgets.erase("blastminingassignment")
-		Data.gadgets.erase("blastersuitassignment")
-	elif !Data.worldModifiers.has("worldmodifierpyromaniac") and Data.ofOr("assignment.id","") == "pyromaniac":
-		Data.parseUpgradesYaml(pathToModYamlUpgrades)
-	
-	
+		Data.gadgets.erase("suitblasterassignment")
+	elif !Data.worldModifiers.has("worldmodifierpyromaniac") and \
+	"worldmodifierpyromaniac" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		Data.parseUpgradesYaml("res://mods-unpacked/POModder-AllYouCanMine/yaml/upgrades.yaml")
+
 	var mining_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mining_data.tscn").instantiate()
 	add_child(mining_data)
 	## Actions that need an action from StageManagerExtender
 	await get_tree().create_timer(0.5).timeout
+	var bb = Level.loadout
 	if data_mod.generation_data["drop_bearer_rate"] > 0:
 		var drop_bearer_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer_manager.tscn").instantiate()
 		StageManager.currentStage.MAP.add_child(drop_bearer_manager)
 		
-	if Data.ofOr("assignment.id","") == "speed":
+	if "worldmodifierspeed" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
 		Engine.time_scale = 2
 		# back to 1 in StageManager.gd
 	if Level.loadout.modeId == CONST.MODE_ASSIGNMENTS:
@@ -223,14 +236,31 @@ func _on_level_ready():
 				if Data.gadgets.has(gadgetId) and !GameWorld.upgrades.has(gadgetId):
 					GameWorld.addUpgrade(gadgetId)
 			for upgradeId in modifier.get("upgrades", {}):
-				if Data.upgrades.has(upgradeId) and !GameWorld.upgrades.has(upgradeId):
+				if Data.upgrades.has(upgradeId):
 					GameWorld.addUpgrade(upgradeId)
-	#if Data.ofOr("assignment.id","") == "pyromaniac":
-		#Data.upgrades["blastminingassignment"] = blast_mining_assignment
-		#Data.upgrades["suitblasterassignment"] = blast_suit_assignment
-		#GameWorld.addUpgrade("blastminingassignment")
-		#GameWorld.addUpgrade("suitblasterassignment")
-	#elif  Data.upgrades.has("blastminingassignment"):
-		#Data.upgrades.erase("blastminingassignment")
-		#Data.upgrades.erase("suitblasterassignment")
+	
+	if "worldmodifierautonomous" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		var condenser_property_changed = PropertyChange.new()
+		condenser_property_changed.key = "condenser.growthtime"
+		condenser_property_changed.keyClass = "condenser"
+		condenser_property_changed.keyName = "growthtimex"
+		condenser_property_changed.value = 0.3
+		Data.applyPropertyChange(condenser_property_changed)
+		
+		
+		var conv_prop2 = PropertyChange.new()
+		conv_prop2.key = "converter.ironwatertime"
+		conv_prop2.keyClass = "converter"
+		conv_prop2.keyName = "ironwatertime"
+		conv_prop2.value = 0.3
+		Data.applyPropertyChange(conv_prop2)
+		
+	if "worldmodifiersuperhot" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		var prop = PropertyChange.new()
+		prop.key = "laser.dps"
+		prop.keyClass = "laser"
+		prop.keyName = "dps"
+		prop.value = 500.0
+		Data.applyPropertyChange(prop)
+
 

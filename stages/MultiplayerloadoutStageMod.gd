@@ -10,17 +10,19 @@ var saver_progress_coresaver_id = "keeper_and_dome_progress_coresaver"
 
 var current_assignment_page = 1
 var assignment_per_page = 16
-@onready var max_page_assignment : int = int(Data.assignments.keys().size()/assignment_per_page) + 1
+@onready var max_page_assignment : int = floor( (Data.assignments.keys().size() - 1 )/assignment_per_page) + 1
 
 
 var current_game_mode_page = 1
 var game_mode_per_page = 3
-@onready var max_page_game_mode : int = int(Data.loadoutGameModes.size()/game_mode_per_page) + 1
+@onready var max_page_game_mode : int = floor( (Data.loadoutGameModes.size() - 1) /game_mode_per_page) + 1
 
 
 var current_custom_achievement_page = 1
 var custom_achievement_per_page = 24
-@onready var max_page_custom_achievement : int = int(data_achievements.CUSTOM_ACHIEVEMENTS.size()/custom_achievement_per_page) + 1
+@onready var max_page_custom_achievement : int = floor( (data_achievements.CUSTOM_ACHIEVEMENTS.size() - 1) /custom_achievement_per_page) + 1 
+
+
 
 func build(data:Array):
 	super(data)
@@ -57,6 +59,17 @@ func createMapDataFor(requiremnts) -> MapData:
 	return tileData
 
 func fillGameModes():
+	saver.load_data()
+	if !saver.save_dict.has("game_mode_page"):
+		saver.save_dict["game_mode_page"]  = current_game_mode_page
+		saver.save_dict["assignments_page"] = current_assignment_page  
+		saver.save_dict["custom_achievements_page"] = current_custom_achievement_page
+		saver.save_dict["game_mode_loadout"] = Level.loadout.modeId
+		saver.save_data() 
+	Level.loadout.modeId = saver.save_dict["game_mode_loadout"] 
+	current_game_mode_page = saver.save_dict["game_mode_page"] 
+	current_assignment_page = saver.save_dict["assignments_page"] 
+	current_custom_achievement_page = saver.save_dict["custom_achievements_page"] 
 	super.fillGameModes()
 	
 	update_game_modes()
@@ -77,11 +90,13 @@ func fillGameModes():
 		left_arrow_assignment.find_child("Icon",true,false).flip_h = true
 		left_arrow_assignment.connect("select", previous_page_assignment)
 		arrow_containers_assignment.add_child(left_arrow_assignment)
-
+		Style.init(arrow_containers_assignment)
+		
 		var right_arrow_assignment = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
 		arrow_containers_assignment.add_child(right_arrow_assignment)
 		right_arrow_assignment.connect("select", next_page_assignment)
-
+		Style.init(right_arrow_assignment)
+		
 	## Create arrows for game mode pages
 	if max_page_game_mode > 1:
 		var arrow_containers_game_mode = $UI/BlockGameMode/HBoxContainer/GameModeMarginContainer/VBoxContainer/HBoxContainer
@@ -90,11 +105,12 @@ func fillGameModes():
 		left_arrow_game_mode.find_child("Icon",true,false).flip_h = true
 		left_arrow_game_mode.connect("select", previous_page_game_mode)
 		arrow_containers_game_mode.add_child(left_arrow_game_mode)
+		Style.init(arrow_containers_game_mode)
 		
 		var right_arrow_game_mode = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
 		arrow_containers_game_mode.add_child(right_arrow_game_mode)
 		right_arrow_game_mode.connect("select", next_page_game_mode)
-		
+		Style.init(right_arrow_game_mode)
 	
 	## Create arrows for custom achievement pages
 	if max_page_custom_achievement > 1:
@@ -104,12 +120,19 @@ func fillGameModes():
 		left_arrow_custom_achievement.find_child("Icon",true,false).flip_h = true
 		left_arrow_custom_achievement.connect("select", previous_page_custom_achievement)
 		arrow_containers_custom_achievement.add_child(left_arrow_custom_achievement)
-
+		Style.init(arrow_containers_custom_achievement)
+			
 		var right_arrow_custom_achievement = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
 		arrow_containers_custom_achievement.add_child(right_arrow_custom_achievement)
 		right_arrow_custom_achievement.connect("select", next_page_custom_achievement)
-
+		Style.init(right_arrow_custom_achievement)
+			
+	await get_tree().create_timer(0.2).timeout
+	gameModeSelected(Level.loadout.modeId)
+	
 func update_game_modes():
+	saver.save_dict["game_mode_page"] = current_game_mode_page
+	saver.save_data()
 	var container = find_child("GameModeContainers")
 	
 	for child in container.get_children():
@@ -127,7 +150,6 @@ func update_game_modes():
 		e.connect("select", gameModeSelected.bind(id))
 		e.connect("select", updateBlockVisibility)
 	
-	gameModeSelected(Level.loadout.modeId)
 		
 func fillDifficulties(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
 	var pgc = $UI.find_child(BlockDifficultyName,true,false).find_child("DifficultyContainers",true,false)
@@ -247,6 +269,8 @@ func update_achievements():
 	
 	
 func update_custom_achievements():
+	saver.save_dict["custom_achievements_page"] = current_custom_achievement_page
+	saver.save_data()
 	var customAchievement_container = find_child("CustomAchievementsContainer")
 	
 	for child in customAchievement_container.get_children():
@@ -275,6 +299,8 @@ func preGenerateMap(requirements):
 	return generated
 
 func update_assignments():
+	saver.save_dict["assignments_page"] = current_assignment_page
+	saver.save_data()
 	for child in %AssignmentsContainer.get_children():
 		child.queue_free()
 	for child in %AssignmentsContainer.get_parent().get_parent().get_children():
@@ -284,11 +310,28 @@ func update_assignments():
 		var e = preload("res://stages/loadout/AssignmentChoice.tscn").instantiate()
 		e.setAssignment(assignmentId)
 		e.connect("select", assignmentSelected.bind(assignmentId))
+		if assignmentId == "pyromaniac" :
+			e.connect("select", pyromaniac_selected)
+		else : 
+			e.connect("select", pyromaniac_remove)
 		e.connect("select", updateBlockVisibility)
 		%AssignmentsContainer.add_child(e)
 	
+	if Level.loadout.modeId == CONST.MODE_ASSIGNMENTS and Level.loadout.modeConfig.has(CONST.MODE_CONFIG_ASSIGNMENT):
+		assignmentSelected(Level.loadout.modeConfig.get(CONST.MODE_CONFIG_ASSIGNMENT))
+		
+		
+func pyromaniac_selected():
+	Data.parseUpgradesYaml("res://mods-unpacked/POModder-AllYouCanMine/yaml/upgrades.yaml")
+	
+func pyromaniac_remove():
+	Data.gadgets.erase("blastminingassignment")
+	Data.gadgets.erase("suitblasterassignment")
+
 
 func gameModeSelected(id:String):
+	saver.save_dict["game_mode_loadout"] = id
+	saver.save_data()
 	if ensureDelayBetweenMajorActions():
 		return
 		
@@ -515,6 +558,10 @@ func difficultySelected(d):
 
 			
 func startRun():
+	var a = Level.loadout.modeConfig
+	if a.has("assignment") and a["assignment"] == "superhot":
+		domeSelected("dome1")
+	
 	%StartRunChoice.set_enabled(false)
 	
 	Audio.sound("gui_loadout_startrun")
@@ -582,3 +629,6 @@ func next_page_custom_achievement():
 func previous_page_custom_achievement():
 	current_custom_achievement_page = max(1,current_custom_achievement_page-1)
 	update_custom_achievements()
+
+
+	

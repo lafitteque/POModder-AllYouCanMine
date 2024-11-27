@@ -49,8 +49,9 @@ func verify_kill_count():
 		previous_tile_count = map.tileData.get_remaining_mineable_tile_count()
 		return
 	await get_tree().create_timer(1.0).timeout
-	var kill_count = previous_tile_count - map.tileData.get_remaining_mineable_tile_count()
-	if kill_count <= max_kill_tiles and kill_count >= min_kill_tiles:
-		get_parent().unlockAchievement(id)
-	else:
-		timer.start()
+	if is_instance_valid(map):
+		var kill_count = previous_tile_count - map.tileData.get_remaining_mineable_tile_count()
+		if kill_count <= max_kill_tiles and kill_count >= min_kill_tiles:
+			get_parent().unlockAchievement(id)
+		else:
+			timer.start()

@@ -11,7 +11,7 @@ const TILE_CHAOS = 18
 var data_mod
 
 
-const rate_list = [0 , 0.5 , 1 , 3 , 5 , 10 , 25 , 50 , 75 ]
+const rate_list = [0 , 0.5 , 1.0 , 3.0 , 7.0 , 10.0 , 25.0 , 50.0 , 75.0 ]
 
 func get_generation_data(a):
 	## 4th decimal of max_tile_count_deviation for detonator rate
@@ -56,17 +56,17 @@ func get_generation_data(a):
 	var chaos_rate = rate_list[chaos_rate_index]
 	
 	
-	#print("raw max_tile_count_deviation : ", a.max_tile_count_deviation)
-	#print("raw viability_thin_top_width : ", a.viability_thin_top_width)
-	#print("raw viability_thin_top_length : " , a.viability_thin_top_length)
-	#print("computed detonator_rate " , detonator_rate)
-	#print("computed destroyer_rate " , destroyer_rate)
-	#print("computed mega_iron_rate " , mega_iron_rate)
-	#print("computed bad_relics " , bad_relics)
-	#print("computed secret_rooms " , secret_rooms)
-	#print("computed chaos_rate " , chaos_rate)
+	print("raw max_tile_count_deviation : ", a.max_tile_count_deviation)
+	print("raw viability_thin_top_width : ", a.viability_thin_top_width)
+	print("raw viability_thin_top_length : " , a.viability_thin_top_length)
+	print("computed detonator_rate " , detonator_rate)
+	print("computed destroyer_rate " , destroyer_rate)
+	print("computed mega_iron_rate " , mega_iron_rate)
+	print("computed bad_relics " , bad_relics)
+	print("computed secret_rooms " , secret_rooms)
+	print("computed chaos_rate " , chaos_rate)
 	
-	return [detonator_rate , mega_iron_rate , mega_iron_rate, bad_relics, secret_rooms,chaos_rate]
+	return [detonator_rate , destroyer_rate , mega_iron_rate, bad_relics, secret_rooms,chaos_rate]
 	
 func generate_resources(rand):
 	var data_from_mod = get_generation_data(a)
@@ -401,12 +401,13 @@ func generate_bad_relics(badRelics):
 		
 		
 func generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells, type_rate,typeId):
-	var typeAmount = round(type_rate * 0.001 * original_cell_coords.size())
+	var typeAmount = round(1.0*type_rate * 0.001 * original_cell_coords.size())
 	var availableCells = $MapData.get_resource_cells_by_id(Data.TILE_DIRT_START)
 	Utils.shuffle(availableCells,rand)
 	var freeTileIndex = 0
 	for _j in typeAmount:
 		$MapData.set_resourcev(availableCells[freeTileIndex], typeId)
+		print("generated : ", typeId , " at " , availableCells[freeTileIndex])
 		freeTileIndex += 1
 	var iterations = 100
 	var totalMove = Vector2()

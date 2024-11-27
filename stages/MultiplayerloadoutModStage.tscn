@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" path="res://gui/buttons/Action.tscn" id="6_8xcr6"]
 [ext_resource type="LabelSettings" path="res://gui/fontsettings/ActionHintFontSettings.tres" id="7_bi043"]
 [ext_resource type="LabelSettings" path="res://gui/fontsettings/LargeFontSettings.tres" id="8_n7htd"]
-[ext_resource type="PackedScene" path="res://stages/loadout/LoadoutChoice.tscn" id="9_jddxa"]
+[ext_resource type="PackedScene" uid="uid://cv40ohlslj06i" path="res://stages/loadout/LoadoutChoice.tscn" id="9_jddxa"]
 [ext_resource type="Script" path="res://stages/loadout/ChoiceHintContainer.gd" id="10_rskjc"]
 [ext_resource type="LabelSettings" path="res://gui/fontsettings/NormalFontSettings.tres" id="11_l5blw"]
 [ext_resource type="Theme" path="res://gui/theme.tres" id="12_ano3e"]
