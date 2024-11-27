@@ -117,3 +117,107 @@ aprilfools:
     - monstermodifiers.totalrunweightmodifier = 1.5
     - monsters.additionalwaveweight = 10
     - monsters.minimumtimebetweenmonsters = 0.08    
+
+tinyplanet:
+  tier: 16
+  goaltype: property
+  goalvalue: inventory.remainingtiles == 0
+  eraseupgradelimits: [primaryweapon, hostile]
+  freegadgets: 2
+  mapArchetype: assignment-tinyplanet
+  worldModifiers: worldmodifiernomonsters
+  propertyChanges:
+    - game.fixedtimelimit = 6
+  challengePropertyChanges:
+    - game.fixedtimelimit = 5
+
+speed:
+  tier: 16
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: regular-large
+  worldModifiers: worldmodifierspeed
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.6
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.2
+    - monsters.additionalwaveweight = 5
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+pyromaniac:
+  tier: 16
+  goaltype: relic
+  upgradeLimits: hostile
+  eraseupgradelimits: [mining]
+  freegadgets: 0
+  mapArchetype: assignment-pyromaniac
+  worldModifiers: worldmodifierpyromaniac
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.2
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 2.2
+    - monsters.additionalwaveweight = 10
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+speleologist:
+  tier: 16
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-speleologist
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.6
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.1
+    - monsters.additionalwaveweight = 2
+    - monsters.minimumtimebetweenmonsters = 0.08
+
+superhot:
+  tier: 16
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 1
+  mapArchetype: assignment-superhot
+  worldModifiers: worldmodifiersuperhot
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 3.0
+    - inventory.sand = 5
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 9.0
+    - monsters.additionalwaveweight = 50
+    - monsters.minimumtimebetweenmonsters = 0.05
+    - inventory.sand = 0
+
+debt:
+  tier: 16
+  goaltype: property
+  goalvalue: game.time>=1195
+  eraseupgradelimits: [primaryweapon, hostile]
+  freegadgets: 0
+  mapArchetype: assignment-debt
+  worldModifiers: worldmodifiernomonsters
+  propertyChanges:
+    - game.fixedtimelimit = 20
+    - game.debt = 1
+    - game.debtcooldown = 20
+    - inventory.iron = 15
+  challengePropertyChanges:
+    - game.fixedtimelimit = 20
+    - game.debt = 2
+    - game.debtcooldown = 29
+    - inventory.iron = 8
+
+autonomous:
+  tier: 16
+  goaltype: relic
+  upgradeLimits: hostile
+  freegadgets: 0
+  worldModifiers: worldmodifierautonomous
+  mapArchetype: assignment-autonomous
+  propertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 0.6
+  challengePropertyChanges:
+    - monstermodifiers.totalrunweightmodifier = 1.2
+    - monsters.additionalwaveweight = 5
+    - monsters.minimumtimebetweenmonsters = 0.08

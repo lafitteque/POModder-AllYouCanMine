@@ -4,7 +4,10 @@ VISUELS / SONS:
 
 BALANCE :
 - Tout tester
-- Déjà testé : aprilfools, SuperHot, BFF, pyromaniac, speed, tinyplanet
+- Déjà testé : aprilfools, SuperHot, BFF, pyromaniac, speed, tinyplanet, autonomous, 
+
+
+
 
 BUG :
 - Un gadget a spawn sur la coreeater cave (balek? ou changer l'archetype)
@@ -13,10 +16,20 @@ BUG :
 - Achievements trop grands (ajouter des flêches)
 
 
+
+
+
 Autre mod :
 - gérer les resources rate des challenges (weird notamment)
 - faire un archetype pour mineall avec moins de roches
 
+
+
+
+
+
+PLUS TARD Game mode :
+- mode combat seulement, à chaque vague : soit un gadget, soit des ressources. Pas de fin.
 
 
 PLUS TARD Assignments :
@@ -32,6 +45,7 @@ PLUS TARD nouvelles tiles :
 - Tile qui change la dureté des roches autour
 - Tiles qui créent un chemin facile (un détour de tiles moins solides qui incitent le joueur à ne pas faire des lignes droites)
 
+
 PLUS TARD CoreSaver
 - Redessiner core eater cave + core eater ending
 - ajouter cables cassés à bad_relic
@@ -40,9 +54,11 @@ PLUS TARD CoreSaver
 - Vagues spéciales à un changement de biome
 - Tutos pour moddeurs : achievements et chaos
 
+
 PLUS TARD Nouveau Perso
 - perso explosions qd il tombe, convertit les ressources en les écrasant
 - perso scientifique : corrode les murs pour les détruire, installe des tuiles pour créer un chemin de remontée aux ressources (attracteurs successifs)
+
 
 PLUS TARD COMPATIBILITE:
 - Achievements et player ajouter des flèches
