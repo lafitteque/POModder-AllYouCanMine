@@ -64,6 +64,7 @@ func shred(addToInventory := true):
 		remove_from_group("saveable")
 
 func _exit_tree():
-	Data.apply("monsters.waveCooldown", min(Data.ofOr("monsters.waveCooldown",0) , 5 ) )
-	var mega_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/new_drops/mega_iron_difficulty_reserter.tscn").instantiate()
-	StageManager.add_child(mega_manager)
+	if ! Data.ofOr("monsters.wavepresent", false):
+		Data.apply("monsters.waveCooldown", 5)
+	var mega_iron_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/new_drops/mega_iron_difficulty_reserter.tscn").instantiate()
+	StageManager.add_child(mega_iron_manager)

@@ -23,6 +23,8 @@ PLUS TARD Assignments :
 - wiggle (épée incontrolable)
 - glass cannon (dome tesla)
 - ??? (dome trajectoire courbe)
+- Farming : nouveau gadget suit pour planter des graines sur les minerais
+
 
 PLUS TARD nouvelles tiles :
 - Faire en sorte que les profondeurs soient plus sombre et ajouter des tuiles de lumiere

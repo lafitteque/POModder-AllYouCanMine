@@ -1,19 +1,26 @@
 extends Node2D
 
-var cooldown = 30
-var removed = false
 var fight_modifier = 110
+var activated = false
+
 
 func _ready():
-	GameWorld.additionalRunWeight += fight_modifier
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	cooldown -= delta
-	if cooldown <= 0:
-		GameWorld.additionalRunWeight -= fight_modifier
-		queue_free()
-		removed = true
-func _exit_tree():
-	if ! removed :
-		GameWorld.additionalRunWeight -= fight_modifier
+	# if not in battle, apply effect 
+	if ! Data.ofOr("monsters.wavebattle", false):
+		GameWorld.additionalRunWeight += fight_modifier
+		activated = true
+	Data.listen(self,"monsters.wavebattle")
+		
+		
+func propertyChanged(property : String, old_value, new_value):
+	if property == "monsters.wavebattle":
+		# if battle ended, use effect for next battle
+		if !new_value and !activated:
+			GameWorld.additionalRunWeight += fight_modifier
+			activated = true
+
+		elif !new_value and activated:
+			GameWorld.additionalRunWeight -= fight_modifier
+			queue_free()
+		
+		
