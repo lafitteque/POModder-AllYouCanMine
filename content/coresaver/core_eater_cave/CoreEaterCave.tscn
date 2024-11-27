@@ -487,6 +487,7 @@ script = ExtResource("8_fjrpt")
 shape = SubResource("CircleShape2D_w0yy2")
 
 [node name="AlphaMap" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 1
 position = Vector2(-4, -17)
 scale = Vector2(0.841463, 0.958333)
