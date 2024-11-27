@@ -22,12 +22,27 @@ var current_custom_achievement_page = 1
 var custom_achievement_per_page = 24
 @onready var max_page_custom_achievement : int = floor( (data_achievements.CUSTOM_ACHIEVEMENTS.size() - 1) /custom_achievement_per_page) + 1 
 
+var mod_gamemodes
+
+
+func _ready():
+	mod_gamemodes = get_tree().get_nodes_in_group("gamemode-loadout")
+	for gamemode in mod_gamemodes:
+		gamemode.initialize_from_loadout(self)
+		var block_game_mode = gamemode.generate_ui_block(self)
+		if block_game_mode :
+			$UI/BlockGameMode/HBoxContainer/VBoxContainer.add_child(block_game_mode)
+		
 
 
 func build(data:Array):
 	super(data)
-	fillDifficulties("BlockCoreSaverLoadout")
-	fillMapSizes("BlockCoreSaverLoadout")
+	for gamemode in mod_gamemodes:
+		if gamemode.has_difficulties():
+			fillDifficulties(gamemode.get_block_ui_name())
+		if gamemode.has_map_sizes():
+			fillMapSizes(gamemode.get_block_ui_name())
+	
 	
 func createMapDataFor(requiremnts) -> MapData:
 	var tileData = preload("res://content/map/MapData.tscn").instantiate()
@@ -46,8 +61,11 @@ func createMapDataFor(requiremnts) -> MapData:
 				tileData.stack(preload("res://stages/loadout/TileDataDomeOpening.tscn").instantiate(), Vector2(-1, 2))
 			"guildrewards":
 				tileData.stack(preload("res://stages/loadout/TileDataGuildRewards.tscn").instantiate(), Vector2(5, 13))
-			"coresaver":
-				tileData.stack(preload("res://stages/loadout/TileDataModeRelicHunt.tscn").instantiate(), Vector2(-9, 2))
+			_ :
+				for gamemode in mod_gamemodes:
+					if gamemode.has_tiledata() and x == gamemode.get_tiledata_name():
+						tileData.stack(gamemode.get_loadout_tiledata(x), gamemode.get_loadout_tiledata_offset(x))
+	
 	if "loadout" in requiremnts:
 		tileData.stack(preload("res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/TileDataLoadoutAchievements.tscn").instantiate(), Vector2(4, 2))
 	
@@ -151,8 +169,8 @@ func update_game_modes():
 		e.connect("select", updateBlockVisibility)
 	
 		
-func fillDifficulties(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
-	var pgc = $UI.find_child(BlockDifficultyName,true,false).find_child("DifficultyContainers",true,false)
+func fillDifficulties(BlockGamemodeName : String = "BlockRelicHuntLoadout"):
+	var pgc = $UI.find_child(BlockGamemodeName,true,false).find_child("DifficultyContainers",true,false)
 	var difficulties := [-2, -1, 0, 2]
 	for i in 4:
 		var image = load("res://content/icons/loadout_diff" + str(i) + ".png")
@@ -350,13 +368,6 @@ func gameModeSelected(id:String):
 		CONST.MODE_RELICHUNT:
 			if GameWorld.lastLoadoutsByMode.has(id):
 				setLoadout(GameWorld.lastLoadoutsByMode.get(id))
-		"coresaver":
-			if GameWorld.lastLoadoutsByMode.has(id):
-				var coresaver_loadout = GameWorld.lastLoadoutsByMode.get("relichunt").duplicate()
-				coresaver_loadout.difficulty = 3
-				coresaver_loadout.modeId = "coresaver"
-				coresaver_loadout.worldId = GameWorld.getNextRandomWorldId()
-				setLoadout(coresaver_loadout)
 		CONST.MODE_PRESTIGE:
 			var found = false
 			for c in find_child("PrestigeModeVariantContainer").get_children():
@@ -372,7 +383,13 @@ func gameModeSelected(id:String):
 				setLoadout(GameWorld.lastLoadoutsByMode.get(id))
 			%AssignmentLeaderboard.start()
 			updateRewardStatus()
-	
+			
+	for gamemode in mod_gamemodes:
+		if gamemode.id == id:
+			if GameWorld.lastLoadoutsByMode.has(id):
+				gamemode.set_gamemode_loadout(self)
+				
+			
 	for c in find_child("GameModeContainers").get_children():
 		if not c is Label:
 			c.selected = c.id == id
@@ -403,16 +420,19 @@ func updateBlockVisibility(forceRebuild := false):
 		else:
 			%AdditionalGadgetContainers.visible = false
 		
-		var blockCoreSaver = find_child("BlockCoreSaverLoadout") 
-		blockCoreSaver.visible = Level.loadout.modeId == "coresaver"
-		if blockCoreSaver.visible:
-			stackedTileDataIds.append("coresaver")
+		var gamemode_block_visible = false
+		for gamemode in mod_gamemodes:
+			var block = find_child(gamemode.get_block_ui_name(),true,false)
+			block.visible = Level.loadout.modeId == gamemode.id
+			if block.visible:
+				stackedTileDataIds.append(gamemode.id)
+				gamemode_block_visible = true
 				
 		var blockLoadout = find_child("BlockDomeLoadout") 
 		blockLoadout.visible = (blockRelicHunt.visible and Level.loadout.modeConfig.has(CONST.MODE_CONFIG_MAP_ARCHETYPE))\
 		or (blockPrestige.visible and Level.loadout.modeConfig.get(CONST.MODE_CONFIG_PRESTIGE_VARIANT, "") != "")\
 		or (blockAssignments.visible and Level.loadout.modeConfig.get(CONST.MODE_CONFIG_ASSIGNMENT, "") != "")\
-		or (blockCoreSaver.visible)
+		or gamemode_block_visible
 		if blockLoadout.visible:
 			stackedTileDataIds.append("loadout")
 			blockLoadout.size.x = 0
@@ -493,8 +513,8 @@ func updateBlockVisibility(forceRebuild := false):
 			else:
 				c.visible = true
 				
-func fillMapSizes(BlockDifficultyName : String = "BlockRelicHuntLoadout"):
-	var pgc = $UI.find_child(BlockDifficultyName,true,false).find_child("MapsizeContainers",true,false)
+func fillMapSizes(BlockGamemodeName : String = "BlockRelicHuntLoadout"):
+	var pgc = $UI.find_child(BlockGamemodeName,true,false).find_child("MapsizeContainers",true,false)
 	var mapsizes := []
 	for ms in [CONST.MAP_SMALL, CONST.MAP_MEDIUM, CONST.MAP_LARGE, CONST.MAP_HUGE]:
 		if GameWorld.isUnlocked(ms):
@@ -533,7 +553,10 @@ func mapSizeSelected(id):
 	
 	var blocks  = []
 	blocks.append(find_child("BlockRelicHuntLoadout",true,false))
-	blocks.append(find_child("BlockCoreSaverLoadout",true,false))
+	
+	for gamemode in mod_gamemodes:
+		if gamemode.has_difficulties():
+			blocks.append(find_child(gamemode.get_block_ui_name(),true,false))
 		
 	for b in blocks :
 		for c in b.find_child("MapsizeContainers").get_children():
@@ -549,7 +572,9 @@ func difficultySelected(d):
 	
 	var blocks = []
 	blocks.append( $UI.find_child("BlockRelicHuntLoadout",true,false) )
-	blocks.append($UI.find_child("BlockCoreSaverLoadout",true,false))
+	for gamemode in mod_gamemodes:
+		if gamemode.has_map_sizes():
+			blocks.append(find_child(gamemode.get_block_ui_name(),true,false))
 		
 	for b in blocks :
 		for c in b.find_child("DifficultyContainers").get_children():

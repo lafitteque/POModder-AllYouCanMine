@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://n3vggb78ru60"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/loadout_gamemode/coresaver_loadout.gd" id="1_s6vcd"]
+
+[node name="CoresaverLoadout" type="Node2D" groups=["gamemode-loadout"]]
+script = ExtResource("1_s6vcd")

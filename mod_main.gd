@@ -74,6 +74,9 @@ func modInit():
 
 	StageManager.connect("level_ready", _on_level_ready)
 
+	var coresaver_loadout = preload("res://mods-unpacked/POModder-AllYouCanMine/content/loadout_gamemode/coresaver_loadout.tscn").instantiate()
+	add_child(coresaver_loadout)
+	
 	Data.registerGameMode("coresaver")
 	GameWorld.unlockElement("coresaver")
 
