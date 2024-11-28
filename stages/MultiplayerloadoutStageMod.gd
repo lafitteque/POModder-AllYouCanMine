@@ -22,6 +22,10 @@ var current_custom_achievement_page = 1
 var custom_achievement_per_page = 24
 @onready var max_page_custom_achievement : int = floor( (data_achievements.CUSTOM_ACHIEVEMENTS.size() - 1) /custom_achievement_per_page) + 1 
 
+var current_achievement_page = 1
+var achievement_per_page = 24
+var max_page_achievement = 2
+
 var mod_gamemodes
 
 
@@ -99,18 +103,18 @@ func fillGameModes():
 	
 	update_assignments()
 	
-
+	var arrow = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn")
 	## Create arrows for assignment pages
 	if max_page_assignment > 1:
 		var arrow_containers_assignment = %AssignmentsContainer.get_parent().get_child(1)
 
-		var left_arrow_assignment = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		var left_arrow_assignment = arrow.instantiate()
 		left_arrow_assignment.find_child("Icon",true,false).flip_h = true
 		left_arrow_assignment.connect("select", previous_page_assignment)
 		arrow_containers_assignment.add_child(left_arrow_assignment)
 		Style.init(arrow_containers_assignment)
 		
-		var right_arrow_assignment = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		var right_arrow_assignment = arrow.instantiate()
 		arrow_containers_assignment.add_child(right_arrow_assignment)
 		right_arrow_assignment.connect("select", next_page_assignment)
 		Style.init(right_arrow_assignment)
@@ -119,13 +123,13 @@ func fillGameModes():
 	if max_page_game_mode > 1:
 		var arrow_containers_game_mode = $UI/BlockGameMode/HBoxContainer/GameModeMarginContainer/VBoxContainer/HBoxContainer
 		
-		var left_arrow_game_mode = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		var left_arrow_game_mode = arrow.instantiate()
 		left_arrow_game_mode.find_child("Icon",true,false).flip_h = true
 		left_arrow_game_mode.connect("select", previous_page_game_mode)
 		arrow_containers_game_mode.add_child(left_arrow_game_mode)
 		Style.init(arrow_containers_game_mode)
 		
-		var right_arrow_game_mode = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		var right_arrow_game_mode = arrow.instantiate()
 		arrow_containers_game_mode.add_child(right_arrow_game_mode)
 		right_arrow_game_mode.connect("select", next_page_game_mode)
 		Style.init(right_arrow_game_mode)
@@ -134,16 +138,30 @@ func fillGameModes():
 	if max_page_custom_achievement > 1:
 		var arrow_containers_custom_achievement = $UI/BlockCustomAchievements/VBoxContainer/ArrowsContainer
 
-		var left_arrow_custom_achievement = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		var left_arrow_custom_achievement = arrow.instantiate()
 		left_arrow_custom_achievement.find_child("Icon",true,false).flip_h = true
 		left_arrow_custom_achievement.connect("select", previous_page_custom_achievement)
 		arrow_containers_custom_achievement.add_child(left_arrow_custom_achievement)
 		Style.init(arrow_containers_custom_achievement)
 			
-		var right_arrow_custom_achievement = preload("res://mods-unpacked/POModder-AllYouCanMine/stages/page_choice.tscn").instantiate()
+		var right_arrow_custom_achievement = arrow.instantiate()
 		arrow_containers_custom_achievement.add_child(right_arrow_custom_achievement)
 		right_arrow_custom_achievement.connect("select", next_page_custom_achievement)
 		Style.init(right_arrow_custom_achievement)
+		
+	if max_page_achievement > 1:
+		var arrow_containers_achievement = $UI/BlockAchievements/VBoxContainer/ArrowsContainer
+
+		var left_arrow_achievement = arrow.instantiate()
+		left_arrow_achievement.find_child("Icon",true,false).flip_h = true
+		left_arrow_achievement.connect("select", previous_page_achievement)
+		arrow_containers_achievement.add_child(left_arrow_achievement)
+		Style.init(arrow_containers_achievement)
+			
+		var right_arrow_achievement = arrow.instantiate()
+		arrow_containers_achievement.add_child(right_arrow_achievement)
+		right_arrow_achievement.connect("select", next_page_achievement)
+		Style.init(right_arrow_achievement)
 			
 	await get_tree().create_timer(0.2).timeout
 	gameModeSelected(Level.loadout.modeId)
@@ -268,12 +286,14 @@ func add_mode_progress(ui_vbox, save_progress):
 			
 	
 func update_achievements():
+	saver.save_dict["achievements_page"] = current_achievement_page
+	saver.save_data()
 	var achievement_container = find_child("AchievementsContainer")
 	
 	for child in achievement_container.get_children():
 		child.free()
 	
-	for achievementId in data_achievements.ACHIEVEMENTS:
+	for achievementId in data_achievements.ACHIEVEMENTS.slice((current_achievement_page-1)*achievement_per_page,current_achievement_page*achievement_per_page):
 		var e = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Loadout_Achievements/AchievementPanel.tscn").instantiate()
 		var title = "achievement." + achievementId.to_lower() + ".title"
 		var desc = "achievement." + achievementId.to_lower() + ".desc"
@@ -655,5 +675,11 @@ func previous_page_custom_achievement():
 	current_custom_achievement_page = max(1,current_custom_achievement_page-1)
 	update_custom_achievements()
 
-
+func next_page_achievement():
+	current_achievement_page = min(max_page_achievement,current_custom_achievement_page+1)
+	update_achievements()
+	
+func previous_page_achievement():
+	current_achievement_page = max(1,current_achievement_page-1)
+	update_achievements()
 	

@@ -14,41 +14,31 @@ var data_mod
 const rate_list = [0 , 0.5 , 1.0 , 3.0 , 7.0 , 10.0 , 25.0 , 50.0 , 75.0 ]
 
 func get_generation_data(a):
+	print("raw max_tile_count_deviation : ", a.max_tile_count_deviation)
+	print("raw viability_thin_top_width : ", a.viability_thin_top_width)
+	print("raw viability_thin_top_length : " , a.viability_thin_top_length)
+	
+	var raw_cont_deviation = str(a.max_tile_count_deviation).split(".")[-1] + "00000"
+	var raw_visibility_top_width = str(a.viability_thin_top_width).split(".")[-1] + "00000"
+	var raw_visibility_top_length = str(a.viability_thin_top_length).split(".")[-1] + "00000"
+	
 	## 4th decimal of max_tile_count_deviation for detonator rate
-	var detonator_rate_index = a.max_tile_count_deviation*10**3
-	detonator_rate_index -= floor(detonator_rate_index)
-	detonator_rate_index *= 10
-	detonator_rate_index = floor(detonator_rate_index)
+	var detonator_rate_index = int(raw_cont_deviation[3])
 	
 	## 5th decimal of max_tile_count_deviation decimals for destroyer_rate_index
-	var destroyer_rate_index = a.max_tile_count_deviation*10**4
-	destroyer_rate_index -= floor(destroyer_rate_index)
-	destroyer_rate_index *= 10
-	destroyer_rate_index = floor(destroyer_rate_index)
-	
-	## 6th decimalsof max_tile_count_deviation for mega_iron_rate_index
-	var mega_iron_rate_index = a.max_tile_count_deviation*10**5
-	mega_iron_rate_index -= floor(mega_iron_rate_index)
-	mega_iron_rate_index *= 10
-	mega_iron_rate_index = floor(mega_iron_rate_index)
+	var destroyer_rate_index = int(raw_cont_deviation[4])
+
+	## 6th decimal of max_tile_count_deviation for mega_iron_rate_index
+	var mega_iron_rate_index = int(raw_cont_deviation[5])
 	
 	## 3rd decimal of viability_thin_top_width for bad_relics
-	var bad_relics = a.viability_thin_top_width*10**2
-	bad_relics -= floor(bad_relics)
-	bad_relics *= 10
-	bad_relics = floor(bad_relics)
+	var bad_relics = int(raw_visibility_top_width[2])
 	
 	## 4th decimal of viability_thin_top_width for secret_rooms
-	var secret_rooms = a.viability_thin_top_width*10**3
-	secret_rooms -= floor(secret_rooms)
-	secret_rooms *= 10
-	secret_rooms = floor(secret_rooms)
+	var secret_rooms =  int(raw_visibility_top_width[3])
 	
 	## 3rd decimalsof viability_thin_top_length for chaos_rate
-	var chaos_rate_index = a.viability_thin_top_length*10**2
-	chaos_rate_index -= floor(chaos_rate_index)
-	chaos_rate_index *= 10
-	chaos_rate_index = floor(chaos_rate_index)
+	var chaos_rate_index = int(raw_visibility_top_length[2])
 	
 	var detonator_rate = rate_list[detonator_rate_index]
 	var destroyer_rate = rate_list[destroyer_rate_index]
@@ -56,9 +46,7 @@ func get_generation_data(a):
 	var chaos_rate = rate_list[chaos_rate_index]
 	
 	
-	print("raw max_tile_count_deviation : ", a.max_tile_count_deviation)
-	print("raw viability_thin_top_width : ", a.viability_thin_top_width)
-	print("raw viability_thin_top_length : " , a.viability_thin_top_length)
+	
 	print("computed detonator_rate " , detonator_rate)
 	print("computed destroyer_rate " , destroyer_rate)
 	print("computed mega_iron_rate " , mega_iron_rate)
@@ -407,7 +395,6 @@ func generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCell
 	var freeTileIndex = 0
 	for _j in typeAmount:
 		$MapData.set_resourcev(availableCells[freeTileIndex], typeId)
-		print("generated : ", typeId , " at " , availableCells[freeTileIndex])
 		freeTileIndex += 1
 	var iterations = 100
 	var totalMove = Vector2()

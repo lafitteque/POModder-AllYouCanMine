@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqddyaep1xlam"
-path="res://.godot/imported/resources_sheet.png-ad5a4e5c6b03738fe5090d3f7b827996.ctex"
+uid="uid://bpbvdv27e4eks"
+path="res://.godot/imported/Layer.png-106bb458d65d800f5640e5d90a658d10.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods-unpacked/POModder-AllYouCanMine/images/resources_sheet.png"
-dest_files=["res://.godot/imported/resources_sheet.png-ad5a4e5c6b03738fe5090d3f7b827996.ctex"]
+source_file="res://mods-unpacked/POModder-AllYouCanMine/images/Layer.png"
+dest_files=["res://.godot/imported/Layer.png-106bb458d65d800f5640e5d90a658d10.ctex"]
 
 [params]
 

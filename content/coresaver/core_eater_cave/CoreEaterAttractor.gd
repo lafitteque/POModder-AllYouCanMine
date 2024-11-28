@@ -7,6 +7,7 @@ var bad_relic_present = false
 var len_to_move = 1000.0
 var cooldown = 10.0
 var time = 10.0
+var exploded = false
 
 func _on_body_entered(body):
 	if body is Drop and body.type == "bad_relic":
@@ -50,7 +51,11 @@ func _physics_process(delta):
 		var ending = $"../../Sprites/ending"
 		ending.visible = true 
 		ending.play("ending")
-		await get_tree().create_timer(0.8).timeout
+		
+		await get_tree().create_timer(0.4).timeout
+		explode()
+		await get_tree().create_timer(0.4).timeout
+
 		ending.pause()
 		ending.queue_free()
 		for relic in get_tree().get_nodes_in_group("relic"):
@@ -64,3 +69,7 @@ func _physics_process(delta):
 		get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("CORE_EATER_ENDING")
 		queue_free()
 
+func explode():
+	exploded = true
+	if Level.map:
+		Level.map.damageTileCircleArea(global_position,  5, 100000)

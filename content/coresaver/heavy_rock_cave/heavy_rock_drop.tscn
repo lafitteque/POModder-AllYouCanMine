@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://3342gcg1fcaa"]
 
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockDrop.gd" id="1_ouhct"]
-[ext_resource type="Texture2D" uid="uid://et8hw0uf03da" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock.png" id="2_tqj17"]
+[ext_resource type="Texture2D" uid="uid://bjy46ga5tupr8" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock.png" id="2_tqj17"]
 [ext_resource type="Texture2D" uid="uid://bm0ju5bijlx2v" path="res://content/drop/gadget/carried.png" id="3_f00r6"]
 [ext_resource type="Material" path="res://content/shared/HighlightShader.tres" id="4_no1g3"]
 [ext_resource type="Texture2D" uid="uid://c2lx3ltbjuvp5" path="res://content/drop/gadget/focussed.png" id="5_fsq20"]
@@ -29,6 +29,8 @@ carryInfluenceSize = 10.0
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_tqj17")
+hframes = 2
+vframes = 2
 
 [node name="CarrySprite" type="Sprite2D" parent="."]
 visible = false

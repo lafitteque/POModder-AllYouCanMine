@@ -1,19 +1,17 @@
 VISUELS / SONS:
 - Une image pour le mod 
 - Une vidéo pour le mod (+ compte ytube)
-- refaire le heavy rock
+- refaire animation coresaver
+- son destruction glass
+
 
 BALANCE :
 - Tout tester
 - Déjà testé : aprilfools, SuperHot, BFF, pyromaniac, speed, tinyplanet, autonomous, 
-- Minefield : plus de bombes, plus petites
-
 
 
 BUG :
 - Un gadget a spawn sur la coreeater cave (balek? ou changer l'archetype)
-- image broken relic ne marche pas
-- réimporter mod spritesheet (il y avait une image d'origine dedans)
 - Achievements trop grands (ajouter des flêches)
 
 
@@ -26,7 +24,11 @@ Autre mod :
 
 
 
-
+TUTO compatibilité :
+- Achievements
+- Game Mode
+- Chaos Tile
+- worldmodifiers
 
 
 PLUS TARD Game mode :
@@ -38,7 +40,8 @@ PLUS TARD Assignments :
 - glass cannon (dome tesla)
 - ??? (dome trajectoire courbe)
 - Farming : nouveau gadget suit pour planter des graines sur les minerais
-
+- fusion : fusioner des resources identiques triple leur valeur
+	
 
 PLUS TARD nouvelles tiles :
 - Faire en sorte que les profondeurs soient plus sombre et ajouter des tuiles de lumiere
@@ -62,5 +65,5 @@ PLUS TARD Nouveau Perso
 
 
 PLUS TARD COMPATIBILITE:
-- Achievements et player ajouter des flèches
+- player ajouter des flèches
 - Changer le système de save pour qu'il généralise à d'autres keepers

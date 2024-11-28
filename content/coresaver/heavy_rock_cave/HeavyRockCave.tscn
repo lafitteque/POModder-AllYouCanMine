@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.gd" id="1_0nmne"]
 [ext_resource type="Script" path="res://content/map/Parallaxer.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://dv8oes58so1kd" path="res://mods-unpacked/POModder-AllYouCanMine/images/heavy_rock_cave.png" id="3_2y4ge"]
-[ext_resource type="Texture2D" uid="uid://dj42bdhg0sm1a" path="res://mods-unpacked/POModder-AllYouCanMine/images/broken_relic.png" id="7_uhfry"]
+[ext_resource type="Texture2D" uid="uid://b13xi457vam1n" path="res://mods-unpacked/POModder-AllYouCanMine/images/broken_relic.png" id="7_uhfry"]
 [ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="8"]
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/RelicAttractor.gd" id="8_ojjdn"]
 [ext_resource type="AudioStream" uid="uid://g6cg4bul73qo" path="res://content/sounds/monster/Shifter_amb.wav" id="9"]

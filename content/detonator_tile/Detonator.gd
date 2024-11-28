@@ -11,7 +11,7 @@ func explode():
 	$ActivateSound.stop()
 	exploded = true
 	if Level.map:
-		Level.map.damageTileCircleArea(global_position,  3, 100000)
+		Level.map.damageTileCircleArea(global_position,  2, 100000)
 	queue_free()
 	
 

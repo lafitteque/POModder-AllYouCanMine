@@ -5,6 +5,8 @@ var attraction_speed = 15.0
 var bad_relic = null
 var bad_relic_present = false
 var len_to_move = 1000.0
+var exploded = false
+
 
 func _on_body_entered(body):
 	if body is Drop and body.type == "bad_relic":
@@ -40,6 +42,7 @@ func _physics_process(delta):
 		$"../../Sprites/root".play("attack")
 	
 		await get_tree().create_timer(0.6).timeout
+		explode()
 		for relic in get_tree().get_nodes_in_group("relic"):
 			if relic.type == "bad_relic":
 				var broken_relic = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelic/BadRelicBroken.tscn").instantiate()
@@ -59,3 +62,7 @@ func _on_root_animation_finished():
 	if $"../../Sprites/root".animation == "attack":
 		$"../../Sprites/root".pause()
 			
+func explode():
+	exploded = true
+	if Level.map:
+		Level.map.damageTileCircleArea(global_position,  5, 100000)
