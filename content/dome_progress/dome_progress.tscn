@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://j62kxwkmtic" path="res://content/icons/loadout_dome1.png" id="2_emqqo"]
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/dome_progress/map_size.gd" id="2_neiuj"]
-[ext_resource type="Texture2D" uid="uid://d181kdld0x1w0" path="res://mods-unpacked/POModder-AllYouCanMine/images/progress_map0.png" id="3_875jd"]
+[ext_resource type="Texture2D" uid="uid://nyex6us2gjyf" path="res://mods-unpacked/POModder-AllYouCanMine/images/progress_map1.png" id="3_cai7m"]
 
 [node name="VBoxContainer" type="VBoxContainer"]
 offset_right = 40.0
@@ -19,16 +19,16 @@ script = ExtResource("2_neiuj")
 
 [node name="small" type="TextureRect" parent="map_size"]
 layout_mode = 2
-texture = ExtResource("3_875jd")
+texture = ExtResource("3_cai7m")
 
 [node name="medium" type="TextureRect" parent="map_size"]
 layout_mode = 2
-texture = ExtResource("3_875jd")
+texture = ExtResource("3_cai7m")
 
 [node name="large" type="TextureRect" parent="map_size"]
 layout_mode = 2
-texture = ExtResource("3_875jd")
+texture = ExtResource("3_cai7m")
 
 [node name="huge" type="TextureRect" parent="map_size"]
 layout_mode = 2
-texture = ExtResource("3_875jd")
+texture = ExtResource("3_cai7m")

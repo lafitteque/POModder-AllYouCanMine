@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://begmonulnmmb6"
-path="res://.godot/imported/progress_map0.png-be8d032a670869ca818a6b3f65cc8e41.ctex"
+uid="uid://eh1ng68n5xei"
+path="res://.godot/imported/progress_map5.png-be63d499eb7caca66b19961d94cb009e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods-unpacked/POModder-AllYouCanMine/images/progress_map0.png"
-dest_files=["res://.godot/imported/progress_map0.png-be8d032a670869ca818a6b3f65cc8e41.ctex"]
+source_file="res://mods-unpacked/POModder-AllYouCanMine/images/progress_map5.png"
+dest_files=["res://.godot/imported/progress_map5.png-be63d499eb7caca66b19961d94cb009e.ctex"]
 
 [params]
 
