@@ -22,7 +22,8 @@ func _physics_process(delta):
 	if !activated :
 		return
 	
-	cooldown -= delta
+	if !GameWorld.paused:
+		cooldown -= delta
 	if cooldown <= 0:
 		for drop in get_tree().get_nodes_in_group("drops"):
 			drop.apply_central_impulse(Vector2(0, 20).rotated(randf() * TAU))
@@ -30,5 +31,7 @@ func _physics_process(delta):
 
 
 func _on_timer_timeout():
+	if GameWorld.paused:
+		return
 	for drop in get_tree().get_nodes_in_group("drops"):
 		drop.apply_central_impulse(Vector2(0, 120).rotated(randf() * TAU))#QLafitte Added

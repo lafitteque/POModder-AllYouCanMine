@@ -213,7 +213,6 @@ func _on_level_ready():
 	### Erase the upgrades that are specific to certain worldmodifiers
 	if Data.worldModifiers.has("worldmodifierpyromaniac") and \
 	! ("worldmodifierpyromaniac" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) ):
-		print(Data.gadgets)
 		Data.gadgets.erase("blastminingassignment")
 		Data.gadgets.erase("suitblasterassignment")
 	elif !Data.worldModifiers.has("worldmodifierpyromaniac") and \

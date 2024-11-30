@@ -20,7 +20,7 @@ destroyer:
   propertyChanges:
     - monstermodifiers.totalrunweightmodifier = 1.1
   challengePropertyChanges:
-    - monstermodifiers.totalrunweightmodifier = 2.5
+    - monstermodifiers.totalrunweightmodifier = 2.0
     - monsters.additionalwaveweight = 20
     - monsters.minimumtimebetweenmonsters = 0.08
 

@@ -108,7 +108,7 @@ func addDrop(drop):
 		var rand_type = all_keys[data_mod.weighted_random(data_mod.APRIL_FOOLS_PROBABILITIES)]
 		if rand_type == "nothing":
 			return
-		drop = data_mod.DROP_FROM_TILES_SCENES.get("iron").instantiate() #rand_type).instantiate()
+		drop = data_mod.DROP_FROM_TILES_SCENES.get(rand_type).instantiate()
 		drop.global_position = old_position 
 		if ("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES :
 			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))
@@ -373,8 +373,13 @@ func generateCaves(minDistanceToCenter := 10):
 				var new_coord = coord+Vector2i(i,j)
 				if tileData.get_resourcev(new_coord) == Data.TILE_DIRT_START :
 					addChamber(new_coord, preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/hint_secret.tscn"))
-
-				
+	
+	
+	#### Section for assignment tiny planet
+	if Data.ofOr("assignment.id","") == "tinyplanet":
+		while tileData.get_remaining_mineable_tile_count() > 420 :
+			var pos = tileData.get_resource_cells_by_id(Data.TILE_DIRT_START)[randi_range(0,tileData.get_resource_cells_by_id(Data.TILE_DIRT_START).size()-1)]
+			tileData.set_resourcev(pos, -1)
 func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_layer = true):
 	cave.updateUsedTileCoords()
 

@@ -3,7 +3,7 @@ VISUELS / SONS:
 - Une vidéo pour le mod (+ compte ytube)
 - refaire animation coresaver
 - son destruction glass
-
+- Progress area : des couleurs plus lisibles : bronze, argent, ...
 
 BALANCE :
 - Tout tester

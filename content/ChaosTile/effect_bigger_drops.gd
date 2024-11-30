@@ -31,7 +31,8 @@ func _physics_process(delta):
 	if !activated :
 		return
 	
-	cooldown -= delta
+	if !GameWorld.paused:
+		cooldown -= delta
 	if cooldown <= 0:
 		for drop in get_tree().get_nodes_in_group("drops"):
 			for child in drop.get_children():

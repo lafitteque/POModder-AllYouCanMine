@@ -91,9 +91,9 @@ func update_generation_data(a : MapArchetype):
 	###  Unfortunately, TileDataGenerator.gd cannot access DataForMod ...
 	### /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\   
 	
-	var raw_cont_deviation = str(a.max_tile_count_deviation).split(".")[-1] + "00000"
-	var raw_visibility_top_width = str(a.viability_thin_top_width).split(".")[-1] + "00000"
-	var raw_visibility_top_length = str(a.viability_thin_top_length).split(".")[-1] + "00000"
+	var raw_cont_deviation = str(a.max_tile_count_deviation).split(".")[-1] + "0000000000"
+	var raw_visibility_top_width = str(a.viability_thin_top_width).split(".")[-1] + "00000000000"
+	var raw_visibility_top_length = str(a.viability_thin_top_length).split(".")[-1] + "000000000"
 	
 	## 4th decimal of max_tile_count_deviation for detonator rate
 	var detonator_rate_index = int(raw_cont_deviation[3])

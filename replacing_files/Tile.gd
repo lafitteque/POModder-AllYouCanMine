@@ -11,7 +11,7 @@ func deserialize(data: Dictionary):
 	
 	if ! type in ["mega_iron", "detonator", "destroyer", "bad_relic", "glass", "fake_border", "secret_room", "chaos"]:
 		return
-		
+	
 	match type :
 		"mega_iron": #QLafitte Added
 			set_meta("destructable", true)
@@ -65,6 +65,9 @@ func setType(type:String):
 		set_meta("destructable", true)
 		type = "fake_border"
 		hardness = 5
+	if Data.ofOr("assignment.id","") == "tinyplanet" :
+		if hardness <= 4:
+			hardness = 0
 	super.setType(type)
 	
 	if ! type in ["mega_iron", "detonator", "destroyer", "bad_relic", "glass", "fake_border", "secret_room", "chaos"]:
@@ -123,7 +126,7 @@ func setType(type:String):
 			$AnimatedSprite2D.queue_free()
 		_ :
 			$AnimatedSprite2D.queue_free()
-			
+	
 	var healthMultiplier = hardnessMultiplier
 	healthMultiplier *= (pow(Data.of("map.tileHealthMultiplierPerLayer"), layer))
 	
