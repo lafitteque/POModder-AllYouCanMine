@@ -29,7 +29,7 @@ TUTO compatibilité :
 - Game Mode
 - Chaos Tile
 - worldmodifiers
-
+- Sortir les upgrades de worldmodifiersuperhot et ajouter un worldmodifierstronglaser pour 500 degats
 
 PLUS TARD Game mode :
 - mode combat seulement, à chaque vague : soit un gadget, soit des ressources. Pas de fin.
