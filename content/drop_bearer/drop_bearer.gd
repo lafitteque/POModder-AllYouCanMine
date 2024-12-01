@@ -42,6 +42,8 @@ func _physics_process(delta):
 				drop.get_node("BoolCarried").queue_free()
 			drop.apply_central_impulse(Vector2(0, 5).rotated(randf() * TAU))
 			drop.moveToPhysicsFrontLayer()
+			drop.set_collision_layer_value(CONST.LAYER_LIFT_RIGID, true)
+			drop.set_collision_layer_value(27, true)
 			drop = null
 		return
 		
@@ -87,6 +89,8 @@ func _physics_process(delta):
 		if drop.has_node("BoolCarried"):
 			drop.get_node("BoolCarried").queue_free()
 		drop.moveToPhysicsFrontLayer()
+		drop.set_collision_layer_value(CONST.LAYER_LIFT_RIGID, true)
+		drop.set_collision_layer_value(27, true)
 		var possible_keeper = drop.carriedBy[-1]
 		if possible_keeper is Keeper and "carryLines" in possible_keeper :
 			possible_keeper.carryLines[drop].points[-1] = drop.global_position
@@ -137,6 +141,7 @@ func die():
 	if state != State.DIE:
 		state = State.DIE
 		$Sprite2D.play("shrink")
+	
 
 
 

@@ -113,14 +113,24 @@ func addDrop(drop):
 		if ("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES :
 			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))
 	
-	if "worldmodifierbigdrops" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) and("type" in drop) and \
-	drop.type in data_mod.ALL_DROP_NAMES and drop.global_position.y >= 20 and drop.carriedBy.size() == 0 :
+	if "worldmodifierbigdrops" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) and drop is Drop and \
+	drop.global_position.y >= 20 and drop.carriedBy.size() == 0 :
+		var count = 4
+		if drop.type in data_mod.ALL_DROP_NAMES :
+			count = 8
+		if drop.type == "relic":
+			count = 6
+		
 		add_child(drop)	
 		Style.init(drop)
-		for i in 10:
+		for i in count:
 			await get_tree().create_timer(0.1).timeout
+			if ! is_instance_valid(drop):
+				continue
 			for child in drop.get_children():
 				if "scale" in child:
+					if child.name == "CollisionShape2D" and drop.type in ["gadget", "powercore"] and i >2:
+						continue
 					child.scale = Vector2(1.0 + 0.1*i, 1.1 + 0.1*i)
 		return
 		

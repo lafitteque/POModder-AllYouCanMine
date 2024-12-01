@@ -18,5 +18,5 @@ func activate():
 	get_node("/root/ModLoader/POModder-AllYouCanMine").saver.save_dict["chaos_uses"]["wave_sooner"] = true
 	get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.update_chaos_achievement()
 	
-	get_parent().kill()
+	get_parent().should_queue_free()
 	

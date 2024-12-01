@@ -28,6 +28,6 @@ func remove_effect():
 	gravity_direction = Vector2.DOWN*200
 	for drop in get_tree().get_nodes_in_group("drops"):
 		drop.apply_central_impulse(Vector2(0, 20).rotated(randf() * TAU))
-	get_parent().kill()
+	get_parent().request_queue_free()
 	
 

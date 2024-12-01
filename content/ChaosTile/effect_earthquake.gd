@@ -27,7 +27,7 @@ func _physics_process(delta):
 	if cooldown <= 0:
 		for drop in get_tree().get_nodes_in_group("drops"):
 			drop.apply_central_impulse(Vector2(0, 20).rotated(randf() * TAU))
-		get_parent().kill()
+		get_parent().request_queue_free()
 
 
 func _on_timer_timeout():

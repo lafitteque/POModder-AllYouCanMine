@@ -87,8 +87,8 @@ big:
   propertyChanges:
     - monstermodifiers.totalrunweightmodifier = 0.8
   challengePropertyChanges:
-    - monstermodifiers.totalrunweightmodifier = 1.3
-    - monsters.additionalwaveweight = 8
+    - monstermodifiers.totalrunweightmodifier = 2.0
+    - monsters.additionalwaveweight = 20
     - monsters.minimumtimebetweenmonsters = 0.08
 
 mineall:

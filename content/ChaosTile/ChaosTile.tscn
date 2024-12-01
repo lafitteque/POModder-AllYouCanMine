@@ -1,6 +1,82 @@
-[gd_scene load_steps=2 format=3 uid="uid://duo5n8xspigo1"]
+[gd_scene load_steps=10 format=3 uid="uid://duo5n8xspigo1"]
 
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTile.gd" id="1_mw1il"]
+[ext_resource type="Shader" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTile.gdshader" id="2_5ovgy"]
+[ext_resource type="Texture2D" uid="uid://dq45m80vyxcy7" path="res://mods-unpacked/POModder-AllYouCanMine/images/chaos_broken_normal_map.png" id="3_01hf3"]
+[ext_resource type="Texture2D" uid="uid://d4eq36nfc0w6g" path="res://mods-unpacked/POModder-AllYouCanMine/images/chaos_broken.png" id="4_ik58b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jg3cn"]
+shader = ExtResource("2_5ovgy")
+shader_parameter/NORMAL_TEX = ExtResource("3_01hf3")
+
+[sub_resource type="Animation" id="Animation_pfi8g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_u16be"]
+resource_name = "activate"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(4, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_c7pqi"]
+resource_name = "default"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y4nhe"]
+_data = {
+"RESET": SubResource("Animation_pfi8g"),
+"activate": SubResource("Animation_u16be"),
+"default": SubResource("Animation_c7pqi")
+}
 
 [node name="ChaosTile" type="Node2D"]
 script = ExtResource("1_mw1il")
+
+[node name="activation" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_jg3cn")
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("4_ik58b")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="activation"]
+libraries = {
+"": SubResource("AnimationLibrary_y4nhe")
+}
+
+[connection signal="animation_changed" from="activation/AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
+[connection signal="animation_finished" from="activation/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

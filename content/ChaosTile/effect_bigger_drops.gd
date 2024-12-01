@@ -41,4 +41,4 @@ func _physics_process(delta):
 		await get_tree().create_timer(0.1).timeout
 		for drop in get_tree().get_nodes_in_group("drops"):
 				drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))
-		get_parent().kill()
+		get_parent().request_queue_free()

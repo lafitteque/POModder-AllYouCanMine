@@ -1,18 +1,12 @@
 VISUELS / SONS:
-- Une image pour le mod 
-- Une vidéo pour le mod (+ compte ytube)
-- refaire animation coresaver
 - son destruction glass
-- Progress area : des couleurs plus lisibles : bronze, argent, ...
+
 
 BALANCE :
-- Tout tester
-- Déjà testé : aprilfools, SuperHot, BFF, pyromaniac, speed, tinyplanet, autonomous, 
-
+- 
 
 BUG :
 - Un gadget a spawn sur la coreeater cave (balek? ou changer l'archetype)
-- Achievements trop grands (ajouter des flêches)
 
 
 
@@ -21,7 +15,6 @@ BUG :
 Autre mod :
 - gérer les resources rate des challenges (weird notamment)
 - faire un archetype pour mineall avec moins de roches
-
 
 
 TUTO compatibilité :

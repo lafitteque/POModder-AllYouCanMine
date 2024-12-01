@@ -20,6 +20,6 @@ func _process(delta):
 	if !GameWorld.paused:
 		cooldown -= delta
 	if cooldown <= 0:
-		get_parent().kill()
+		get_parent().request_queue_free()
 	
 
