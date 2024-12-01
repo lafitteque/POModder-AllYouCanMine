@@ -73,7 +73,7 @@ var chaos_effects = ["gravity" , "attractor",\
 				"wave_sooner", "wave_later"]
 				
 				
-const rate_list = [0 , 0.1 , 0.5 , 0.7 , 3 , 10 , 25 , 50 , 75, 99 ]
+const rate_list = [0 , 0.5 , 1.0 , 3.0 , 7.0 , 10.0 , 25.0 , 50.0 , 75.0 ]
 const probability_list = [0 , 0.0005 , 0.001 , 0.005 , 0.01 , 0.05 , 0.10 , 0.25, 0.50 , 1 ]
 
 
