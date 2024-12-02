@@ -45,8 +45,6 @@ func get_generation_data(a):
 	var mega_iron_rate = rate_list[mega_iron_rate_index]
 	var chaos_rate = rate_list[chaos_rate_index]
 	
-	
-	
 	print("computed detonator_rate " , detonator_rate)
 	print("computed destroyer_rate " , destroyer_rate)
 	print("computed mega_iron_rate " , mega_iron_rate)
@@ -61,62 +59,14 @@ func generate_resources(rand):
 	var detonator_rate = data_from_mod[0]
 	var destroyer_rate = data_from_mod[1]
 	var mega_iron_rate = data_from_mod[2]
-	var bad_relics = data_from_mod[3]
 	var chaos_rate = data_from_mod[5]
+	
+	super(rand)
 	
 	var original_cell_coords:Array = $MapData.get_used_biome_cells()
 	var borderCells = findOutsideBorderCells()
-	
-	for cell in $MapData.get_used_biome_cells():
-		if $MapData.get_resourcev(cell) < 0:
-			$MapData.set_resourcev(cell, Data.TILE_DIRT_START)
-	
 	Utils.shuffle(original_cell_coords, rand)
-	gen_stage = 4.1
-	startTimer("generate_iron_clusters")
-	generate_iron_clusters(original_cell_coords, borderCells)
-	endTimer()
-	gen_stage = 4.2
-	startTimer("generate_gadget_chambers")
-	generate_gadget_chambers()
-	endTimer()
-	gen_stage = 4.3
-	startTimer("generate_power_cores")
-	generate_power_cores()
-	endTimer()
-	gen_stage = 4.4
-	if bad_relics == 0:
-		startTimer("generate_relics")
-		generate_relics()
-	else :
-		### Added vvvvvv
-		startTimer("generate_bad_relics")
-		generate_bad_relics(bad_relics)
-		### Added ^^^^^^
-		
-	endTimer()
-	gen_stage = 4.5
-	startTimer("adjust_ore_amounts")
-	adjust_ore_amounts()
-	endTimer()
-	gen_stage = 4.6
-	startTimer("expand_iron_clusters")
 	var ironClusterCenters = $MapData.get_resource_cells_by_id(Data.TILE_IRON).duplicate()
-	expand_iron_clusters(ironClusterCenters)
-	endTimer()
-	gen_stage = 4.7
-	startTimer("generate_water")
-	generate_water(ironClusterCenters, original_cell_coords, borderCells)
-	endTimer()
-	gen_stage = 4.8
-	startTimer("generate_cobalt")
-	generate_cobalt(ironClusterCenters, original_cell_coords, borderCells)
-	endTimer()
-	gen_stage = 4.9
-	startTimer("generate_holes")
-	var averageCellCountInBiome = a.tileCount/(maxBiome+1)
-	generate_holes(rand, averageCellCountInBiome)
-	endTimer()
 	
 	### Added vvvvvv
 
@@ -128,72 +78,20 @@ func generate_resources(rand):
 
 	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,chaos_rate, TILE_CHAOS)
 
-func generate():
-	if not viability_large_noise:
-		return
-	
-	rand = RandomNumberGenerator.new()
-	rand.seed = gen_seed
-	a.randomize_values(rand)
-	
-	$MapData.clear()
-	
-	reportLog("--- TILE DATA GENERATOR REPORT ---")
-	reportLog("Width: " + str(a.width))
-	reportLog("Depth: " + str(a.depth))
-	reportLog("Target Tile Count: " + str(a.tileCount))
-	reportLog("Noise Large: " + str(a.viability_large_noise.resource_path.get_file()))
-	reportLog("Noise Small: " + str(a.viability_small_noise.resource_path.get_file()))
-	reportLog("Seed:" + str(gen_seed))
-	
-	startTimer("total_generation")
-	gen_stage = 1
-	startTimer("base shape")
-	finishedSuccessful = generate_base_shape()
-	endTimer()
-	if not finishedSuccessful:
-		reportError("generate_base_shape failed.")
-		terminate_generation()
-		return
-	
-	gen_stage = 2
-	startTimer("biomes")
-	finishedSuccessful = generate_biomes()
-	endTimer()
-	if not finishedSuccessful:
-		reportError("generate_biomes failed.")
-		terminate_generation()
-		return
 
-	gen_stage = 3
-	startTimer("hardness")
-	generate_hardness()
-	endTimer()
+func generate_relics():
+	var bad_relics = get_generation_data(a)[3]
 	
-	#if GameWorld.devMode:
-		#var aa = $MapData.duplicate()
-		#aa.name = "MapAfterBiomeGeneration"
-		#aa.visible = false
-		#add_child(aa)
-
-	gen_stage = 4
-	startTimer("border-1")
-	generate_border_prepass()
-	endTimer()
-	
-	if a.generateResources:
-		startTimer("resources")
-		generate_resources(rand)
-		endTimer()
-	
-	startTimer("border-2")
-	generate_border()
-	endTimer()
-	
-	gen_stage = 5
-	generate_fixed_entrance()
-	
-	### Added vvvvvv
+	if bad_relics == 0:
+		startTimer("generate_relics")
+		super()
+	else :
+		startTimer("generate_bad_relics")
+		generate_bad_relics(bad_relics)
+		
+		
+func generate_fixed_entrance():
+	super()
 	var secret_rooms = get_generation_data(a)[4]
 	if secret_rooms == 0 :
 		return
@@ -259,10 +157,7 @@ func generate():
 					$MapData.set_resourcev(pos, Data.TILE_IRON)
 					continue
 				$MapData.set_resourcev(pos, Data.TILE_WATER)
-	
-	### Added ^^^^^^
-	endTimer()
-	terminate_generation()
+
 	
 	
 

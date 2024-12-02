@@ -28,6 +28,8 @@ func activate():
 	StageManager.get_parent().add_child(label)
 	label.text = tr("chaos."+effect_name)
 	add_child(effect)
+	for c in get_children():
+		print(c.name)
 	effect.activate()
 	used = true
 	await get_tree().create_timer(0.1).timeout
@@ -36,8 +38,6 @@ func activate():
 	
 	
 func request_queue_free():
-	for c in get_children(): 
-		c.queue_free()
 	set_physics_process(true)
 	should_queue_free = true
 

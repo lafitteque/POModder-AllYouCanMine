@@ -1,29 +1,22 @@
 extends Map
 
 
-var data_mod 
+
 var entrance_pos = null
 var last_drop = null
 
-func _ready():
-	data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
-	super()
-	
+@onready var data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
+@onready var map_mods = get_tree().get_nodes_in_group("map-mods")
 	
 
 
 func revealTile(coord:Vector2):
 	var typeId:int = tileData.get_resource(coord.x, coord.y)
 	var invalids := []
-	
-	if typeId == data_mod.TILE_DESTROYER:
-		print("map : reveal destroyer")
+	modifyTileWhenRevealed(coord,typeId)
 	### if tile is marker iron (in order to have exactly one iron per layer
 	### used to know the layer numner), remove iron
-	if Data.ofOr("assignment.id","") == "speleologist" and typeId == Data.TILE_IRON:
-		typeId = Data.TILE_DIRT_START
-		tileData.set_resourcev(Vector2(coord.x, coord.y), Data.TILE_DIRT_START) 
-		tileData.set_hardnessv(Vector2(coord.x, coord.y), 1) 
+	
 		
 	if tileRevealedListeners.has(coord):
 		for listener in tileRevealedListeners[coord]:
@@ -41,7 +34,7 @@ func revealTile(coord:Vector2):
 	if tiles.has(coord):
 		return
 	
-	var tile = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn").instantiate()
+	var tile = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn").instantiate()
 	var biomeId:int = tileData.get_biome(coord.x, coord.y)
 	tile.layer = biomeId
 	tile.biome = biomes[tile.layer]
@@ -74,7 +67,11 @@ func revealTile(coord:Vector2):
 			revealTileVisually(coord) 
 		"chaos":
 			revealTileVisually(coord) 
+		_:
+			for mod in map_mods:
+				mod.revealTileVisually(self, tile, coord)
 				
+					
 	tiles[coord] = tile 
 	
 	if tilesByType.has(tile.type):
@@ -97,7 +94,25 @@ func revealTile(coord:Vector2):
 			var rand_index = randi_range(0,8) 
 			tile.initResourceSprite(vec_list[rand_index]) 
 	
+	
+func modifyTileWhenRevealed(coord,typeId):
+	if Data.ofOr("assignment.id","") == "speleologist" and typeId == Data.TILE_IRON:
+		typeId = Data.TILE_DIRT_START
+		tileData.set_resourcev(Vector2(coord.x, coord.y), Data.TILE_DIRT_START) 
+		tileData.set_hardnessv(Vector2(coord.x, coord.y), 1) 
+		
+	for mod in map_mods:
+		mod.modmodifyTileWhenRevealed(self,coord,typeId)
+	
+	
 func addDrop(drop):
+	
+	var should_stop = false
+	for mod in map_mods:
+		should_stop = should_stop or mod.addDrop(self,drop)
+	if should_stop:
+		return
+		
 	if "worldmodifieraprilfools" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) and\
 	("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES and drop.carriedBy.size() == 0:
 		if drop.global_position.y <= 20 :
@@ -145,6 +160,7 @@ func addDrop(drop):
 	add_child(drop)		
 	Style.init(drop)
 	
+
 
 func destroyTile(tile, withDropsAndSound := true):
 	Data.changeByInt("map.tilesDestroyed", 1)
@@ -236,8 +252,14 @@ func destroyTile(tile, withDropsAndSound := true):
 		drop.apply_central_impulse(Vector2(0, 10).rotated(randf() * TAU))
 		call_deferred("addDrop", drop)
 		GameWorld.incrementRunStat("resources_mined")
-
+		
+	for mod in map_mods:
+		mod.destroyTile(self, tile, withDropsAndSound)
+		
+		
 func getSceneForTileType(tileType:int) -> PackedScene:
+	for mod in map_mods:
+		mod.getSceneForTileType(tileType)
 	if tileType == data_mod.TILE_BAD_RELIC:
 		return preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/BadRelicChamber/BadRelicChamber.tscn")
 	elif tileType == data_mod.TILE_FAKE_BORDER:
@@ -252,6 +274,9 @@ func init(fromDeserialize := false, defaultState := true):
 		var clusterCenters = getResourceClusterTopLeft(data_mod.TILE_BAD_RELIC)
 		for centerCoord in clusterCenters:
 			addChamber(centerCoord, getSceneForTileType(data_mod.TILE_BAD_RELIC))
+			
+	for mod in map_mods:
+		mod.init(fromDeserialize, defaultState)
 	
 	
 
@@ -287,8 +312,12 @@ func generateCaves(minDistanceToCenter := 10):
 		if shouldGenerateDrillbertCave():
 			cavePackeScenes.insert(0, preload("res://content/caves/drillicave/DrillbertCave.tscn"))
 	
-	# Added vvvvvvvvv
 	
+	
+	for mod in map_mods:
+		mod.beforeCaveGeneration(self, cavePackeScenes, minDistanceToCenter)
+		
+	# Added : Coresaver + Speleologist vvvvvvvvv
 	var coresaver_endings = data_mod.get_endings()
 	
 	var secret_room_tiles = tileData.get_resource_cells_by_id(data_mod.TILE_SECRET_ROOM)
@@ -321,8 +350,6 @@ func generateCaves(minDistanceToCenter := 10):
 			tileData.clear_resource(absCoord)
 		root_cave.visible = true
 		
-	## Added ^^^^^^^^
-	
 	if Data.ofOr("assignment.id","") == "speleologist":
 		cavePackeScenes = []
 		for cave in cavePackeScenes:
@@ -347,7 +374,10 @@ func generateCaves(minDistanceToCenter := 10):
 				addForcedCave(rand, cave, layerIndex, 3,false)
 				availableCaves.erase(cavePackedScene)
 		return
+	
+	## Added ^^^^^^^^
 		
+			
 	var availableCaves:Array
 	var caveCount := {}
 	var maxLayer = startingIronCountByLayer.size()
@@ -370,6 +400,9 @@ func generateCaves(minDistanceToCenter := 10):
 			else:
 				cave.queue_free()
 
+	for mod in map_mods:
+		mod.afterCaveGeneration(self)
+	
 	### Added vvvvvvvv	
 	if !coresaver_is_reloading and Level.loadout.modeId == "coresaver" and coresaver_endings.has("glass") :
 		spawn_glass()
@@ -390,6 +423,11 @@ func generateCaves(minDistanceToCenter := 10):
 		while tileData.get_remaining_mineable_tile_count() > 420 :
 			var pos = tileData.get_resource_cells_by_id(Data.TILE_DIRT_START)[randi_range(0,tileData.get_resource_cells_by_id(Data.TILE_DIRT_START).size()-1)]
 			tileData.set_resourcev(pos, -1)
+			
+			
+			
+			
+			
 func addForcedCave(rand, cave, biomeIndex, minDistanceToCenter, accept_higher_layer = true):
 	cave.updateUsedTileCoords()
 
