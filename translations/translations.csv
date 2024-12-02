@@ -266,14 +266,14 @@ upgrades.blastminingblastassignment2.desc,Further increase the blast strength.,A
 upgrades.blastminingblastassignment3.title,Blast 3,Explosion 3,Explosivo 3
 upgrades.blastminingblastassignment3.desc,Upgrade the blast charges to extreme strength.,Améliores les charges d’explosion pour obtenir une force extrême.,Mejora las cargas explosivas para que detonén con una potencia extrema.
 ,,,
-upgrads.blastminingproductiontimeassignment1.title,Production Time,Production accélérée,Tiempo de producción
-upgrads.blastminingproductiontimeassignment1.desc,Reduce the time needed to create a blast charge.,Réduit le temps nécessaire pour produire une charge explosive.,Reduce el tiempo necesario para crear una carga explosiva.
+upgrades.blastminingproductiontimeassignment1.title,Production Time,Production accélérée,Tiempo de producción
+upgrades.blastminingproductiontimeassignment1.desc,Reduce the time needed to create a blast charge.,Réduit le temps nécessaire pour produire une charge explosive.,Reduce el tiempo necesario para crear una carga explosiva.
 ,,,
 upgrades.blastminingstickychargeassignment.title,Sticky Directional Charges,Charges directionnelles adhésives.,Cargas direccionales adhesivas
 upgrades.blastminingstickychargeassignment.desc,Charges stick to the first wall they touch and blast a tunnel instead of a circular explosion.,"Les charges explosives se collent au premier mur qu’elles touchent, et leur déflagration n’est pas circulaire, mais en forme de tunnel.",Las cargas se pegan a las primera rocas que tocan y detonan en forma de túnel y no circulármente.
 ,,,
 upgrades.blastminingimpactdetonationassignment.title,Impact Detonation,Déflagration à l’impact,Detonación al impactar.
-upgrades.blastminingimpactdetonationassignment.desc,The blast charge will ewplode on impact with a surface. The explosion will be offset into the direction of the impact.,La charge explosive se déclenche dès qu’elle entre en contact avec une surface. L’explosion est compensée dans la direction de l’impact.,Las cargas explosivas detonan al impactar con una superficie. La explosión se hara en la dirección del impacto.
+upgrades.blastminingimpactdetonationassignment.desc,The blast charge will explode on impact with a surface. The explosion will be offset into the direction of the impact.,La charge explosive se déclenche dès qu’elle entre en contact avec une surface. L’explosion est compensée dans la direction de l’impact.,Las cargas explosivas detonan al impactar con una superficie. La explosión se hara en la dirección del impacto.
 ,,,
 ,,,
 upgrades.suitblasterassignment.title,Suit Blaster,Blaster de combinaison,Bláster de traje

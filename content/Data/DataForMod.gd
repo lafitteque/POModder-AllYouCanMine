@@ -25,7 +25,7 @@ const TILE_CHAOS = 18
 
 const RESOURCES_ID = [TILE_IRON,TILE_WATER,TILE_SAND,TILE_MEGA_IRON]
 
-const TILE_ID_TO_STRING_MAP := {
+var TILE_ID_TO_STRING_MAP := {
 	TILE_EMPTY: "",
 	TILE_BORDER: CONST.BORDER,
 	TILE_IRON: CONST.IRON,
@@ -46,7 +46,7 @@ const TILE_ID_TO_STRING_MAP := {
 	TILE_CHAOS : "chaos"
 } 
 
-const DROP_FROM_TILES_SCENES := {
+var DROP_FROM_TILES_SCENES := {
 	CONST.IRON: preload("res://content/drop/iron/IronDrop.tscn"),
 	CONST.WATER: preload("res://content/drop/water/WaterDrop.tscn"),
 	CONST.SAND: preload("res://content/drop/sand/SandDrop.tscn"),
@@ -55,7 +55,7 @@ const DROP_FROM_TILES_SCENES := {
 	"nothing" : null
 }
 
-const APRIL_FOOLS_PROBABILITIES = [40.0, 8.0 , 3.0 , 0.5, 1.0 ,15.0]
+var APRIL_FOOLS_PROBABILITIES = [40.0, 8.0 , 3.0 , 0.5, 1.0 ,15.0]
 
 
 var ALL_DROP_NAMES = [CONST.WATER, CONST.IRON,CONST.SAND , "mega_iron"]
@@ -82,6 +82,14 @@ func get_endings():
 	endings.remove_at(randi() % 3)
 	endings = ["glass" , "heavy_rock"]
 	return endings
+	
+func add_tile(tileMapNumber, tileName):
+	TILE_ID_TO_STRING_MAP[tileMapNumber] = tileName
+	
+	
+func add_drop_scene(dropName, sceneLoad, aprilfoolsWeight):
+	DROP_FROM_TILES_SCENES[dropName] = sceneLoad
+	APRIL_FOOLS_PROBABILITIES.append(aprilfoolsWeight)
 	
 	
 func update_generation_data(a : MapArchetype):

@@ -326,15 +326,15 @@ func update_custom_achievements():
 		else :
 			e.setChoice(title, customAchievementId, null, hint)
 
-func preGenerateMap(requirements):
-	var generated = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn").instantiate()
-	add_child(generated)
-	generated.setTileData(createMapDataFor(requirements))
-	generated.init(false, false)
-	generated.revealInitialState(Vector2(0, 4))
-	pregeneratedMaps[requirements] = generated
-	remove_child(generated)
-	return generated
+#func preGenerateMap(requirements):
+	#var generated = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn").instantiate()
+	#add_child(generated)
+	#generated.setTileData(createMapDataFor(requirements))
+	#generated.init(false, false)
+	#generated.revealInitialState(Vector2(0, 4))
+	#pregeneratedMaps[requirements] = generated
+	#remove_child(generated)
+	#return generated
 
 func update_assignments():
 	saver.save_dict["assignments_page"] = current_assignment_page
@@ -443,6 +443,8 @@ func updateBlockVisibility(forceRebuild := false):
 		var gamemode_block_visible = false
 		for gamemode in mod_gamemodes:
 			var block = find_child(gamemode.get_block_ui_name(),true,false)
+			if gamemode.id == "endlesscombat":
+				print("debug")
 			block.visible = Level.loadout.modeId == gamemode.id
 			if block.visible:
 				stackedTileDataIds.append(gamemode.id)

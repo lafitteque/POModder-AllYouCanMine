@@ -74,13 +74,13 @@ func modInit():
 
 	StageManager.connect("level_ready", _on_level_ready)
 
-	var coresaver_loadout = preload("res://mods-unpacked/POModder-AllYouCanMine/content/loadout_gamemode/coresaver_loadout.tscn").instantiate()
+	var coresaver_loadout = load("res://mods-unpacked/POModder-AllYouCanMine/content/loadout_gamemode/coresaver_loadout.tscn").instantiate()
 	add_child(coresaver_loadout)
 	
 	Data.registerGameMode("coresaver")
 	GameWorld.unlockElement("coresaver")
 
-	var coreSaverPrepare = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_saver_prepare.tscn").instantiate()
+	var coreSaverPrepare = load("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_saver_prepare.tscn").instantiate()
 	add_child(coreSaverPrepare)
 	
 # Called when the node enters the scene tree for the first time.
@@ -154,15 +154,15 @@ func manage_overwrites():
 	var new_stage = load("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutModStage.tscn")
 	new_stage.take_over_path("res://stages/loadout/multiplayerloadoutmodstage.tscn")
 	
-	var tile = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
+	var tile = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
 	tile.take_over_path("res://content/map/tile/Tile.tscn")
 	
-	var map = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn")
+	var map = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn")
 	map.take_over_path("res://content/map/Map.tscn")
 	
 	var level_stage = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/LevelStage.tscn")
 	level_stage.take_over_path("res://stages/level/LevelStage.tscn")
-	
+	#
 	
 	### Coresaver Icon
 	

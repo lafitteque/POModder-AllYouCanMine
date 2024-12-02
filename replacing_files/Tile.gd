@@ -4,11 +4,23 @@ var detonator = null #QLafitte Added
 var destroyer = null
 var chaos = null
 
-@onready var data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
+var mod_info = {}
 
+@onready var data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
+@onready var tile_mods = get_tree().get_nodes_in_group("tile-mods")
+
+
+func serialize():
+	super()
+	for mod in tile_mods :
+		mod.serialize(self)
+	
 func deserialize(data: Dictionary):
 	super(data)
 	
+	for mod in tile_mods :
+		mod.deserialize(self)
+		
 	if ! type in ["mega_iron", "detonator", "destroyer", "bad_relic", "glass", "fake_border", "secret_room", "chaos"]:
 		return
 	
@@ -16,49 +28,45 @@ func deserialize(data: Dictionary):
 		"mega_iron": #QLafitte Added
 			set_meta("destructable", true)
 			customInitResourceSprite(Vector2(randi_range(0,1),1))
-			$AnimatedSprite2D.queue_free()
 		"detonator": #QLafitte Added
 			set_meta("destructable", true)
 			detonator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/detonator_tile/Detonator.tscn").instantiate()#QLafitte Added
 			StageManager.currentStage.MAP.add_child(detonator)#QLafitte Added
 			detonator.global_position = global_position#QLafitte Added
 			customInitResourceSprite(Vector2(1,0))
-			$AnimatedSprite2D.queue_free()
 		"destroyer":
 			set_meta("destructable", true)
 			destroyer = load("res://mods-unpacked/POModder-AllYouCanMine/content/destroyer_tile/Destroyer.tscn").instantiate()#QLafitte Added
 			StageManager.currentStage.MAP.add_child(destroyer)#QLafitte Added
 			destroyer.global_position = global_position#QLafitte Added
 			customInitResourceSprite(Vector2(2,0))	
-			$AnimatedSprite2D.queue_free()	
 		"chaos": #QLafitte Added
 			set_meta("destructable", true)
 			chaos = preload("res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTile.tscn").instantiate()#QLafitte Added
 			StageManager.currentStage.MAP.add_child(chaos)#QLafitte Added
 			chaos.global_position = global_position#QLafitte Added
 			customInitResourceSprite(Vector2(2,1))
-			$AnimatedSprite2D.queue_free()
 		"bad_relic":
 			set_meta("destructable", true)
 			customInitResourceSprite(Vector2(3,randi_range(0,1)))
-			$AnimatedSprite2D.queue_free()
 		"glass":
 			set_meta("destructable", true)
-			play_animation()
+			var coreater_animation = load("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_eater_cave/CoreEater.tscn").instantiate()
+			add_child(coreater_animation)
+			Style.init(coreater_animation)
+			coreater_animation.show()
+			coreater_animation.play("main")
+			res_sprite.hide()
 		"fake_border":
 			set_meta("destructable", true)
 			res_sprite.hide()
 			res_sprite.queue_free()
 			res_sprite = null
-			$AnimatedSprite2D.queue_free()
 		"secret_room":
 			set_meta("destructable", true)
 			res_sprite.hide()
 			res_sprite.queue_free()
 			res_sprite = null
-			$AnimatedSprite2D.queue_free()
-		_ :
-			$AnimatedSprite2D.queue_free()
 	
 func setType(type:String):
 	if hardness == 7 and type == CONST.BORDER:
@@ -68,9 +76,15 @@ func setType(type:String):
 	if Data.ofOr("assignment.id","") == "tinyplanet" :
 		if hardness <= 4:
 			hardness = 0
+		
+	if type in ["fake_iron","fake_water","fake_sand"]:
+		print("hook")
+	for mod in tile_mods :
+		mod.setTypeBegin(self,type)
+		
 	super.setType(type)
 	
-	if ! type in ["mega_iron", "detonator", "destroyer", "bad_relic", "glass", "fake_border", "secret_room", "chaos"]:
+	if ! (type in data_mod.TILE_ID_TO_STRING_MAP.values()):
 		return
 		
 	var baseHealth:float = Data.of("map.tileBaseHealth")
@@ -79,36 +93,36 @@ func setType(type:String):
 			set_meta("destructable", true)
 			customInitResourceSprite(Vector2(randi_range(0,1),1))
 			baseHealth += Data.of("map.megaIronAdditionalHealth")
-			$AnimatedSprite2D.queue_free()
 		"detonator": #QLafitte Added
 			set_meta("destructable", true)
 			detonator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/detonator_tile/Detonator.tscn").instantiate()#QLafitte Added
 			StageManager.currentStage.MAP.add_child(detonator)#QLafitte Added
 			detonator.global_position = global_position#QLafitte Added
 			customInitResourceSprite(Vector2(1,0))
-			$AnimatedSprite2D.queue_free()
 		"destroyer":
 			set_meta("destructable", true)
 			destroyer = load("res://mods-unpacked/POModder-AllYouCanMine/content/destroyer_tile/Destroyer.tscn").instantiate()#QLafitte Added
 			StageManager.currentStage.MAP.add_child(destroyer)#QLafitte Added
 			destroyer.global_position = global_position#QLafitte Added
-			customInitResourceSprite(Vector2(2,0))	
-			$AnimatedSprite2D.queue_free()	
+			customInitResourceSprite(Vector2(2,0))
 		"chaos": #QLafitte Added
 			set_meta("destructable", true)
 			chaos = preload("res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTile.tscn").instantiate()#QLafitte Added
 			StageManager.currentStage.MAP.add_child(chaos)#QLafitte Added
 			chaos.global_position = global_position#QLafitte Added
 			customInitResourceSprite(Vector2(2,1))
-			$AnimatedSprite2D.queue_free()
 		"bad_relic":
 			set_meta("destructable", true)
 			customInitResourceSprite(Vector2(3,randi_range(0,1)))
 			baseHealth += Data.of("map.badRelicAdditionalHealth")
-			$AnimatedSprite2D.queue_free()
 		"glass":
 			set_meta("destructable", true)
-			play_animation()
+			var coreater_animation = load("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_eater_cave/CoreEater.tscn").instantiate()
+			add_child(coreater_animation)
+			coreater_animation.show()
+			coreater_animation.play("main")
+			Style.init(coreater_animation)
+			res_sprite.hide()
 			baseHealth += Data.of("map.glassAdditionalHealth")
 		"fake_border":
 			set_meta("destructable", true)
@@ -116,43 +130,43 @@ func setType(type:String):
 			res_sprite.queue_free()
 			res_sprite = null
 			baseHealth += Data.of("map.fakeBorderAdditionalHealth")
-			$AnimatedSprite2D.queue_free()
 		"secret_room":
 			set_meta("destructable", true)
 			res_sprite.hide()
 			res_sprite.queue_free()
 			res_sprite = null
 			baseHealth += Data.of("map.secretRoomAdditionalHealth")
-			$AnimatedSprite2D.queue_free()
 		_ :
-			$AnimatedSprite2D.queue_free()
-	
+			for mod in tile_mods :
+				baseHealth = mod.setType(self,type, baseHealth)
+				if mod.set_meta_destructable(self,type) :
+					set_meta("destructable", true)
 	var healthMultiplier = hardnessMultiplier
 	healthMultiplier *= (pow(Data.of("map.tileHealthMultiplierPerLayer"), layer))
 	
 	max_health = max(1, round(healthMultiplier * baseHealth))
 	health = max_health 
 	
-func play_animation():
-	Style.init($AnimatedSprite2D)
-	$AnimatedSprite2D.show()
-	$AnimatedSprite2D.play("main")
-	res_sprite.hide()
 	
-	
-func customInitResourceSprite(v : Vector2):
-	res_sprite.hframes = 5
-	res_sprite.vframes = 2
-	res_sprite.texture = load("res://mods-unpacked/POModder-AllYouCanMine/images/mod_resource_sheet.png")
+func customInitResourceSprite(v : Vector2, h_frames = 5 , v_frames = 2, path : String = "res://mods-unpacked/POModder-AllYouCanMine/images/mod_resource_sheet.png"):
+	res_sprite.hframes = h_frames
+	res_sprite.vframes = v_frames
+	res_sprite.texture = load(path)
 	res_sprite.set_frame_coords(v)
 	Style.init(self)
 	
 func hit(dir:Vector2, dmg:float):
+	for mod in tile_mods :
+		mod.hit(self,type,dir,dmg)
+		
 	if detonator and is_instance_valid(detonator) and  !detonator.exploded:#QLafitte Added
 		detonator.explode()
 	
 	
 	if health - dmg <= 0:
+		for mod in tile_mods :
+			mod.tileBreak(self,type,dir,dmg)
+			
 		if destroyer and is_instance_valid(destroyer) and!destroyer.exploded:#QLafitte Added
 			destroyer.explode()
 		
