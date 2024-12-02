@@ -14,7 +14,7 @@ var data_mod
 var shroom_cap = 25
 
 func _ready():
-	data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
+	data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod
 	probability_spawn = data_mod.generation_data["drop_bearer_rate"]
 	
 func _on_timer_timeout():

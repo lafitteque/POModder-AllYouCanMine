@@ -8,7 +8,7 @@ var should_queue_free = false
 var animation_finished = false
 
 @onready var default_gravity_vector = ProjectSettings.get_setting("physics/2d/default_gravity_vector")
-@onready var data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
+@onready var data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

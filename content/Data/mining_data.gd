@@ -11,7 +11,7 @@ var debt
 
 func _ready():
 	tile_data = StageManager.currentStage.MAP.tileData
-	data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod 
+	data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod 
 	Data.apply("inventory.remainingtiles", 9000)
 	Data.apply("inventory.remaining_core_eaters", 4)
 	Data.apply("inventory.mined_fake_borders", 0)

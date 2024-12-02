@@ -97,13 +97,13 @@ func _physics_process(delta):
 		
 		drop = null
 		die()
-		var saver = get_node("/root/ModLoader/POModder-AllYouCanMine").saver
+		var saver = get_node("/root/ModLoader/POModder-Dependency").saver
 		if !saver.save_dict.has("drop_bearer_stolen"):
 			saver.save_dict["drop_bearer_stolen"] = 0
 		
 		saver.save_dict["drop_bearer_stolen"] += 1
 		if saver.save_dict["drop_bearer_stolen"] >= 20:
-			get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("DROP_BEARER_STOLEN")
+			get_node("/root/ModLoader/POModder-Dependency").custom_achievements.unlockAchievement("DROP_BEARER_STOLEN")
 		return
 	
 			

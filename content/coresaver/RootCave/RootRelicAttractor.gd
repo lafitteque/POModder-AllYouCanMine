@@ -53,7 +53,7 @@ func _physics_process(delta):
 		Data.apply("inventory.relic", 1)
 		Data.apply("monsters.wavepresent", false)
 		
-		get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("SECRET_ENDING")
+		get_node("/root/ModLoader/POModder-Dependency").custom_achievements.unlockAchievement("SECRET_ENDING")
 		queue_free()
 
 

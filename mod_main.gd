@@ -14,8 +14,7 @@ var trans_dir = "res://mods-unpacked/POModder-AllYouCanMine/translations/"
 var achievements = {}
 var data_achievements 
 var data_mod 
-var custom_achievements 
-var saver
+
 
 var blast_mining_assignment
 var blast_suit_assignment
@@ -34,7 +33,6 @@ func _init():
 	ModLoaderMod.install_script_extension(ext_dir + "AssignmentDisplay.gd")
 	ModLoaderMod.install_script_extension(ext_dir + "TileDataGenerator.gd")
 	ModLoaderMod.install_script_extension(ext_dir + "laser_superhot.gd")
-	ModLoaderMod.install_script_extension(ext_dir + "StageManager.gd")
 	
 func _ready():
 	ModLoaderLog.info("Done", MYMODNAME_LOG)
@@ -42,6 +40,9 @@ func _ready():
 
 		
 func modInit():
+	data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod
+	data_achievements = get_node("/root/ModLoader/POModder-Dependency").data_achievements
+	
 	#GameWorld.devMode = true
 	var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
 	var pathToModYamlProperties : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/properties.yaml"
@@ -58,17 +59,8 @@ func modInit():
 	Data.upgrades.erase("blastminingassignment")
 	Data.upgrades.erase("suitblasterassignment")
 	
-	data_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForAchievements.tscn").instantiate()
-	data_mod = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/DataForMod.tscn").instantiate()
-	add_child(data_achievements)
-	add_child(data_mod)
-	
 	manage_overwrites()
 	
-	saver = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Save/Saver.tscn").instantiate()
-	add_child(saver)
-	custom_achievements = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/CustomAchievements.tscn").instantiate()
-	add_child(custom_achievements)
 	var stage_manager_extender = preload("res://mods-unpacked/POModder-AllYouCanMine/content/StageManagerExtender/StageManagerExtender.tscn").instantiate()
 	StageManager.add_child(stage_manager_extender)
 
@@ -82,6 +74,16 @@ func modInit():
 
 	var coreSaverPrepare = load("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_saver_prepare.tscn").instantiate()
 	add_child(coreSaverPrepare)
+	
+	
+	data_mod.add_drop_scene("mega_iron", preload("res://mods-unpacked/POModder-AllYouCanMine/content/new_drops/MegaIronDrop.tscn"),0.5)
+
+	var map_hook = preload("res://mods-unpacked/POModder-AllYouCanMine/content/MapAndTile/MapHook.tscn").instantiate()
+	add_child(map_hook)
+	var tile_hook = preload("res://mods-unpacked/POModder-AllYouCanMine/content/MapAndTile/TileHook.tscn").instantiate()
+	add_child(tile_hook)
+	
+	registerAchievenemnts()
 	
 # Called when the node enters the scene tree for the first time.
 func manage_overwrites():
@@ -147,22 +149,6 @@ func manage_overwrites():
 	var coresaver = preload("res://content/gamemode/relichunt/Relichunt.tscn")
 	coresaver.take_over_path("res://content/gamemode/coresaver/Coresaver.tscn")
 	
-	
-	
-	### Taking over vanilla files : (main source of Mod incompatibilities)
-	
-	var new_stage = load("res://mods-unpacked/POModder-AllYouCanMine/stages/MultiplayerloadoutModStage.tscn")
-	new_stage.take_over_path("res://stages/loadout/multiplayerloadoutmodstage.tscn")
-	
-	var tile = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Tile.tscn")
-	tile.take_over_path("res://content/map/tile/Tile.tscn")
-	
-	var map = load("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/Map.tscn")
-	map.take_over_path("res://content/map/Map.tscn")
-	
-	var level_stage = preload("res://mods-unpacked/POModder-AllYouCanMine/replacing_files/LevelStage.tscn")
-	level_stage.take_over_path("res://stages/level/LevelStage.tscn")
-	#
 	
 	### Coresaver Icon
 	
@@ -265,4 +251,35 @@ func _on_level_ready():
 		prop.value = 500.0
 		Data.applyPropertyChange(prop)
 
-
+func registerAchievenemnts():
+	var CUSTOM_ACHIEVEMENTS = [
+		"ALL_DOMES_ASSESSOR",
+		"ALL_DOMES_ENGINEER",
+		"ALL_DOMES_ASSESSOR2",
+		"ALL_DOMES_ENGINEER2",
+		"SECRET_ENDING",
+		"HEAVY_ROCK_ENDING",
+		"CORE_EATER_ENDING",
+		"DROP_BEARER_STOLEN",
+		"ALL_CHAOS"
+	]
+	
+	var info_achievements = [
+		["MultiplayerLoadoutModStage", "MINE_LOADOUT"],
+		["LevelStage", "USELESS_EXPLOSION"],
+		["LevelStage", "FAST_WHY"],
+		["Relichunt", "RELIC_WAIT"],
+		["CoreSaver", "SECRET_ROOM"],
+		["MultiplayerLoadoutModStage", "ALL_ASSIGNMENTS"],
+		["CoreSaver", "WAKA_WAKA"],
+		["CoreSaver", "DOUBLE_TROUBLE"]
+	]
+	var data_achievements = get_node("/root/ModLoader/POModder-Dependency").data_achievements
+	for achievement in CUSTOM_ACHIEVEMENTS:
+		var a = load("res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/" + achievement.to_lower()+ ".tscn")
+		data_achievements.add_achievement(achievement,"")
+		
+	for achievement in info_achievements:
+		var a = load("res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/" + achievement[1].to_lower()+ ".tscn")
+		a.take_over_path("res://mods-unpacked/POModder-Dependency/content/Achievements/" + achievement[1].to_lower()+ ".tscn")
+		data_achievements.add_achievement(achievement[1], achievement[0])

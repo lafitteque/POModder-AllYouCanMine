@@ -24,7 +24,7 @@ func _on_body_entered(body):
 			
 			Data.apply("monsters.wavepresent", false)
 			Data.apply("monsters.wavepresent", false)
-			get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("HEAVY_ROCK_ENDING")
+			get_node("/root/ModLoader/POModder-Dependency").custom_achievements.unlockAchievement("HEAVY_ROCK_ENDING")
 			
 func _physics_process(delta):
 	var can_move = GameWorld.boughtUpgrades.has("player1.jetpackstrength4") or GameWorld.boughtUpgrades.has("player1.keeper2bundle4")
