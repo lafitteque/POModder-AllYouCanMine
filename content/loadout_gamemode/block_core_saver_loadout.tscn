@@ -1,0 +1,96 @@
+[gd_scene load_steps=7 format=3 uid="uid://bksivjrt2gvga"]
+
+[ext_resource type="Theme" path="res://gui/theme.tres" id="1_ddha7"]
+[ext_resource type="FontVariation" path="res://gui/fonts/FontHeading.tres" id="2_c14m2"]
+[ext_resource type="LabelSettings" path="res://gui/fontsettings/VeryLargeFontSettings.tres" id="3_ooon4"]
+[ext_resource type="FontVariation" path="res://gui/fonts/FontLarge.tres" id="4_5b77n"]
+[ext_resource type="LabelSettings" path="res://gui/fontsettings/LargeFontSettings.tres" id="5_mglur"]
+[ext_resource type="Script" path="res://stages/loadout/ModifiersBox.gd" id="6_70ive"]
+
+[node name="BlockCoreSaverLoadout" type="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(1200, 0)
+size_flags_horizontal = 8
+mouse_filter = 2
+theme_override_constants/separation = 40
+
+[node name="Headline" type="Label" parent="."]
+texture_filter = 4
+layout_mode = 2
+theme = ExtResource("1_ddha7")
+theme_override_fonts/font = ExtResource("2_c14m2")
+theme_override_font_sizes/font_size = 64
+text = "loadout.coresaver.title"
+label_settings = ExtResource("3_ooon4")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 60
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="DifficultyList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer/DifficultyList"]
+texture_filter = 4
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme = ExtResource("1_ddha7")
+theme_override_fonts/font = ExtResource("4_5b77n")
+theme_override_font_sizes/font_size = 36
+text = "loadout.difficulty.title"
+label_settings = ExtResource("5_mglur")
+horizontal_alignment = 1
+
+[node name="DifficultyContainers" type="GridContainer" parent="VBoxContainer/HBoxContainer/DifficultyList"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="MapSizeList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer/MapSizeList"]
+texture_filter = 4
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme = ExtResource("1_ddha7")
+theme_override_fonts/font = ExtResource("4_5b77n")
+theme_override_font_sizes/font_size = 36
+text = "loadout.mapsize.title"
+label_settings = ExtResource("5_mglur")
+horizontal_alignment = 1
+
+[node name="MapsizeContainers" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MapSizeList"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ModifiersBox" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("6_70ive")
+
+[node name="Label4" type="Label" parent="VBoxContainer/ModifiersBox"]
+texture_filter = 4
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme = ExtResource("1_ddha7")
+theme_override_fonts/font = ExtResource("4_5b77n")
+theme_override_font_sizes/font_size = 36
+label_settings = ExtResource("5_mglur")
+horizontal_alignment = 1

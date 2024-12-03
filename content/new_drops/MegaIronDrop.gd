@@ -1,6 +1,6 @@
 extends  Drop
 
-var iron_value = 5
+var iron_value = 6
 
 func shrink():
 	if absorbed:

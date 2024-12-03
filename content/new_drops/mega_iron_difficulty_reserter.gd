@@ -1,6 +1,6 @@
 extends Node2D
 
-var fight_modifier = 110
+var fight_modifier = 170
 var activated = false
 
 

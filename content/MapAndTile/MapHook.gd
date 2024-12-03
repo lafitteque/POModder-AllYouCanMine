@@ -20,7 +20,7 @@ func revealTileVisually(map, tile, coord):
 			
 func addDrop(map, drop):	
 	if "worldmodifieraprilfools" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) and\
-	("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES and drop.carriedBy.size() == 0:
+	drop is Drop and drop.type in data_mod.ALL_DROP_NAMES and drop.carriedBy.size() == 0:
 		if drop.global_position.y <= 20 :
 			map.add_child(drop)	
 			return true
@@ -31,10 +31,12 @@ func addDrop(map, drop):
 			return true
 		drop = data_mod.DROP_FROM_TILES_SCENES.get(rand_type).instantiate()
 		drop.global_position = old_position 
+		map.add_child(drop)
 		if ("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES :
 			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))
-	
-	return false	
+		return true	
+		
+	return false
 
 func modifyTileWhenRevealed(map,coord,typeId):
 	if Data.ofOr("assignment.id","") == "speleologist" and typeId == Data.TILE_IRON:
@@ -43,7 +45,7 @@ func modifyTileWhenRevealed(map,coord,typeId):
 	
 func destroyTile(map, tile, withDropsAndSound):
 	if withDropsAndSound and tile.type == "mega_iron":
-		var sound = $TileDestroyedIron.duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
+		var sound = map.find_child("TileDestroyedIron",true,false).duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
 		sound.setSimulatedPosition(tile.global_position)
 		map.add_child(sound)
 		sound.play()
@@ -53,6 +55,24 @@ func destroyTile(map, tile, withDropsAndSound):
 		drop.apply_central_impulse(Vector2(0, 10).rotated(randf() * TAU))
 		map.addDrop(drop)
 		GameWorld.incrementRunStat("resources_mined")
+		
+	
+	var sound = null
+	match tile.type:
+		"mega_iron" :
+			sound = map.find_child("TileDestroyedIron").duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
+		"glass":
+			sound = map.find_child("TileDestroyedWater").duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
+		"fake_border":
+			sound = map.find_child("TileDestroyedWater").duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
+		"chaos":
+			sound = map.find_child("TileDestroyedWater").duplicate(Node.DuplicateFlags.DUPLICATE_USE_INSTANTIATION)
+		
+	if sound != null :	
+		sound.setSimulatedPosition(tile.global_position)
+		map.add_child(sound)
+		sound.play()
+		
 		
 func getSceneForTileType(tileType):
 	if tileType == data_mod.TILE_BAD_RELIC:
@@ -68,7 +88,7 @@ func init(map, fromDeserialize, defaultState):
 			map.addChamber(centerCoord, map.getSceneForTileType(data_mod.TILE_BAD_RELIC))
 			
 			
-func beforeCaveGeneration(map, cavePackeScenes, minDistanceToCenter):
+func beforeCaveGeneration(map, cavePackeScenes, minDistanceToCenter,rand):
 	
 	# Added : Coresaver + Speleologist vvvvvvvvv
 	var coresaver_endings = data_mod.get_endings()
@@ -79,7 +99,7 @@ func beforeCaveGeneration(map, cavePackeScenes, minDistanceToCenter):
 	if !coresaver_is_reloading and  Level.loadout.modeId == "coresaver" and coresaver_endings.has("heavy_rock") :
 		var heavy_rock_cave =  preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/heavy_rock_cave/HeavyRockCave.tscn").instantiate()
 		var maxLayer = map.startingIronCountByLayer.size()
-		map.addForcedCave(map.rand, heavy_rock_cave, maxLayer-1, 2,false)
+		map.addForcedCave(rand, heavy_rock_cave, maxLayer-1, 2,false)
 		
 
 	if !coresaver_is_reloading and Level.loadout.modeId == "coresaver" and coresaver_endings.has("secret") :
@@ -124,11 +144,11 @@ func beforeCaveGeneration(map, cavePackeScenes, minDistanceToCenter):
 				availableCaves = cavePackeScenes.duplicate()
 			for cavePackedScene in availableCaves:
 				var cave = cavePackedScene.instantiate() # yeah this is shit, but probably not noticable
-				map.addForcedCave(map.rand, cave, layerIndex, 3,false)
+				map.addForcedCave(rand, cave, layerIndex, 3,false)
 				availableCaves.erase(cavePackedScene)
 		return
 
-func afterCaveGeneration(map):
+func afterCaveGeneration(map, rand):
 	var coresaver_endings = data_mod.get_endings()
 	var secret_room_tiles = map.tileData.get_resource_cells_by_id(data_mod.TILE_SECRET_ROOM)
 	var coresaver_is_reloading = secret_room_tiles.size() == 0
@@ -136,7 +156,7 @@ func afterCaveGeneration(map):
 	if !coresaver_is_reloading and Level.loadout.modeId == "coresaver" and coresaver_endings.has("glass") :
 		map.spawn_glass()
 		var core_eater_cave = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/core_eater_cave/CoreEaterCave.tscn").instantiate()
-		map.addCaveStartAndDirection(map.rand, core_eater_cave, Vector2.ZERO, Vector2.DOWN)
+		map.addCaveStartAndDirection(rand, core_eater_cave, Vector2.ZERO, Vector2.DOWN)
 	
 	# Add hints for secrets
 	for coord in map.tileData.get_hardness_cells_by_grade(7):

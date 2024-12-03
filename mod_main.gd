@@ -149,7 +149,6 @@ func manage_overwrites():
 	var coresaver = preload("res://content/gamemode/relichunt/Relichunt.tscn")
 	coresaver.take_over_path("res://content/gamemode/coresaver/Coresaver.tscn")
 	
-	
 	### Coresaver Icon
 	
 	var coresaver_icon = preload("res://mods-unpacked/POModder-AllYouCanMine/images/coresaver.png")
