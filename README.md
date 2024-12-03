@@ -31,6 +31,7 @@ GitHub Repo : https://github.com/lafitteque/POModder-AllYouCanMine
 By POModder
 
 
-## Use All You Can Mine as a dependency
+
+## Use All You Can Mine's new tiles and worldmodifiers
 
 Please read the wiki dedicated to this : [here](https://github.com/lafitteque/POModder-AllYouCanMine/wiki)
