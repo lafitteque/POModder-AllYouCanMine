@@ -21,8 +21,18 @@ func revealTileVisually(map, tile, coord):
 func addDrop(map, drop):	
 	if "worldmodifieraprilfools" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) and\
 	drop is Drop and drop.type in data_mod.ALL_DROP_NAMES and drop.carriedBy.size() == 0:
+		
+		var rand_res = randf_range(0,1)
+		if rand_res < 0.05 : 
+			map.should_grow_count = 4
+		elif rand_res < 0.1:
+			map.should_be_small_count = 4
+		elif rand_res < 0.15 : 
+			map.should_grow_count = 1
+		elif rand_res < 0.20:
+			map.should_be_small_count = 1	
+			
 		if drop.global_position.y <= 20 :
-			map.add_child(drop)	
 			return true
 		var old_position = drop.global_position 
 		var all_keys = data_mod.DROP_FROM_TILES_SCENES.keys() 
@@ -31,7 +41,10 @@ func addDrop(map, drop):
 			return true
 		drop = data_mod.DROP_FROM_TILES_SCENES.get(rand_type).instantiate()
 		drop.global_position = old_position 
+		if rand_res < 0.1 :
+			return true
 		map.add_child(drop)
+		Style.init(drop)
 		if ("type" in drop) and drop.type in data_mod.ALL_DROP_NAMES :
 			drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))
 		return true	

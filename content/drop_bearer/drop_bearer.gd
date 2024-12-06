@@ -11,8 +11,8 @@ var just_landed = false
 var drop  = null
 
 @onready var jump_fall_acceleration = randf_range(4,6)
-@onready var jump_initial_speed = randf_range(110,150)
-@onready var x_speed = randf_range(20,40)
+@onready var jump_initial_speed = randf_range(180,220)
+@onready var x_speed = randf_range(30,50)
 @onready var direction = randi_range(0,1)*2-1
 
 
