@@ -24,6 +24,7 @@ gravity_scale = 0.5
 can_sleep = false
 script = ExtResource("1_ouhct")
 additionalSlowdown = 0.2
+carryableType = "gadget"
 carryInfluenceSize = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

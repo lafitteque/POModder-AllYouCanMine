@@ -1,6 +1,8 @@
 extends Node2D
 
-
+func serialize(tile):
+	return
+	
 # Called when the node enters the scene tree for the first time.
 func deserialize(tile):
 	var set_meta_destructible = false

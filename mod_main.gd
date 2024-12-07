@@ -127,6 +127,8 @@ func manage_overwrites():
 	var new_archetype_superhot = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-superhot.tres")
 	new_archetype_superhot.take_over_path("res://content/map/generation/archetypes/assignment-superhot.tres")
 	
+	var new_archetype_debt = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-debt.tres")
+	new_archetype_debt.take_over_path("res://content/map/generation/archetypes/assignment-debt.tres")
 	
 	### Adding new map archetypes for custom Game Mode
 	
@@ -196,6 +198,8 @@ func manage_overwrites():
 	
 func _on_level_ready():
 	### Erase the upgrades that are specific to certain worldmodifiers
+	
+	
 	if Data.worldModifiers.has("worldmodifierpyromaniac") and \
 	! ("worldmodifierpyromaniac" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []) ):
 		Data.gadgets.erase("blastminingassignment")
@@ -212,6 +216,7 @@ func _on_level_ready():
 	if data_mod.generation_data["drop_bearer_rate"] > 0:
 		var drop_bearer_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer_manager.tscn").instantiate()
 		StageManager.currentStage.MAP.add_child(drop_bearer_manager)
+	
 		
 	if "worldmodifierspeed" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
 		Engine.time_scale = 2
