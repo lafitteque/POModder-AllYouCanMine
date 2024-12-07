@@ -269,12 +269,12 @@ func registerAchievenemnts():
 	]
 	
 	var info_achievements = [
-		["MultiplayerLoadoutModStage", "MINE_LOADOUT"],
+		["MultiplayerLoadoutStage", "MINE_LOADOUT"],
 		["LevelStage", "USELESS_EXPLOSION"],
 		["LevelStage", "FAST_WHY"],
 		["Relichunt", "RELIC_WAIT"],
 		["CoreSaver", "SECRET_ROOM"],
-		["MultiplayerLoadoutModStage", "ALL_ASSIGNMENTS"],
+		["MultiplayerLoadoutStage", "ALL_ASSIGNMENTS"],
 		["CoreSaver", "WAKA_WAKA"],
 		["CoreSaver", "DOUBLE_TROUBLE"]
 	]
