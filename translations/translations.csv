@@ -235,7 +235,7 @@ assignment.superhot.title,Super Hot,Super Chaud,Muy caliente
 assignment.superhot.desc,The dome is equiped with super lasers. Your precision will be enhanced while you don’t fire. But beware of the enemies that are stronger than ever.,"Le dome est équipé de super lasers. Votre précision est augmentée tant que vous ne tirez pas. Cependant, faites attention aux ennemis qui sont plus forts que jamais.",La cúpula tiene super laseres. Tu precisión esta aumentada mientras no disparas. Pero ten cuidado con los enemigos que son más fuerte que nunca.
 ,,,
 assignment.debt.title,Bankrupt,Faillite,Arruinado
-assignment.debt.desc,The bank will take iron from you regularly. Spend carefuly of your life will come to an end if you have no iron left.,La banque va vous prélever du fer régulièrement. Dépensez avec prudence ou votre vie prendra fin si vous n’avez plus de fer.,El banco va a tomarte hierro reuglarmente. Gasta prudentemente o tu vida acabara al si no te queda hierro.
+assignment.debt.desc,The bank will take iron from you regularly. Spend carefuly or your life will come to an end if you have no iron left.,La banque va vous prélever du fer régulièrement. Dépensez avec prudence ou votre vie prendra fin si vous n’avez plus de fer.,El banco va a tomarte hierro reuglarmente. Gasta prudentemente o tu vida acabara al si no te queda hierro.
 ,,,
 assignment.autonomous.title,Autonomous,Autonome,Autónomo
 assignment.autonomous.desc,"There are no resources on this planet, you will have to make everything by yourself. A technological support will be given to you.","Il n’y a pas de ressources sur cette planète, vous devrez vous en sortir par vos propres moyens. Une aide technologique vous sera fournie.","No hay recursos en este planeta, tendras que apañartelas. Una ayuda tecnológica te sera dada."
@@ -287,3 +287,20 @@ upgrades.suitblasterradiusassignment.desc,Increase the blast radius.,Augmentez l
 ,,,
 upgrades.suitblasterspeedassignment1.title,Charge Speed,Vitesse de charge.,Velocidad de carga 
 upgrades.suitblasterspeedassignment1.desc,Improve how quickly the suit charges a blast.,Améliorez la vitesse à laquelle la combinaison charge une explosion.,Mejora la rapidez con la que el traje carga una explosión.
+,,,
+,,,
+,,,
+,,,
+properties.game.debtcooldown,Time between payments : {} s,Temps entre les paiements : {} s,
+properties.game.debt,Payment amount : {} iron,Paiements de : {} fers ,
+properties.inventory.iron,Starting iron : {},Fer de départ : {} ,
+properties.inventory.water,Starting water : {},Eau de départ : {},
+properties.inventory.sand,Starting cobalt : {},Cobalt de départ : {},
+,,,
+assignment.worldmodifier.speed,Time flows twice as fast,Le temps s’écoule deux fois plus rapidement,
+assignment.worldmodifier.bigdrops,Drops are big ,Les ressources sont grosses,
+assignment.worldmodifier.smalldrops,Drops are small,Les ressources sont petites,
+assignment.worldmodifier.autonomous,Use special versions of the converter and condenser,Utilisez une version spéciale du convertisseur et du condenseur,
+assignment.worldmodifier.pyromaniac,Use special versions of suit blaster and mine blaster,Utilisez une version spéciale du Forage par explosion et du blaster de combinaison,
+assignment.worldmodifier.superhot,Slow mode when aiming (lasers are mandatory),Ralentissement des ennemis pendant la visée (lasers obligatoires),
+assignment.worldmodifier.nomonsters,No monsters,Pas de monstres,

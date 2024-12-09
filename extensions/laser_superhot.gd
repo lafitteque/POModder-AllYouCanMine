@@ -139,11 +139,13 @@ func stop():
 	super()
 	exit_superhot_mode = false
 	exit_normal_mode = true 
-	Engine.time_scale = 1.0
+	if "worldmodifiersuperhot" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		Engine.time_scale = 1.0
 
 func start():
 	super()
 	exit_superhot_mode = false
 	exit_normal_mode = true 
 	super()
-	Engine.time_scale = 1.0
+	if "worldmodifiersuperhot" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		Engine.time_scale = 1.0

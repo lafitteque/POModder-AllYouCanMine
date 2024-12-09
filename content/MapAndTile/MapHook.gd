@@ -186,6 +186,8 @@ func afterCaveGeneration(map, rand):
 			var pos = map.tileData.get_resource_cells_by_id(Data.TILE_DIRT_START)[randi_range(0,map.tileData.get_resource_cells_by_id(Data.TILE_DIRT_START).size()-1)]
 			map.tileData.set_resourcev(pos, -1)
 			
-			
 func modmodifyTileWhenRevealed(map,coord,typeId):
+	if Data.ofOr("assignment.id","") == "tinyplanet" :
+		if map.tileData.get_hardnessv(coord) <= 4:
+			map.tileData.set_hardnessv(coord, 0)
 	return

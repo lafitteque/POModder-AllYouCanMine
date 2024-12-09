@@ -1,6 +1,6 @@
 extends Node2D
 
-var fight_modifier = 170
+var fight_modifier = 130
 var activated = false
 
 
@@ -10,7 +10,7 @@ func _ready():
 		GameWorld.additionalRunWeight += fight_modifier
 		activated = true
 	Data.listen(self,"monsters.wavebattle")
-		
+	Data.listen(self,"game.over")
 		
 func propertyChanged(property : String, old_value, new_value):
 	if property == "monsters.wavebattle":
@@ -22,5 +22,7 @@ func propertyChanged(property : String, old_value, new_value):
 		elif !new_value and activated:
 			GameWorld.additionalRunWeight -= fight_modifier
 			queue_free()
-		
+	elif property == "game.over":
+		GameWorld.additionalRunWeight -= fight_modifier
+		queue_free()
 		

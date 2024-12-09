@@ -56,10 +56,6 @@ func set_meta_destructable(tile, type):
 		tile.type = "fake_border"
 		tile.hardness = 3
 		return true
-		
-	if Data.ofOr("assignment.id","") == "tinyplanet" :
-		if tile.hardness <= 4:
-			tile.hardness = 0
 
 	match tile.type :
 		"mega_iron": #QLafitte Added
