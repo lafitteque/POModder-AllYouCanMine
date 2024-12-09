@@ -291,16 +291,16 @@ upgrades.suitblasterspeedassignment1.desc,Improve how quickly the suit charges a
 ,,,
 ,,,
 ,,,
-properties.game.debtcooldown,Time between payments : {} s,Temps entre les paiements : {} s,
-properties.game.debt,Payment amount : {} iron,Paiements de : {} fers ,
-properties.inventory.iron,Starting iron : {},Fer de départ : {} ,
-properties.inventory.water,Starting water : {},Eau de départ : {},
-properties.inventory.sand,Starting cobalt : {},Cobalt de départ : {},
+properties.game.debtcooldown,Time between payments : {} s,Temps entre les paiements : {} s,Tiempo entre pagos: {} s
+properties.game.debt,Payment amount : {} iron,Paiements de : {} fers ,Pagos de : {} de hierro
+properties.inventory.iron,Starting iron : {},Fer de départ : {} ,Hierro al empezar : {}
+properties.inventory.water,Starting water : {},Eau de départ : {},Agua al empezar : {}
+properties.inventory.sand,Starting cobalt : {},Cobalt de départ : {},Cobalto al empezar : {}
 ,,,
-assignment.worldmodifier.speed,Time flows twice as fast,Le temps s’écoule deux fois plus rapidement,
-assignment.worldmodifier.bigdrops,Drops are big ,Les ressources sont grosses,
-assignment.worldmodifier.smalldrops,Drops are small,Les ressources sont petites,
-assignment.worldmodifier.autonomous,Use special versions of the converter and condenser,Utilisez une version spéciale du convertisseur et du condenseur,
-assignment.worldmodifier.pyromaniac,Use special versions of suit blaster and mine blaster,Utilisez une version spéciale du Forage par explosion et du blaster de combinaison,
-assignment.worldmodifier.superhot,Slow mode when aiming (lasers are mandatory),Ralentissement des ennemis pendant la visée (lasers obligatoires),
-assignment.worldmodifier.nomonsters,No monsters,Pas de monstres,
+assignment.worldmodifier.speed,Time flows twice as fast,Le temps s’écoule deux fois plus rapidement,El tiempo pasa dos veces más rápido
+assignment.worldmodifier.bigdrops,Drops are big ,Les ressources sont grosses,Los recursos son grandes
+assignment.worldmodifier.smalldrops,Drops are small,Les ressources sont petites,Los recursos son pequeños
+assignment.worldmodifier.autonomous,Use special versions of the Converter and Condenser,Utilisez une version spéciale du Convertisseur et du Condensateur,Usa una version especial del Converter y del Condenser
+assignment.worldmodifier.pyromaniac,Use special versions of Suit Blaster and Mine Blaster,Utilisez une version spéciale du Forage par Explosion et du Blaster de Combinaison,Usa una versión especial del Mine blasting y del Suit Blasting
+assignment.worldmodifier.superhot,Slow mode when aiming (lasers are mandatory),Ralentissement des ennemis pendant la visée (lasers obligatoires),Ralentiza los enemigos mientras estas apuntando
+assignment.worldmodifier.nomonsters,No monsters,Pas de monstres,Sin monstruos
