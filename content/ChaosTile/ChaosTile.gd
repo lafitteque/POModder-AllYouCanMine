@@ -27,6 +27,11 @@ func activate():
 	
 	StageManager.get_parent().add_child(label)
 	label.text = tr("chaos."+effect_name)
+	var pos_offsets = [Vector2(100,50), Vector2(100,-50), 
+	Vector2(-100,50), Vector2(-100,-50),
+	Vector2(100,100), Vector2(100,-100), 
+	Vector2(-100,100), Vector2(-100,-100)]
+	label.global_position += pos_offsets[randi_range(0,7)]
 	add_child(effect)
 	for c in get_children():
 		print(c.name)

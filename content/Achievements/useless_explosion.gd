@@ -18,7 +18,7 @@ var previous_tile_count = 0
 @onready var map = StageManager.currentStage.MAP
 
 func _ready():
-	if get_parent().achievements_unlocked[id]:
+	if get_parent().isAchievementUnlocked(id):
 		return
 	timer = Timer.new()
 	timer.autostart = true

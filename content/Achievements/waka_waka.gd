@@ -7,7 +7,7 @@ var id = "WAKA_WAKA"
 
 func _ready():
 	Data.apply("chaos.gravity_changes", 0)
-	if get_parent().achievements_unlocked[id]:
+	if get_parent().isAchievementUnlocked(id):
 		return
 	Data.listen(self,"chaos.gravity_changes")
 	

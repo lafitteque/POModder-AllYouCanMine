@@ -7,7 +7,7 @@ var id = "SECRET_ROOM"
 
 func _ready():
 	Data.apply("inventory.mined_fake_borders",0)
-	if get_parent().achievements_unlocked[id]:
+	if get_parent().isAchievementUnlocked(id):
 		return
 	Data.listen(self,"inventory.mined_fake_borders")
 	

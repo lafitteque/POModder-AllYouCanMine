@@ -85,6 +85,14 @@ func modInit():
 	
 	registerAchievenemnts()
 	
+	
+	var modifiers = ["pyromaniac", "autonomous",
+	"superhot", "speed", 
+	"aprilfools", "smalldrops",
+	"bigdrops"]
+	for modifier in modifiers :
+		GameWorld.unlockedRunModifiers.append(modifier)
+		
 # Called when the node enters the scene tree for the first time.
 func manage_overwrites():
 	### Adding new map archetypes for assignments
@@ -148,7 +156,7 @@ func manage_overwrites():
 
 	### Custom Game Mode (simply a copy of relichunt) :
 	
-	var coresaver = preload("res://content/gamemode/relichunt/Relichunt.tscn")
+	var coresaver = preload("res://mods-unpacked/POModder-AllYouCanMine/content/coresaver/gamemode.tscn")
 	coresaver.take_over_path("res://content/gamemode/coresaver/Coresaver.tscn")
 	
 	### Coresaver Icon
@@ -247,7 +255,7 @@ func _on_level_ready():
 		conv_prop2.value = 0.3
 		Data.applyPropertyChange(conv_prop2)
 		
-	if "worldmodifiersuperhot" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+	if Data.ofOr("assignment.id", "") == "superhot" :
 		var prop = PropertyChange.new()
 		prop.key = "laser.dps"
 		prop.keyClass = "laser"
@@ -273,10 +281,10 @@ func registerAchievenemnts():
 		["LevelStage", "USELESS_EXPLOSION"],
 		["LevelStage", "FAST_WHY"],
 		["Relichunt", "RELIC_WAIT"],
-		["CoreSaver", "SECRET_ROOM"],
+		["Coresaver", "SECRET_ROOM"],
 		["MultiplayerLoadoutStage", "ALL_ASSIGNMENTS"],
-		["CoreSaver", "WAKA_WAKA"],
-		["CoreSaver", "DOUBLE_TROUBLE"]
+		["Coresaver", "WAKA_WAKA"],
+		["Coresaver", "DOUBLE_TROUBLE"]
 	]
 	var data_achievements = get_node("/root/ModLoader/POModder-Dependency").data_achievements
 	for achievement in CUSTOM_ACHIEVEMENTS:

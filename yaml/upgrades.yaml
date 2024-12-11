@@ -12,8 +12,6 @@ worldmodifierautonomous:
 
 worldmodifiersuperhot:
   type: worldmodifier
-  upgrades: [laserStrength1, laserStrength2, laserStrength3, laserStrength4, laserhitprojectiles, laserMove1, laserMove2, laserMove3]
-  eraseupgradelimits: [primaryweapon]
 
 worldmodifierspeed:
   type: worldmodifier
@@ -27,7 +25,11 @@ worldmodifiersmalldrops:
 worldmodifierbigdrops:
   type: worldmodifier
 
-
+worldmodifierfulllaser:
+  type: worldmodifier
+  upgrades: [laserStrength1, laserStrength2, laserStrength3, laserStrength4, laserhitprojectiles, laserMove1, laserMove2, laserMove3]
+  eraseupgradelimits: [primaryweapon]
+  
 blastMiningAssignment:
   type: gadget
   scenes: 

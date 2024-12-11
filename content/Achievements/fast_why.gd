@@ -15,7 +15,7 @@ var timer : Timer
 
 
 func _ready():
-	if get_parent().achievements_unlocked[id]:
+	if get_parent().isAchievementUnlocked(id):
 		return
 		
 	keeper = StageManager.currentStage.find_child("Keeper",true,false)

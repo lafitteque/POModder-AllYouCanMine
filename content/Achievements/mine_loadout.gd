@@ -8,7 +8,7 @@ var timer : Timer
 var delta = 1
 
 func _ready():
-	if get_parent().achievements_unlocked[id]:
+	if get_parent().isAchievementUnlocked(id):
 		return
 	tile_data = StageManager.currentStage.find_child("MapData",true,false)
 	timer = Timer.new()

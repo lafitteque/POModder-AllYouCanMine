@@ -179,7 +179,7 @@ superhot:
   upgradeLimits: hostile
   freegadgets: 1
   mapArchetype: assignment-superhot
-  worldModifiers: worldmodifiersuperhot
+  worldModifiers: worldmodifiersuperhot, worldmodifierfulllaser
   propertyChanges:
     - monstermodifiers.totalrunweightmodifier = 3.0
     - inventory.sand = 5
