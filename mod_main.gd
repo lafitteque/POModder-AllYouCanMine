@@ -264,6 +264,7 @@ func _on_level_ready():
 		Data.applyPropertyChange(prop)
 
 func registerAchievenemnts():
+	print("test assignments : ", Data.assignments.keys())
 	var CUSTOM_ACHIEVEMENTS = [
 		"ALL_DOMES_ASSESSOR",
 		"ALL_DOMES_ENGINEER",

@@ -21,6 +21,8 @@ func prepareGameMode(modeId, levelStartData):
 		Data.apply("monsters.allowedtypes", Data.gameProperties.get("monstersbyworld." + levelStartData.loadout.worldId))
 	
 	for modifierId in levelStartData.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		if ! Data.worldModifiers.has(modifierId) :
+			continue
 		var modifier = Data.worldModifiers[modifierId]
 		for propertyChange in modifier.get("propertychanges", {}):
 			if levelStartData.mapArchetype and propertyChange.keyClass == "archetype":
