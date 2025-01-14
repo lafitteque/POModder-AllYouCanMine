@@ -217,10 +217,23 @@ loadout.mode.smalldrops.desc,Drops are small,Les ressources sont petites,Los rec
 loadout.mode.bigdrops.desc,Drops are big ,Les ressources sont grosses,Los recursos son grandes
 loadout.mode.speed.desc,Time flows twice as fast,Le temps s’écoule deux fois plus rapidement,El tiempo pasa dos veces más rápido
 ,,,
-loadout.mode.autonomous,Autonomous,,
-loadout.mode.pyromaniac,Pyromaniac,,
-loadout.mode.superhot,Super Hot,,
-loadout.mode.aprilfools,Weird Resources,,
-loadout.mode.smalldrops,Small Drops,,
-loadout.mode.bigdrops,Big Drops,,
-loadout.mode.speed,Speed !,,
+loadout.mode.autonomous,Autonomous,Autonome,Autónomo
+loadout.mode.pyromaniac,Pyromaniac,Pyromane,Pyrómano
+loadout.mode.superhot,Super Hot,Super Chaud,Muy caliente
+loadout.mode.aprilfools,Weird Resources,Ressources étranges,Recursos extaños
+loadout.mode.smalldrops,Small Drops,Petites ressources,Pequeños recursos
+loadout.mode.bigdrops,Big Drops,Grosses ressources,Grandes recursos
+loadout.mode.speed,Speed !,Vite !,Rápido
+,,,
+loadout.heat.title,Heat Selection,Sélection de defis,Selección de desafíos
+loadout.heat.desc,Additional challenges ,Défis additionnels ,Desafios adicionales
+loadout.heat.descassignments,Additional challenges (ony applies in challenge mode),Défis additionnels (s’applique uniquement au mode défi),Desafios adicionales (solo se aplica al modo desafio)
+loadout.heat.alert,Effects will disapear if you quit and reload.,Les effets disparaitront si vous quittez et reprenez une partie.,Los efectos desapareceran si sales y cargas de nuevo una partida.
+,,,
+heat.timelimit,Time limit :,Limite de temps :,Límite de tiempo :
+heat.cobaltreduction,Cobalt reduction :,Réduction de cobalt :,Reducción de cobalte :
+heat.debtcooldown,Debt of 1 iron cooldown :,Intervalle des dettes de 1 de fer :,Tiempo entre pagos de deuda (1 de hierro) :
+heat.waveweight,Additional wave weight : ,Poids de vague additionnel :,Peso de oleada adicional :
+heat.wavemultiplier,Wave multiplier :,Multiplicateur de poids de vague :,Multiplicador de peso de oleada :
+,,,
+heat.reset,Reset,Réinitialiser,Reiniciar

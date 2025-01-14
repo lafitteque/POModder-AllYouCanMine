@@ -11,6 +11,10 @@ func initialize_from_loadout(loadout_scene):
 	var block = preload("res://mods-unpacked/POModder-AllYouCanMine/content/dome_progress/block_progress.tscn").instantiate()
 	loadout_scene.find_child("UI").add_child(block)
 
+	var heatDisplay = preload("res://mods-unpacked/POModder-AllYouCanMine/content/HeatRoom/HeatDisplay.tscn").instantiate()
+	heatDisplay.global_position = Vector2(-1150,-100)
+	loadout_scene.find_child("UI").add_child(heatDisplay)
+	
 func generate_ui_block(loadout_scene):
 	return preload("res://mods-unpacked/POModder-AllYouCanMine/content/loadout_gamemode/block_core_saver_loadout.tscn").instantiate()
 	
@@ -30,6 +34,8 @@ func get_loadout_tiledata(tileData, requirements):
 	var stack_list = [] 
 	if "coresaver" in requirements:
 		stack_list.append([preload("res://stages/loadout/TileDataModeRelicHunt.tscn").instantiate() , Vector2(-9, 2)])		
+	if "coresaver" in requirements or "relichunt" in requirements or "assignments" in requirements :
+		stack_list.append([preload("res://mods-unpacked/POModder-AllYouCanMine/content/HeatRoom/TileDataHeatRoom.tscn").instantiate() , Vector2(-9, 2)])
 	return stack_list	
 	
 	

@@ -8,7 +8,6 @@ worldmodifierautonomous:
   type: worldmodifier
   gadgets: [condenser, converter]
   upgrades: [converterIronToCobalt, condenserSpeed1, condenserSpeed2, converterefficientwater, converterefficientwatershort]
-  eraseupgradelimits: [carry]
 
 worldmodifiersuperhot:
   type: worldmodifier

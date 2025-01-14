@@ -21,6 +21,7 @@ var blast_suit_assignment
 
 var pathToModYamlUpgrades : String
 
+var heatProperties = []
 
 func _init():
 	ModLoaderLog.info("Init", MYMODNAME_LOG)
@@ -37,7 +38,6 @@ func _init():
 func _ready():
 	ModLoaderLog.info("Done", MYMODNAME_LOG)
 	add_to_group("mod_init")
-
 		
 func modInit():
 	data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod
@@ -296,3 +296,5 @@ func registerAchievenemnts():
 		var a = load("res://mods-unpacked/POModder-AllYouCanMine/content/Achievements/" + achievement[1].to_lower()+ ".tscn")
 		a.take_over_path("res://mods-unpacked/POModder-Dependency/content/Achievements/" + achievement[1].to_lower()+ ".tscn")
 		data_achievements.add_achievement(achievement[1], achievement[0])
+
+

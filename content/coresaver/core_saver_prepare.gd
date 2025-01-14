@@ -1,7 +1,21 @@
 extends Node2D
 
+var props = []
+var mod_main
+
+func _ready():
+	mod_main = get_node("/root/ModLoader/POModder-AllYouCanMine")
+	
+	
 func prepareGameMode(modeId, levelStartData):
 	print("Game mode prepare :" , modeId)
+	
+	if modeId != "prestige" and modeId != "assignments":
+		for prop in mod_main.heatProperties:
+			Data.applyPropertyChange(prop)
+			print("Applied : ", prop.keyName, " with value " , prop.value)
+
+
 	if modeId != "coresaver":
 		return
 		

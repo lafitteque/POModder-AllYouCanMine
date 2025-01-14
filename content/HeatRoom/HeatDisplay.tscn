@@ -1,0 +1,227 @@
+[gd_scene load_steps=10 format=3 uid="uid://b20hae5yy7kc1"]
+
+[ext_resource type="Theme" path="res://gui/theme.tres" id="1"]
+[ext_resource type="StyleBox" path="res://gui/panels/panel_inside_frame.tres" id="2"]
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/HeatRoom/HeatDisplay.gd" id="3_qlqdi"]
+[ext_resource type="LabelSettings" path="res://gui/fontsettings/LargeFontSettings.tres" id="4"]
+[ext_resource type="FontVariation" path="res://gui/fonts/FontSmall.tres" id="5"]
+[ext_resource type="PackedScene" uid="uid://b2vc3l00w7ipb" path="res://stages/loadout/LoadoutChoice.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="7"]
+[ext_resource type="AudioStream" uid="uid://qeesjo0mfbpb" path="res://content/sounds/UI/ChooseRegular.wav" id="8"]
+[ext_resource type="AudioStream" uid="uid://bmhabuou0gle5" path="res://content/sounds/UI/ChooseChallenge.wav" id="9"]
+
+[node name="AssignmentChoice" type="PanelContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(450, 200)
+offset_right = 330.0
+offset_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+mouse_filter = 2
+theme = ExtResource("1")
+theme_override_styles/panel = ExtResource("2")
+script = ExtResource("3_qlqdi")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "loadout.heat.title"
+label_settings = ExtResource("4")
+horizontal_alignment = 1
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer6"]
+texture_filter = 4
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("5")
+text = "loadout.heat.desc"
+autowrap_mode = 3
+
+[node name="SpacerChallengeMode2" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+
+[node name="DescriptionLabel2" type="Label" parent="MarginContainer/VBoxContainer"]
+texture_filter = 4
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("5")
+text = "loadout.heat.alert"
+autowrap_mode = 3
+
+[node name="SpacerChallengeMode3" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+
+[node name="Reset" parent="MarginContainer/VBoxContainer" instance=ExtResource("6")]
+layout_mode = 2
+titleLocId = "assignment.mode.regular"
+
+[node name="SpacerChallengeMode" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "heat.timelimit"
+
+[node name="TimeLimit" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TimeLimitMinus" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.regular"
+
+[node name="TimeLimitPlus" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.challenge"
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "heat.cobaltreduction"
+
+[node name="Cobalt" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CobaltMinus" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.regular"
+
+[node name="CobaltPlus" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.challenge"
+
+[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "heat.debtcooldown"
+
+[node name="Debt" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DebtMinus" parent="MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.regular"
+
+[node name="DebtPlus" parent="MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.challenge"
+
+[node name="Control3" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "heat.waveweight"
+
+[node name="Weight" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WeightMinus" parent="MarginContainer/VBoxContainer/HBoxContainer4" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.regular"
+
+[node name="WeightPlus" parent="MarginContainer/VBoxContainer/HBoxContainer4" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.challenge"
+
+[node name="Control4" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "heat.wavemultiplier"
+
+[node name="Multiplier" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MultiplierMinus" parent="MarginContainer/VBoxContainer/HBoxContainer5" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.regular"
+
+[node name="MultiplierPlus" parent="MarginContainer/VBoxContainer/HBoxContainer5" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+titleLocId = "assignment.mode.challenge"
+
+[node name="SfxChooseRegular" parent="." instance=ExtResource("7")]
+stream = ExtResource("8")
+
+[node name="SfxChooseChallenge" parent="." instance=ExtResource("7")]
+stream = ExtResource("9")
+
+[connection signal="select" from="MarginContainer/VBoxContainer/Reset" to="." method="_on_reset_pressed"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer/TimeLimitMinus" to="." method="_on_time_minus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer/TimeLimitPlus" to="." method="_on_time_plus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer2/CobaltMinus" to="." method="_on_cobalt_minus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer2/CobaltPlus" to="." method="_on_cobalt_plus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer3/DebtMinus" to="." method="_on_cooldown_minus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer3/DebtPlus" to="." method="_on_cooldown_plus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer4/WeightMinus" to="." method="_on_weight_minus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer4/WeightPlus" to="." method="_on_weight_plus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer5/MultiplierMinus" to="." method="_on_multiplier_minus"]
+[connection signal="select" from="MarginContainer/VBoxContainer/HBoxContainer5/MultiplierPlus" to="." method="_on_multiplier_plus"]

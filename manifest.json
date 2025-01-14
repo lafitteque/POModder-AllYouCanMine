@@ -2,7 +2,8 @@
 	"name": "AllYouCanMine",
 	"namespace": "POModder",
 	"version_number": "0.1.0",
-	"description": "Dependency for new game modes, new tiles, caves, drops and achievements",
+	"description": "Adds a new game mode, new tiles, a new resource,
+	 new assignments, a completion area, a challenge modifier and mod achievements",
 	"website_url": "https://",
 	"dependencies": [],
 	"extra": {

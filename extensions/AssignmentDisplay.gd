@@ -2,6 +2,7 @@ extends "res://stages/loadout/AssignmentDisplay.gd"
 
 func setAssignment(id:String, isChallengeMode := false):
 	super.setAssignment(id,isChallengeMode)
+	Data.apply("chosenAssignment", assignment)
 	if ! assignment :
 		return
 	if ! (assignment.goalvalue is PropertyCheck):
@@ -16,6 +17,7 @@ func setAssignment(id:String, isChallengeMode := false):
 	if assignment.goalvalue.property_key.ends_with("remainingtiles"):
 		%GoalLabel.text = tr("assignment.goaltype.mineall")
 	
+
 	if "worldmodifierspeed" in assignment.worldModifiers:
 		conditionStrings["assignment.worldmodifier.speed"] = 0
 	if "worldmodifierbigdrops" in assignment.worldModifiers:
@@ -88,3 +90,4 @@ func setAssignment(id:String, isChallengeMode := false):
 	else:
 		%Conditions.visible = true
 		%ConditionValueLabel.text = txt
+	

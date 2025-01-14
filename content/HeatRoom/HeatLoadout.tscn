@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1fdj53eqawvm"]
+
+[sub_resource type="GDScript" id="GDScript_drqvn"]
+script/source = "extends Node2D
+
+@onready var saver = get_node(\"/root/ModLoader/POModder-Dependency\").saver
+
+func initialize_from_loadout(loadout_scene):
+	var block = preload(\"res://mods-unpacked/POModder-AllYouCanMine/content/dome_progress/block_progress.tscn\").instantiate()
+	loadout_scene.find_child(\"UI\").add_child(block)
+
+func generate_ui_block(loadout_scene):
+	return null
+	
+func has_difficulties():
+	return false
+
+func has_map_sizes():
+	return false
+	
+func get_block_ui_name():
+	return null
+
+func has_tiledata():
+	return true
+
+func get_loadout_tiledata(tileData, requirements):
+	var stack_list = [] 
+	if \"coresaver\" in requirements or \"assignments\" in requirements or \"relichunt\" in requirements:
+		stack_list.append([preload(\"res://mods-unpacked/POModder-AllYouCanMine/content/HeatRoom/TileDataHeatRoom.tscn\").instantiate() , Vector2(-9, 2)])		
+	return stack_list	
+	
+	
+func set_gamemode_loadout(loadout_scene):
+	pass
+
+func fillGameModes(loadout):
+	pass
+
+	
+"
+
+[node name="HeatLoadout" type="Node2D" groups=["gamemode-loadout"]]
+script = SubResource("GDScript_drqvn")
