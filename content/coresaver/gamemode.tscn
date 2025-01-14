@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://lvk4j17m1tma"]
+
+[ext_resource type="Script" path="res://content/gamemode/relichunt/Relichunt.gd" id="1_4r6q7"]
+[ext_resource type="AudioStream" uid="uid://bbguj1ksij3im" path="res://content/music/ENGINEER Relic Retrieval Layer 1 [intro].ogg" id="2_7o1nj"]
+[ext_resource type="AudioStream" uid="uid://dh1pq811067wu" path="res://content/music/ENGINEER Relic Retrieval Layer 1 [loop].ogg" id="3_bjyjx"]
+[ext_resource type="AudioStream" uid="uid://c4orcgpdtwbed" path="res://content/music/ENGINEER Relic Retrieval Layer 2 [loop].ogg" id="4_2kiq5"]
+[ext_resource type="AudioStream" uid="uid://y36wpcfe0flt" path="res://content/music/LASER Desperation Layer 1 [loop].ogg" id="5_1p1di"]
+[ext_resource type="AudioStream" uid="uid://bnop0rogrnh1d" path="res://content/music/LASER Desperation Layer 2 [loop].ogg" id="6_yergc"]
+[ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="7_ko176"]
+
+[node name="Coresaver" type="Node"]
+script = ExtResource("1_4r6q7")
+
+[node name="RelicRetrievalLayer1Intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7o1nj")
+bus = &"Music"
+
+[node name="RelicRetrievalLayer1Loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bjyjx")
+bus = &"Music"
+
+[node name="RelicRetrievalLayer2Loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_2kiq5")
+bus = &"Music"
+
+[node name="DesperationLayer1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_1p1di")
+bus = &"Music"
+
+[node name="DesperationLayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_yergc")
+bus = &"Music"
+
+[node name="MusicTween" parent="." instance=ExtResource("7_ko176")]
+
+[node name="DesperationTween" parent="." instance=ExtResource("7_ko176")]
+
+[node name="ScriptTween" parent="." instance=ExtResource("7_ko176")]

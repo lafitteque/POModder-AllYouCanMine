@@ -26,9 +26,7 @@ physics_material_override = SubResource("1")
 gravity_scale = 0.8
 script = ExtResource("2_o1hqv")
 type = "iron"
-hasInterDropCollisionSound = false
-arrivalDistanceToTarget = 3.0
-carryableType = ""
+carryableType = "gadget"
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_phljp")

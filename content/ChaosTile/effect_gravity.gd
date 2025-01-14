@@ -12,8 +12,8 @@ func activate():
 	for drop in get_tree().get_nodes_in_group("drops"):
 		drop.apply_central_impulse(Vector2(0, 20).rotated(randf() * TAU))
 			
-	get_node("/root/ModLoader/POModder-AllYouCanMine").saver.save_dict["chaos_uses"]["gravity"] = true
-	get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.update_chaos_achievement()
+	get_node("/root/ModLoader/POModder-Dependency").saver.save_dict["chaos_uses"]["gravity"] = true
+	get_node("/root/ModLoader/POModder-Dependency").custom_achievements.update_chaos_achievement()
 	set_physics_process(true)
 	
 	

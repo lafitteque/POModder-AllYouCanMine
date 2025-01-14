@@ -1,28 +1,8 @@
-VISUELS / SONS:
-- son destruction glass
+Update:
+- update les descriptions de All You Can Mine + Endless Combat
+- debug superhot + speed
 
 
-BALANCE :
-- 
-
-BUG :
-- Un gadget a spawn sur la coreeater cave (balek? ou changer l'archetype)
-
-
-
-
-
-Autre mod :
-- gérer les resources rate des challenges (weird notamment)
-- faire un archetype pour mineall avec moins de roches
-
-
-TUTO compatibilité :
-- Achievements
-- Game Mode
-- Chaos Tile
-- worldmodifiers
-- Sortir les upgrades de worldmodifiersuperhot et ajouter un worldmodifierstronglaser pour 500 degats
 
 PLUS TARD Game mode :
 - mode combat seulement, à chaque vague : soit un gadget, soit des ressources. Pas de fin.

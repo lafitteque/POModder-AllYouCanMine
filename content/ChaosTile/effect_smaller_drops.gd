@@ -17,8 +17,8 @@ func activate():
 			if "scale" in child:
 				child.scale = Vector2(0.5,0.5)
 		drop.apply_central_impulse(Vector2(0, 40).rotated(randf() * TAU))
-	get_node("/root/ModLoader/POModder-AllYouCanMine").saver.save_dict["chaos_uses"]["smaller_drops"] = true
-	get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.update_chaos_achievement()
+	get_node("/root/ModLoader/POModder-Dependency").saver.save_dict["chaos_uses"]["smaller_drops"] = true
+	get_node("/root/ModLoader/POModder-Dependency").custom_achievements.update_chaos_achievement()
 	
 	
 func _physics_process(delta):

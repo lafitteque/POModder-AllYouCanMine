@@ -1,16 +1,17 @@
 {
 	"name": "AllYouCanMine",
 	"namespace": "POModder",
-	"version_number": "0.1.2",
-	"description": "Adds new assignments, new tiles, new areas in the loadout, new custom ingame achievements and a new gamemode.",
+	"version_number": "0.1.0",
+	"description": "Adds a new game mode, new tiles, a new resource,
+	 new assignments, a completion area, a challenge modifier and mod achievements",
 	"website_url": "https://",
 	"dependencies": [],
 	"extra": {
 		"godot": {
 			"incompatibilities": [],
 			"authors": ["PO"],
-			"compatible_mod_loader_version": ["3.0.0"],
-			"compatible_game_version": ["4.2"],
+			"compatible_mod_loader_version": ["6.2.0", "7.0.0"],
+			"compatible_game_version": ["4.2.1"],
 			"config_defaults": {}
 		}
 	}

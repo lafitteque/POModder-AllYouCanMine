@@ -11,8 +11,8 @@ var just_landed = false
 var drop  = null
 
 @onready var jump_fall_acceleration = randf_range(4,6)
-@onready var jump_initial_speed = randf_range(110,150)
-@onready var x_speed = randf_range(20,40)
+@onready var jump_initial_speed = randf_range(180,220)
+@onready var x_speed = randf_range(30,50)
 @onready var direction = randi_range(0,1)*2-1
 
 
@@ -97,13 +97,13 @@ func _physics_process(delta):
 		
 		drop = null
 		die()
-		var saver = get_node("/root/ModLoader/POModder-AllYouCanMine").saver
+		var saver = get_node("/root/ModLoader/POModder-Dependency").saver
 		if !saver.save_dict.has("drop_bearer_stolen"):
 			saver.save_dict["drop_bearer_stolen"] = 0
 		
 		saver.save_dict["drop_bearer_stolen"] += 1
 		if saver.save_dict["drop_bearer_stolen"] >= 20:
-			get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("DROP_BEARER_STOLEN")
+			get_node("/root/ModLoader/POModder-Dependency").custom_achievements.unlockAchievement("DROP_BEARER_STOLEN")
 		return
 	
 			

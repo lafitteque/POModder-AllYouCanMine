@@ -8,7 +8,7 @@ var should_queue_free = false
 var animation_finished = false
 
 @onready var default_gravity_vector = ProjectSettings.get_setting("physics/2d/default_gravity_vector")
-@onready var data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod
+@onready var data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,6 +27,11 @@ func activate():
 	
 	StageManager.get_parent().add_child(label)
 	label.text = tr("chaos."+effect_name)
+	var pos_offsets = [Vector2(100,50), Vector2(100,-50), 
+	Vector2(-100,50), Vector2(-100,-50),
+	Vector2(100,100), Vector2(100,-100), 
+	Vector2(-100,100), Vector2(-100,-100)]
+	label.global_position += pos_offsets[randi_range(0,7)]
 	add_child(effect)
 	for c in get_children():
 		print(c.name)

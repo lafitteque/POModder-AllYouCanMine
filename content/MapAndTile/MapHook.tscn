@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8h2jxtftpgc5"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/MapAndTile/MapHook.gd" id="1_2vpwe"]
+
+[node name="MapHook" type="Node2D" groups=["map-mods"]]
+script = ExtResource("1_2vpwe")

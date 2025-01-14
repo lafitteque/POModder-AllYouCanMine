@@ -3,13 +3,20 @@ extends "res://content/weapons/laser/Laser.gd"
 var exit_superhot_mode = true
 var exit_normal_mode = false 
 
+var initialEngineSpeed = 1.0
+
+func _ready():
+	super()
+	if "worldmodifierspeed" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		initialEngineSpeed = 2.0
+
 func inputs(moveValue:Vector2, fireValue:float, specialValue:float):
 	if "worldmodifiersuperhot" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
 		if GameWorld.paused:
 			if exit_superhot_mode:
 				exit_superhot_mode = false
 				Data.apply("laser.movespeed",2.0)
-				Engine.time_scale = 1.0
+				Engine.time_scale = initialEngineSpeed
 			exit_superhot_mode = true
 			return
 		
@@ -22,7 +29,7 @@ func inputs(moveValue:Vector2, fireValue:float, specialValue:float):
 		else : 
 			if exit_superhot_mode:
 				Data.apply("laser.movespeed",2.0)
-				Engine.time_scale = 1.0
+				Engine.time_scale = initialEngineSpeed
 				exit_superhot_mode = false
 			exit_normal_mode = true
 			
@@ -139,11 +146,13 @@ func stop():
 	super()
 	exit_superhot_mode = false
 	exit_normal_mode = true 
-	Engine.time_scale = 1.0
+	if "worldmodifiersuperhot" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		Engine.time_scale = initialEngineSpeed
 
 func start():
 	super()
 	exit_superhot_mode = false
 	exit_normal_mode = true 
 	super()
-	Engine.time_scale = 1.0
+	if "worldmodifiersuperhot" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
+		Engine.time_scale = initialEngineSpeed

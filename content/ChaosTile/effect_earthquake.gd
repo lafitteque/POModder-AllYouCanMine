@@ -14,8 +14,8 @@ func activate():
 	cooldown = life_time
 	activated = true
 		
-	get_node("/root/ModLoader/POModder-AllYouCanMine").saver.save_dict["chaos_uses"]["earthquake"] = true
-	get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.update_chaos_achievement()
+	get_node("/root/ModLoader/POModder-Dependency").saver.save_dict["chaos_uses"]["earthquake"] = true
+	get_node("/root/ModLoader/POModder-Dependency").custom_achievements.update_chaos_achievement()
 	
 	
 func _physics_process(delta):

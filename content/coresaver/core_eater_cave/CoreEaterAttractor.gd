@@ -66,7 +66,7 @@ func _physics_process(delta):
 				relic.queue_free()
 				
 		Data.apply("monsters.wavepresent", false)
-		get_node("/root/ModLoader/POModder-AllYouCanMine").custom_achievements.unlockAchievement("CORE_EATER_ENDING")
+		get_node("/root/ModLoader/POModder-Dependency").custom_achievements.unlockAchievement("CORE_EATER_ENDING")
 		queue_free()
 
 func explode():

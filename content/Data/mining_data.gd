@@ -11,7 +11,7 @@ var debt
 
 func _ready():
 	tile_data = StageManager.currentStage.MAP.tileData
-	data_mod = get_node("/root/ModLoader/POModder-AllYouCanMine").data_mod 
+	data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod 
 	Data.apply("inventory.remainingtiles", 9000)
 	Data.apply("inventory.remaining_core_eaters", 4)
 	Data.apply("inventory.mined_fake_borders", 0)
@@ -49,8 +49,21 @@ func _process(delta):
 			Data.changeByInt("inventory.iron", -debt)
 	
 func propertyChanged(property : String, old_value, new_value):
-	if debt > 0 and property == "inventory.iron" and new_value <= 0:
+	if debt > 0 and property == "inventory.iron" and new_value < 0:
 		var assignments = StageManager.currentStage.find_child("Assignments",true,false)
-		assignments.handlePropertyGoalGameEnd()
+		var assignmentId = Data.ofOr("assignment.id", false)
+		Level.moveHudOut()
+		Level.stage.stopKeeperInput()
+	
+		Audio.sound("lose")
+		await get_tree().create_timer(2.5).timeout
+		Level.dome.collapsed = true # prevent collapse
+		GameWorld.handleGameLost()
+		Keepers.first().visible = true
+
+		var popup = preload("res://content/gamemode/relichunt/RunFinishedPopup.tscn").instantiate()
+		popup.init()
+		Level.stage.showEndingPanel(popup)
+		
 	if property == "game.over" and new_value in ["won", "lost"]:
 		self.queue_free()
