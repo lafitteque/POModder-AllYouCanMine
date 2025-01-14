@@ -17,9 +17,12 @@ This Mod adds :
 
 - Changes in the loadout : A completion area, Achievements areas
 
+- 7 New World Modifiers
+
+- A simple optional heat system to make Relic Hunt, Assignments and Core Saver more difficult.
+
 
 Compatibilty :
-- Incompatible with MoreGuildAssignments.
 - Incompatible with Hydra Launcher and Phosphorescence Domes
 - Should be incompatible with a lot of mods, don't be afraid to try, if the game does weird things, just remove the mod and make sure to let me know so I can list all incompatibilities. Removing this mod doesn't remove your progress.
 
