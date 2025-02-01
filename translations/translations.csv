@@ -4,11 +4,11 @@ achievement.mine_loadout.desc,Break all the resources in the training area.,Dét
 achievement.mine_loadout.hint,You need more mining training.,Vous avez besoin de plus d’entraînement au minage.,Necesitas entrenar más la excavación.
 ,,,
 achievement.useless_explosion.title,Sniper bomber,Sniper bombardier,Francotirador bombardero
-achievement.useless_explosion.desc,Break only one bloc with a bomb.,Casser un seul bloc avec une bombe.,Romper un solo bloque con una bomba.
+achievement.useless_explosion.desc,Break only one block with a bomb.,Casser un seul bloc avec une bombe.,Romper un solo bloque con una bomba.
 achievement.useless_explosion.hint,Aim precisely and wait.,Visez précisément et attendez.,Apunta precisamente y espera.
 ,,,
 achievement.fast_why.title,Slow and steady wins the race,Tout vient à point à qui sait attendre,El tiempo es oro pero me pagan
-achievement.fast_why.desc,Move slowly without rest for 500 m.,Se déplacer lentement sans s’arrêter sur 500 m.,Moverse despacio sobre 500 m sin pararse.
+achievement.fast_why.desc,Move slowly without stopping for 500 m.,Se déplacer lentement sans s’arrêter sur 500 m.,Moverse despacio sobre 500 m sin pararse.
 achievement.fast_why.hint,"It’s not that heavy, keep going !","Ce n’est pas si lourd, continue !","No pesa tanto, continua !"
 ,,,
 achievement.relic_wait.title,The end is never the end…,Ce n’est pas fini…,No ha acabado.
@@ -93,13 +93,13 @@ assignment.mineall.title,Need for more room,Besoin de plus de place,Se necesita 
 assignment.mineall.desc,Mine every block in the mine.,Miner tous les blocs de la mine.,Romper todos los bloques de la mina.
 ,,,
 assignment.detonators.title,Minefield,Terrain Miné,Campo de minas
-assignment.detonators.desc,The previous mission let a lot of explosives behind them.,La mission précédente a laissé des explosifs derrière elle.,La precedente mision ha dejado explosivos detras de si.
+assignment.detonators.desc,The previous mission left a lot of explosives behind.,La mission précédente a laissé des explosifs derrière elle.,La precedente mision ha dejado explosivos detras de si.
 ,,,
 assignment.aprilfools.title,Weird deepness,Profondeurs étranges,Profundidades extrañas
 assignment.aprilfools.desc,"Smtoehnig is wonrg hree, yet it feles filamiar. ",Il y a quelque chose d’étrange ici malgré un sentiment familier.,Hay algo extraño aqui. Pero todo parece como siempre.
 ,,,
-assignment.goaltype.mineall,Mine every breakeable block.,Casser tous les blocs cassables.,Romper todos los bloques que se puedan romper.
-assignment.goaltype.gametime,Survive during %d minutes.,Survivre pendant %d minutes.,Sobrevive durante %d minutos.
+assignment.goaltype.mineall,Mine every breakable block.,Casser tous les blocs cassables.,Romper todos los bloques que se puedan romper.
+assignment.goaltype.gametime,Survive for %d minutes.,Survivre pendant %d minutes.,Sobrevive durante %d minutos.
 ,,,
 ,,,
 ,,,
@@ -135,10 +135,10 @@ assignment.speed.title,Speed !,Vite !,Rápido !
 assignment.speed.desc,Time flows faster on this planet.,Le temps s’écoule plus rapidement sur cette planète.,El tiempo va más rápido en este planeta.
 ,,,
 assignment.superhot.title,Super Hot,Super Chaud,Muy caliente
-assignment.superhot.desc,The dome is equiped with super lasers. Your precision will be enhanced while you don’t fire. But beware of the enemies that are stronger than ever.,"Le dome est équipé de super lasers. Votre précision est augmentée tant que vous ne tirez pas. Cependant, faites attention aux ennemis qui sont plus forts que jamais.",La cúpula tiene super laseres. Tu precisión esta aumentada mientras no disparas. Pero ten cuidado con los enemigos que son más fuerte que nunca.
+assignment.superhot.desc,The dome is equipped with super lasers. Your precision will be enhanced while you don’t fire. But beware of the enemies that are stronger than ever.,"Le dome est équipé de super lasers. Votre précision est augmentée tant que vous ne tirez pas. Cependant, faites attention aux ennemis qui sont plus forts que jamais.",La cúpula tiene super laseres. Tu precisión esta aumentada mientras no disparas. Pero ten cuidado con los enemigos que son más fuerte que nunca.
 ,,,
 assignment.debt.title,Bankrupt,Faillite,Arruinado
-assignment.debt.desc,The bank will take iron from you regularly. Spend carefuly or your life will come to an end if you have no iron left.,La banque va vous prélever du fer régulièrement. Dépensez avec prudence ou votre vie prendra fin si vous n’avez plus de fer.,El banco va a tomarte hierro reuglarmente. Gasta prudentemente o tu vida acabara al si no te queda hierro.
+assignment.debt.desc,The bank will take iron from you regularly. Spend carefully or your life will come to an end if you have no iron left.,La banque va vous prélever du fer régulièrement. Dépensez avec prudence ou votre vie prendra fin si vous n’avez plus de fer.,El banco va a tomarte hierro reuglarmente. Gasta prudentemente o tu vida acabara al si no te queda hierro.
 ,,,
 assignment.autonomous.title,Autonomous,Autonome,Autónomo
 assignment.autonomous.desc,"There are no resources on this planet, you will have to make everything by yourself. A technological support will be given to you.","Il n’y a pas de ressources sur cette planète, vous devrez vous en sortir par vos propres moyens. Une aide technologique vous sera fournie.","No hay recursos en este planeta, tendras que apañartelas. Una ayuda tecnológica te sera dada."
@@ -180,7 +180,7 @@ upgrades.blastminingimpactdetonationassignment.desc,The blast charge will explod
 ,,,
 ,,,
 upgrades.suitblasterassignment.title,Suit Blaster,Blaster de combinaison,Bláster de traje
-upgrades.suitblasterassignment.desc,Install a mining blaster into your suit which acan explosively destroy rocks around you.,"Installez dans votre combinaison un blaster minier, capable de faire exploser les rochers qui vous entourent.",Instala un bláster de minería en tu traje que puede destruir explosivamente las rocas que te rodean.
+upgrades.suitblasterassignment.desc,Install a mining blaster into your suit which can explosively destroy rocks around you.,"Installez dans votre combinaison un blaster minier, capable de faire exploser les rochers qui vous entourent.",Instala un bláster de minería en tu traje que puede destruir explosivamente las rocas que te rodean.
 ,,,
 upgrades.suitblastermaxchargeassignment.title,More Charges,Plus de charges,Más cargas
 upgrades.suitblastermaxchargeassignment.desc,"Increase how many charges you can store in your suit. The more charges you have ready, the faster additional ones will charge.","Augmentez le nombre de charges que vous pouvez stocker dans votre combinaison. Plus vous avez de charges prêtes, plus les charges supplémentaires se chargent rapidement.",Aumenta el número de cargas que puedes almacenar en tu traje. Cuantas más tengas preparadasm más rapido se cargarán las adicionales.
@@ -201,7 +201,7 @@ properties.inventory.water,Starting water : {},Eau de départ : {},Agua al emp
 properties.inventory.sand,Starting cobalt : {},Cobalt de départ : {},Cobalto al empezar : {}
 ,,,
 assignment.worldmodifier.speed,Time flows twice as fast,Le temps s’écoule deux fois plus rapidement,El tiempo pasa dos veces más rápido
-assignment.worldmodifier.bigdrops,Drops are big ,Les ressources sont grosses,Los recursos son grandes
+assignment.worldmodifier.bigdrops,Drops are big,Les ressources sont grosses,Los recursos son grandes
 assignment.worldmodifier.smalldrops,Drops are small,Les ressources sont petites,Los recursos son pequeños
 assignment.worldmodifier.autonomous,Use special versions of the Converter and Condenser,Utilisez une version spéciale du Convertisseur et du Condensateur,Usa una version especial del Converter y del Condenser
 assignment.worldmodifier.pyromaniac,Use special versions of Suit Blaster and Mine Blaster,Utilisez une version spéciale du Forage par Explosion et du Blaster de Combinaison,Usa una versión especial del Mine blasting y del Suit Blasting
@@ -212,7 +212,7 @@ assignment.worldmodifier.nomonsters,No monsters,Pas de monstres,Sin monstruos
 loadout.mode.autonomous.desc,Use special versions of the Converter and Condenser,Utilisez une version spéciale du Convertisseur et du Condensateur,Usa una version especial del Converter y del Condenser
 loadout.mode.pyromaniac.desc,Use special versions of Suit Blaster and Mine Blaster,Utilisez une version spéciale du Forage par Explosion et du Blaster de Combinaison,Usa una versión especial del Mine blasting y del Suit Blasting
 loadout.mode.superhot.desc,Slow mode when aiming (lasers are mandatory),Ralentissement des ennemis pendant la visée (lasers obligatoires),Ralentiza los enemigos mientras estas apuntando
-loadout.mode.aprilfools.desc,Every resource is random and so is it’s visual.,Chaque ressource est aléatoire et son visuel aussi.,Carda recurso es aleatorio.
+loadout.mode.aprilfools.desc,Every resource is random and so is its visual.,Chaque ressource est aléatoire et son visuel aussi.,Carda recurso es aleatorio.
 loadout.mode.smalldrops.desc,Drops are small,Les ressources sont petites,Los recursos son pequeños
 loadout.mode.bigdrops.desc,Drops are big ,Les ressources sont grosses,Los recursos son grandes
 loadout.mode.speed.desc,Time flows twice as fast,Le temps s’écoule deux fois plus rapidement,El tiempo pasa dos veces más rápido
