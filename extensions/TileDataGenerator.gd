@@ -78,7 +78,7 @@ func generate_resources(rand):
 
 	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,chaos_rate, TILE_CHAOS)
 
-	var cobaltModifier = Data.ofOr("game.cobaltmultiplier", 1.0)
+	var cobaltModifier = Data.ofOr("game.cobaltmultiplier", 0.0)
 	if cobaltModifier > 0.0:
 		print("AVANT WORLDMODIFIER COBALT : ", $MapData.get_resource_cells_by_id(Data.TILE_SAND).size())
 		var cobaltCells = $MapData.get_resource_cells_by_id(Data.TILE_SAND)
@@ -86,7 +86,7 @@ func generate_resources(rand):
 		for tile in cobaltCells.slice(0,int(cobaltCells.size()*cobaltModifier)):
 			$MapData.set_resourcev(tile, Data.TILE_DIRT_START)
 		print("APRES WORLDMODIFIER COBALT : ", $MapData.get_resource_cells_by_id(Data.TILE_SAND).size())	
-		var abc  = 11
+
 		
 func generate_relics():
 	var bad_relics = get_generation_data(a)[3]
