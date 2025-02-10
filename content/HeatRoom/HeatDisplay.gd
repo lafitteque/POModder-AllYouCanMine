@@ -25,7 +25,7 @@ var mod_main
 
 func _ready():
 	mod_main = get_node("/root/ModLoader/POModder-AllYouCanMine")
-	Data.apply("game.cobaltmultiplier", 1.0)
+	Data.apply("game.cobaltmultiplier", 0.0)
 	
 	for c in $MarginContainer/VBoxContainer.get_children():
 		if c is HBoxContainer:
@@ -74,7 +74,7 @@ func propertyChanged(property : String, old_value, new_value):
 	originalDebtValue = 0
 	originalIronValue = 0
 	
-	if property == "chosenAssignment" :
+	if property == "chosenassignment" :
 		if new_value != old_value and old_value!= null:
 			Data.assignments[old_value.id].challengePropertyChanges = []
 			for prop in assignmentCopy:
@@ -285,7 +285,7 @@ func changePropertyValueAssignment(keyName, keyClass, value):
 
 	if !propInList:
 		var newProp = PropertyChange.new()
-		newProp.key = keyClass  + "." +keyName
+		newProp.key = keyClass  + "." + keyName
 		newProp.keyClass = keyClass
 		newProp.keyName = keyName
 		newProp.value = value

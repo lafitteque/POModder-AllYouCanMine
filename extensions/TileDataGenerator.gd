@@ -55,6 +55,9 @@ func get_generation_data(a):
 	return [detonator_rate , destroyer_rate , mega_iron_rate, bad_relics, secret_rooms,chaos_rate]
 	
 func generate_resources(rand):
+
+	print("Debug : get vanilla relic data : ", a.relic_switches," ; " , a.relic_switch_distance_range," ; " , a.relic_switch_angle_range_pi," ; " , a.relic_depth_step)
+
 	var data_from_mod = get_generation_data(a)
 	var detonator_rate = data_from_mod[0]
 	var destroyer_rate = data_from_mod[1]
@@ -77,16 +80,17 @@ func generate_resources(rand):
 	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,mega_iron_rate, TILE_MEGA_IRON)
 
 	generate_curstom_tiles(ironClusterCenters, original_cell_coords, borderCells,chaos_rate, TILE_CHAOS)
-
+	
+	print("Debug Archetype :", a.biome_cleanup_passes ," ; " , a.biome_max_size," ; " , a.biome_size_addition," ; " , a.biome_size_multiplier," ; " , a.cobalt_rate," ; " , a.cobalt_removal_rate," ; " , a.depth," ; " , a.tileCount," ; " , a.first_biome_size," ; " , a.gadgets)
+	print("Debug Cobalt avant : ", $MapData.get_resource_cells_by_id(Data.TILE_SAND).size())
+	
 	var cobaltModifier = Data.ofOr("game.cobaltmultiplier", 0.0)
 	if cobaltModifier > 0.0:
-		print("AVANT WORLDMODIFIER COBALT : ", $MapData.get_resource_cells_by_id(Data.TILE_SAND).size())
 		var cobaltCells = $MapData.get_resource_cells_by_id(Data.TILE_SAND)
 		cobaltCells.shuffle()
 		for tile in cobaltCells.slice(0,int(cobaltCells.size()*cobaltModifier)):
 			$MapData.set_resourcev(tile, Data.TILE_DIRT_START)
-		print("APRES WORLDMODIFIER COBALT : ", $MapData.get_resource_cells_by_id(Data.TILE_SAND).size())	
-
+	print("Debug Cobalt après : ", $MapData.get_resource_cells_by_id(Data.TILE_SAND).size())
 		
 func generate_relics():
 	var bad_relics = get_generation_data(a)[3]
