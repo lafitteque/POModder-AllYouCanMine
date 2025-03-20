@@ -31,6 +31,7 @@ thieves:
   upgradeLimits: hostile
   freegadgets: 1
   mapArchetype: assignment-thieves
+  worldModifiers: worldmodifierthieves
   propertyChanges:
     - monstermodifiers.totalrunweightmodifier = 0.9
   challengePropertyChanges:

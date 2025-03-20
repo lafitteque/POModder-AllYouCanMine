@@ -15,6 +15,3 @@ func stage_changed():
 	if stage.name != "LevelStage":
 		Engine.time_scale = 1
 		
-	match stage.name:
-		"LandingSequence":
-			data_mod.update_generation_data(stage.levelStartData.mapArchetype)

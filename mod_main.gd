@@ -217,12 +217,14 @@ func _on_level_ready():
 	"worldmodifierpyromaniac" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
 		Data.parseUpgradesYaml("res://mods-unpacked/POModder-AllYouCanMine/yaml/upgrades.yaml")
 
+
 	var mining_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mining_data.tscn").instantiate()
 	add_child(mining_data)
-	## Actions that need an action from StageManagerExtender
+	
+	
 	await get_tree().create_timer(0.5).timeout
 	var bb = Level.loadout
-	if data_mod.generation_data["drop_bearer_rate"] > 0:
+	if "worldmodifierthieves" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
 		var drop_bearer_manager = preload("res://mods-unpacked/POModder-AllYouCanMine/content/drop_bearer/drop_bearer_manager.tscn").instantiate()
 		StageManager.currentStage.MAP.add_child(drop_bearer_manager)
 	

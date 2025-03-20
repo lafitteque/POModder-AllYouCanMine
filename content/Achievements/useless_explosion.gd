@@ -15,8 +15,6 @@ var max_kill_tiles = 1
 var min_kill_tiles = 1
 var previous_tile_count = 0
 
-@onready var map = StageManager.currentStage.MAP
-
 func _ready():
 	if get_parent().isAchievementUnlocked(id):
 		return
@@ -28,12 +26,11 @@ func _ready():
 	
 func _on_timer_timeout():
 	for carryable in get_tree().get_nodes_in_group("carryable"):
-		if !("untilExplosion" in carryable and 'animationSuffix' in carryable) :
+		if !("untilExplosion" in carryable) :
 			return
 		if is_instance_valid(second_timer):
 			return
 		cave_bomb = carryable
-		var number_times 
 		second_timer = Timer.new()
 		second_timer.autostart = true
 		second_timer.wait_time = 0.05
@@ -46,12 +43,15 @@ func _on_timer_timeout():
 func verify_kill_count():
 	if is_instance_valid(cave_bomb) :
 		cave_bomb_pos = cave_bomb.global_position
-		previous_tile_count = map.tileData.get_remaining_mineable_tile_count()
+		previous_tile_count = StageManager.currentStage.MAP.tileData.get_remaining_mineable_tile_count()
 		return
 	await get_tree().create_timer(1.0).timeout
-	if is_instance_valid(map):
-		var kill_count = previous_tile_count - map.tileData.get_remaining_mineable_tile_count()
+	if is_instance_valid(StageManager.currentStage.MAP):
+		var kill_count = previous_tile_count - StageManager.currentStage.MAP.tileData.get_remaining_mineable_tile_count()
 		if kill_count <= max_kill_tiles and kill_count >= min_kill_tiles:
 			get_parent().unlockAchievement(id)
 		else:
 			timer.start()
+			second_timer.queue_free()
+			if is_instance_valid(second_timer):
+				second_timer.queue_free()

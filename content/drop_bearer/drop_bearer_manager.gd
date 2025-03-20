@@ -9,13 +9,14 @@ var wait_time_before_bearer_appears = 3.0
 var cooldown_already_spawned = 40.0
 var cooldown_list = []
 
-var probability_spawn = 0.01
-var data_mod 
+var probability_spawn = 0.01 
 var shroom_cap = 25
 
 func _ready():
-	data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod
-	probability_spawn = data_mod.generation_data["drop_bearer_rate"]
+	if Level.loadout.modeId == "coresaver":
+		probability_spawn = 0.005
+	else :
+		probability_spawn = 1.0
 	
 func _on_timer_timeout():
 	var count_to_pop = 0

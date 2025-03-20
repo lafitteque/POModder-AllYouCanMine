@@ -24,6 +24,9 @@ worldmodifiersmalldrops:
 worldmodifierbigdrops:
   type: worldmodifier
 
+worldmodifierthieves:
+  type: worldmodifier
+
 worldmodifierfulllaser:
   type: worldmodifier
   upgrades: [laserStrength1, laserStrength2, laserStrength3, laserStrength4, laserhitprojectiles, laserMove1, laserMove2, laserMove3]

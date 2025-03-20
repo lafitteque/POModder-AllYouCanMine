@@ -1,11 +1,11 @@
 {
 	"name": "AllYouCanMine",
 	"namespace": "POModder",
-	"version_number": "0.1.0",
+	"version_number": "1.2.4",
 	"description": "Adds a new game mode, new tiles, a new resource,
 	 new assignments, a completion area, a challenge modifier and mod achievements",
 	"website_url": "https://",
-	"dependencies": [],
+	"dependencies": ["POModder-Dependency"],
 	"extra": {
 		"godot": {
 			"incompatibilities": [],
