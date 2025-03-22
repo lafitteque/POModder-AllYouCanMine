@@ -1,9 +1,12 @@
 extends Node2D
+class_name Destroyer
 
 var activated := false
 var untilExplosion := 0.0
 var maxUntilExplosion := 0.0
 var exploded := false
+var tile_child_type = "destroyer"
+
 #@export var explosion_scene : PackedScene
 
 	

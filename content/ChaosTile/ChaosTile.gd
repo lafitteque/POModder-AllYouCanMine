@@ -6,6 +6,7 @@ var effect_list
 var label_duration = 3.0
 var should_queue_free = false
 var animation_finished = false
+var tile_child_type = "chaos"
 
 @onready var default_gravity_vector = ProjectSettings.get_setting("physics/2d/default_gravity_vector")
 @onready var data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod

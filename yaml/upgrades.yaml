@@ -7,7 +7,7 @@ worldmodifierpyromaniac:
 worldmodifierautonomous:
   type: worldmodifier
   gadgets: [condenser, converter]
-  upgrades: [converterIronToCobalt, condenserSpeed1, condenserSpeed2, converterefficientwater, converterefficientwatershort]
+  upgrades: [converterIronToCobalt, condenserSpeed1, condenserSpeed2, converterefficientwater, converterefficientwatershort, converterqueue, condenserAutoCollect]
 
 worldmodifiersuperhot:
   type: worldmodifier
@@ -32,6 +32,35 @@ worldmodifierfulllaser:
   upgrades: [laserStrength1, laserStrength2, laserStrength3, laserStrength4, laserhitprojectiles, laserMove1, laserMove2, laserMove3]
   eraseupgradelimits: [primaryweapon]
   
+
+excavator:
+  type: keeper
+  scenes: 
+    keeper: content/keeper/excavator/Excavator.tscn
+  addslots: [keepersuit, keepersupplement]
+  unlockslimits: [excavator]
+  propertyChanges:
+    - excavator.maxSpeed = 150
+    - excavator.maxUpSpeed = 220
+    - excavator.maxDownSpeed = 250
+    - excavator.acceleration = 5
+    - excavator.deceleration = 4
+    - excavator.slowdownRecovery = 4
+    - excavator.tileKnockback = 7
+    - excavator.tileHitCooldown = 0.35
+    - excavator.boomHitCooldown = 1.0
+    - excavator.hardtilesmodifier = 1.0
+    - excavator.destroyindestructibletiles = false/h
+    - excavator.baseDamage = 5.0
+    - excavator.boomDamageMultiplier = 3.0
+    - excavator.extraDamagePerHightUnit = 1.0
+    - excavator.boostUpIntensity = 1000.0
+    - excavator.minBoomSpeed = 130.0
+    - excavator.gravity = 150.0
+    - excavator.maxCarry = 4
+
+
+
 blastMiningAssignment:
   type: gadget
   scenes: 
