@@ -85,8 +85,6 @@ func modInit():
 	
 	registerAchievenemnts()
 	
-	Data.registerKeeper("excavator")
-	GameWorld.unlockElement("excavator")
 	
 	var modifiers = ["pyromaniac", "autonomous",
 	"superhot", "speed", 
