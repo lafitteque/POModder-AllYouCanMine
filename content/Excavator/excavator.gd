@@ -28,6 +28,7 @@ var action_hint_interact := -1
 var falling := false
 var fallingDistance := 0.0
 var boomCooldown = 0.0
+var prevSpeed : Vector2 = Vector2.ZERO
 
 func init():
 	super.init()
@@ -75,45 +76,53 @@ func _physics_process(delta):
 	
 	
 	
-	var baseAcceleration : Vector2 = Vector2.ZERO
+	var baseSpeed : Vector2 = Vector2.ZERO
 	var boost = Data.ofOr(playerId + ".keeper.speedBuff", 0) * (moveDirectionInput.normalized())
 	
-	baseAcceleration.x  = Data.of(playerId + ".excavator.maxSpeed")
-	baseAcceleration.x += boost.x
+	baseSpeed.x  = Data.of(playerId + ".excavator.maxSpeed")
+	baseSpeed.x += boost.x
 	
 	if moveDirectionInput.y <= 0 :
-		baseAcceleration.y = -Data.of(playerId + ".excavator.maxUpSpeed") 
+		baseSpeed.y = -Data.of(playerId + ".excavator.maxUpSpeed") 
 	else:
-		baseAcceleration.y = Data.of(playerId + ".excavator.maxDownSpeed")
+		baseSpeed.y = Data.of(playerId + ".excavator.maxDownSpeed")
 		
 	var yMove = move.normalized().y
-	baseAcceleration.y += Data.ofOr(playerId + ".keeper.additionalupwardsspeed", 0) * abs(yMove)
+	baseSpeed.y += Data.ofOr(playerId + ".keeper.additionalupwardsspeed", 0) * abs(yMove)
 	
-	var acceleration:Vector2 = Vector2(moveDirectionInput.x * baseAcceleration.x , abs(moveDirectionInput.y) * baseAcceleration.y)
-	
-	speedLabel.text = str(acceleration)
+	var speed:Vector2 = Vector2.ZERO
+	speed.x = moveDirectionInput.x * baseSpeed.x 
+	if moveDirectionInput.y<= 0 :
+		speed.y = abs(moveDirectionInput.y) * baseSpeed.y
 	
 	# Falling
-	acceleration.y += Data.of(playerId + ".excavator.gravity") 
+	var forces : float = Data.of(playerId + ".excavator.gravity")
+	if prevSpeed.y >= 0 :
+		forces +=  Data.of(playerId + ".excavator.frictionFactor") * prevSpeed.y**2
+	speed.y += forces * delta
 	
-	# Limit horizontal inertia
-	if sign(move.x) != sign(moveDirectionInput.x): 
-		move.x = max(-80.0 , min(move.x , 80.0))
-			
 	# Boost when high down speed
-	elif move.y >= 50.0 and moveDirectionInput.y <= 0:
-		acceleration.y -= Data.of(playerId + ".excavator.boostupIntensity")
+	#if move.y >= 20.0 and moveDirectionInput.y < 0.5:
+	#	speed.y -= Data.of(playerId + ".excavator.boostupIntensity")
 	
-	speedLabel.text = speedLabel.text + str(acceleration)
 	# If an axis is way greater than the other one, re-align with this axis
 	if abs(moveDirectionInput.x) < 0.1 and abs(moveDirectionInput.y) > 0.9:
 		move.x *= 1 - delta * Data.of(playerId + ".excavator.deceleration")
 	if abs(moveDirectionInput.y) < 0.1 and abs(moveDirectionInput.x) > 0.9:
-		move.y *= 1 - delta *  Data.of(playerId + ".excavator.deceleration")
+		move.y *= max(0 , 1 - delta  * Data.of(playerId + ".excavator.deceleration"))
+		if move.y >= 0:
+			speed.y -= forces * delta
+			
 	
-	var speedChange = acceleration * delta 
-	move +=  speedChange
+		
+	#var speedChange = speed * delta 
+	#move +=  speedChange
 	
+	if $CollisionDown.is_colliding():
+		move.y = min(20, move.y)
+	elif $CollisionUp.is_colliding():
+		move.y = max(-20.0, move.y)	
+		
 	updateCarry()
 	pullCarry()
 	
@@ -123,20 +132,26 @@ func _physics_process(delta):
 	
 	
 	
-	#move.y = min(max(move.y, -Data.of(playerId + ".excavator.maxUpSpeed")), Data.of(playerId + ".excavator.maxDownSpeed"))
-	#move.x = min(max(move.x, -Data.of(playerId + ".excavator.maxSpeed")), Data.of(playerId + ".excavator.maxSpeed"))
+	speed.y = min(max(speed.y, -Data.of(playerId + ".excavator.maxUpSpeed")), Data.of(playerId + ".excavator.maxDownSpeed"))
+	speed.x = min(max(speed.x, -Data.of(playerId + ".excavator.maxSpeed")), Data.of(playerId + ".excavator.maxSpeed"))
 	
-	if $CollisionDown.is_colliding():
-		move.y = min(20, move.y)
-	elif $CollisionUp.is_colliding():
-		move.y = max(-20.0, move.y)	
+	var moveChange = speed * Data.of(playerId + ".excavator.acceleration") * delta * max(0.1, 1.0 - moveSlowdown)
+	if move.y <= 0 or speed.y >= 0.5 * Data.of(playerId + ".excavator.maxDownSpeed"):
+		move = (move * (1 - delta * Data.of(playerId + ".excavator.deceleration"))) + moveChange
+	else :
+		move.x = (move.x * (1 - delta * Data.of(playerId + ".excavator.deceleration"))) 
+		move += moveChange
+		move.y = min(max(move.y, -Data.of(playerId + ".excavator.maxUpSpeed")), Data.of(playerId + ".excavator.maxDownSpeed"))
+		
+	speedLabel.text = str(speed) + str(moveChange) + str(move)
 	
 	var actualMove = position 
 	set_velocity(move)
 	#fix for gd4 changes to move and slide
 	move_and_slide_custom()
 	actualMove = position - actualMove
-		
+	
+	prevSpeed = speed
 	
 	
 	GameWorld.travelledDistance += actualMove.length()
@@ -418,7 +433,7 @@ func drill_check()->void:
 	if Options.shakeDrill:
 		InputSystem.shakeTarget(self, 20, 0.2, 8)
 
-	var knockback = Data.of("excavator.acceleration") * Data.of("excavator.tileKnockback")
+	var knockback = Data.of("excavator.Speed") * Data.of("excavator.tileKnockback")
 	hitCooldown = Data.of("excavator.tileHitCooldown")
 	moveSlowdown = 0.25 + currentSpeed() * 0.01
 	spriteLockDuration = hitCooldown
@@ -477,7 +492,7 @@ func boom_check()->void:
 	if Options.shakeDrill:
 		InputSystem.shakeTarget(self, 20, 0.2, 8)
 
-	var knockback = Data.of("excavator.acceleration") * Data.of("excavator.tileKnockback")
+	var knockback = Data.of("excavator.Speed") * Data.of("excavator.tileKnockback")
 	boomCooldown = Data.of("excavator.boomHitCooldown")
 	moveSlowdown = 0.25 + currentSpeed() * 0.01
 	spriteLockDuration = boomCooldown

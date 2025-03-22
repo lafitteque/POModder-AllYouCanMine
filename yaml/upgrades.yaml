@@ -54,9 +54,10 @@ excavator:
     - excavator.baseDamage = 5.0
     - excavator.boomDamageMultiplier = 3.0
     - excavator.extraDamagePerHightUnit = 1.0
-    - excavator.boostUpIntensity = 1000.0
+    - excavator.boostUpIntensity = 50.0
     - excavator.minBoomSpeed = 130.0
-    - excavator.gravity = 150.0
+    - excavator.gravity = 2500.0
+    - excavator.frictionFactor = 0.005
     - excavator.maxCarry = 4
 
 
