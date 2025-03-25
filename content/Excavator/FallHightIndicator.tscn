@@ -19,6 +19,7 @@ offset_bottom = -13.0
 texture = ExtResource("2_v5ymp")
 
 [node name="Level1" type="TextureProgressBar" parent="Background"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 max_value = 1.0
@@ -27,6 +28,7 @@ value = 1.0
 texture_progress = ExtResource("3_345yc")
 
 [node name="Level2" type="TextureProgressBar" parent="Background"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 max_value = 1.0

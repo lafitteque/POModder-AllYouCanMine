@@ -88,6 +88,9 @@ func modInit():
 	Data.registerKeeper("excavator")
 	GameWorld.unlockElement("excavator")
 	
+	Data.registerKeeper("biologist")
+	GameWorld.unlockElement("biologist")
+	
 	var modifiers = ["pyromaniac", "autonomous",
 	"superhot", "speed", 
 	"aprilfools", "smalldrops",

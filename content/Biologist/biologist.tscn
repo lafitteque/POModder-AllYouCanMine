@@ -1,0 +1,1344 @@
+[gd_scene load_steps=155 format=3 uid="uid://y3wbr1qr1cxs"]
+
+[ext_resource type="Script" path="res://content/keeper/keeper2/Keeper2.gd" id="1_feh67"]
+[ext_resource type="PackedScene" path="res://content/keeper/keeper2/MuzzleFlash.tscn" id="2_m5ycg"]
+[ext_resource type="Texture2D" uid="uid://cflnigtmjmyqg" path="res://content/shared/particle_1px_offset.png" id="3_qpd0r"]
+[ext_resource type="Texture2D" uid="uid://y1wvoofqlttd" path="res://content/keeper/keeper2/player1/drill_point.png" id="4_so2ue"]
+[ext_resource type="Texture2D" uid="uid://w10m0u1ss2cg" path="res://content/keeper/keeper2/central_charge.png" id="5_vo1pw"]
+[ext_resource type="Texture2D" uid="uid://epcgg6i8h1f5" path="res://content/keeper/keeper2/charge_pointer.png" id="6_xl1be"]
+[ext_resource type="Shader" path="res://content/keeper/keeper2/assessor_collect_radius.gdshader" id="7_kxklu"]
+[ext_resource type="Texture2D" uid="uid://bc0fu6f0twh7t" path="res://content/keeper/keeper2/Keeper2_CollectSprite_noise.png" id="8_nps2g"]
+[ext_resource type="Script" path="res://content/keeper/keeper2/CustomStyle_ChangeModulate.gd" id="9_1rua6"]
+[ext_resource type="Texture2D" uid="uid://p8kriqdbf45u" path="res://content/keeper/keeper2/player1/reflect.png" id="10_20epj"]
+[ext_resource type="Script" path="res://content/keeper/keeper2/BallSplitArea.gd" id="11_1era2"]
+[ext_resource type="PackedScene" path="res://systems/audio/Sound.tscn" id="12_eip7f"]
+[ext_resource type="AudioStream" uid="uid://gbcs1vwsguo2" path="res://content/sounds/Weapons/Sword/Sword_Deflect.wav" id="13_yjmnv"]
+[ext_resource type="AudioStream" uid="uid://c3iv0cnkdp1k4" path="res://content/sounds/keeper2/Diginit_03.wav" id="14_sl0hv"]
+[ext_resource type="Script" path="res://content/keeper/keeper2/BallExplodeArea.gd" id="15_6rmwq"]
+[ext_resource type="Shader" path="res://content/keeper/keeper2/AssessorExplode.gdshader" id="16_nf8ti"]
+[ext_resource type="Texture2D" uid="uid://dq6dndtplr4s0" path="res://content/map/tile/tile_noise_1.png" id="17_263ir"]
+[ext_resource type="Texture2D" uid="uid://daff4tw2ipany" path="res://systems/style/palettes/palette_1_1.png" id="18_ryrxn"]
+[ext_resource type="Texture2D" uid="uid://dtggeq427b3cc" path="res://content/keeper/keeper2/rin2g.png" id="19_af6ax"]
+[ext_resource type="PackedScene" path="res://systems/deprecatedtween/DeprecatedTween.tscn" id="20_b6uyh"]
+[ext_resource type="AudioStream" uid="uid://da7s6jxqthcy1" path="res://content/sounds/keeper2/ExplodeOrb 01.wav" id="21_6epa1"]
+[ext_resource type="AudioStream" uid="uid://o55uy3pp43m" path="res://content/sounds/keeper2/ExplodeOrb 02.wav" id="22_1d6no"]
+[ext_resource type="AudioStream" uid="uid://c02lbnxtom5lo" path="res://content/sounds/keeper2/Ready.wav" id="23_skyph"]
+[ext_resource type="AudioStream" uid="uid://bl524uvd768vk" path="res://content/sounds/keeper2/Triggerexplode.wav" id="24_bohxc"]
+[ext_resource type="AudioStream" uid="uid://bn0ccd33g48cw" path="res://content/sounds/Combat Punch 5.wav" id="25_vwb28"]
+[ext_resource type="Script" path="res://content/shared/LightLineOfSight.gd" id="26_5xbip"]
+[ext_resource type="Script" path="res://content/keeper/keeper2/AmmoPath.gd" id="27_my044"]
+[ext_resource type="Texture2D" uid="uid://4s0emmosimd0" path="res://content/keeper/keeper2/player1/ammo-spin.png" id="28_x1inv"]
+[ext_resource type="Texture2D" uid="uid://ryxjqa7i6mai" path="res://content/keeper/keeper2/player1/sphere.png" id="29_u8210"]
+[ext_resource type="Texture2D" uid="uid://bux36eif0lmcu" path="res://content/keeper/keeper2/player1/sphere_reload_chargeup.png" id="30_6ywog"]
+[ext_resource type="SpriteFrames" uid="uid://ckd8mtkwpsko5" path="res://content/keeper/keeper2/spriteframes-skin0.tres" id="31_hspwk"]
+[ext_resource type="Texture2D" uid="uid://dy2gqg3mhawsv" path="res://content/keeper/keeper2/player1/aim_indicator.png" id="32_v60ht"]
+[ext_resource type="Script" path="res://systems/audio/Sound.gd" id="33_0d6q6"]
+[ext_resource type="AudioStream" uid="uid://q3w3x65upjy1" path="res://content/sounds/keeper2/jellyfishtonal_01.wav" id="34_x27u8"]
+[ext_resource type="AudioStream" uid="uid://ber2m44rca6ay" path="res://content/sounds/keeper2/jellyfishtonal_02.wav" id="35_7voun"]
+[ext_resource type="AudioStream" uid="uid://clsh8bo027sjx" path="res://content/sounds/keeper2/jellyfishtonal_03.wav" id="36_41ilj"]
+[ext_resource type="AudioStream" uid="uid://8ukwk24aj5fq" path="res://content/sounds/keeper2/jellyfishtonal_04.wav" id="37_utomt"]
+[ext_resource type="AudioStream" uid="uid://dsc8okfjgy4y1" path="res://content/sounds/keeper2/release.wav" id="38_scdwe"]
+[ext_resource type="AudioStream" uid="uid://cf2gg4h0a5mhy" path="res://content/sounds/keeper2/Bounce.wav" id="39_ttj0b"]
+[ext_resource type="AudioStream" uid="uid://cxx20d5yqqtgo" path="res://content/sounds/keeper2/start input.wav" id="40_xl6id"]
+[ext_resource type="AudioStream" uid="uid://cf6rtb6hoyc8j" path="res://content/sounds/keeper2/preshot.wav" id="41_jcs6o"]
+[ext_resource type="AudioStream" uid="uid://dlyfr0rqliyiy" path="res://content/sounds/keeper2/ambience.wav" id="42_y4c1h"]
+[ext_resource type="AudioStream" uid="uid://dob286m7j5tey" path="res://content/sounds/keeper2/nice.ogg" id="43_3ifq3"]
+[ext_resource type="AudioStream" uid="uid://efgum4rtsoxv" path="res://content/sounds/keeper2/Shot.wav" id="44_uqaf2"]
+[ext_resource type="AudioStream" uid="uid://bwrvu01ga4dyt" path="res://content/sounds/Locations/Teleport/TeleportInit.wav" id="45_jea1m"]
+[ext_resource type="AudioStream" uid="uid://bri5blprws0cw" path="res://content/sounds/Locations/Teleport/TeleportDone_v2.wav" id="46_lajxh"]
+[ext_resource type="AudioStream" uid="uid://c3tur50gqbrbm" path="res://content/sounds/keeper2/BounceOn.wav" id="47_lredd"]
+[ext_resource type="AudioStream" uid="uid://3l3rhv0rt0if" path="res://content/sounds/keeper2/Drill_init01.wav" id="48_17v3v"]
+[ext_resource type="AudioStream" uid="uid://0na27pggsgem" path="res://content/sounds/UI/ApplySetting.wav" id="49_bgjqc"]
+[ext_resource type="AudioStream" uid="uid://4xgn5r0ya51" path="res://content/sounds/keeper2/pickup_bounceThude.wav" id="50_miiga"]
+[ext_resource type="AudioStream" uid="uid://ca24uup4xugrd" path="res://content/sounds/keeper1/jetpackstart2.wav" id="51_gk3iu"]
+[ext_resource type="AudioStream" uid="uid://dut8u4giiporl" path="res://content/sounds/keeper1/jetpackstop.wav" id="52_3swcw"]
+[ext_resource type="AudioStream" uid="uid://cf4xcwuvj45gc" path="res://content/sounds/keeper2/movement.wav" id="53_6d6v8"]
+[ext_resource type="AudioStream" uid="uid://b4n31sc37c2bh" path="res://content/sounds/Weather/LowElectric Rainwindow.wav" id="54_4avwa"]
+[ext_resource type="AudioStream" uid="uid://7rj4i7xx56og" path="res://content/sounds/keeper2/Drill_LoopAll_01.wav" id="55_4f1t6"]
+[ext_resource type="AudioStream" uid="uid://sqqk4talkl63" path="res://content/sounds/keeper2/Drill_LoopAll_02.wav" id="56_4n66q"]
+[ext_resource type="AudioStream" uid="uid://dbfxwxbjx083b" path="res://content/sounds/keeper2/Drill_LoopAll_03.wav" id="57_r36h0"]
+[ext_resource type="AudioStream" uid="uid://deljvd01cvt4p" path="res://content/sounds/keeper2/Drill_LoopAll_04.wav" id="58_g5kib"]
+[ext_resource type="AudioStream" uid="uid://2q053pyqtj5h" path="res://content/sounds/keeper2/Dig2.wav" id="59_vva13"]
+[ext_resource type="AudioStream" uid="uid://dkn0vpuynbwek" path="res://content/sounds/keeper2/Drill_Loop_01.wav" id="60_nvlqi"]
+[ext_resource type="AudioStream" uid="uid://ddevgewrr0na1" path="res://content/sounds/keeper2/sfx_shimm.wav" id="61_6e5bj"]
+[ext_resource type="AudioStream" uid="uid://5jednkrh0ac5" path="res://content/sounds/keeper2/RelicDrill.wav" id="62_m14vs"]
+[ext_resource type="AudioStream" uid="uid://ltv0kef564at" path="res://content/sounds/keeper2/Waterdrill.wav" id="63_58cgm"]
+[ext_resource type="AudioStream" uid="uid://b8qm2hxmlpcn7" path="res://content/sounds/keeper2/Digging2.wav" id="64_2kk1g"]
+[ext_resource type="AudioStream" uid="uid://bbuy5kmbl6j5n" path="res://content/sounds/keeper2/RevWhump_01.wav" id="65_tpfsm"]
+[ext_resource type="AudioStream" uid="uid://dsnwpvyctxfgu" path="res://content/sounds/keeper2/RevWhump_02.wav" id="66_ow8g5"]
+[ext_resource type="AudioStream" uid="uid://lo86y5e06ew1" path="res://content/sounds/keeper2/RevWhump_03.wav" id="67_mjucg"]
+[ext_resource type="AudioStream" uid="uid://df4cr5mbag3du" path="res://content/sounds/keeper2/Diginit_02.wav" id="68_p2btq"]
+[ext_resource type="AudioStream" uid="uid://d32brtuklroup" path="res://content/sounds/keeper2/Diginit_01.wav" id="69_piqkm"]
+[ext_resource type="AudioStream" uid="uid://ciyg4rskdwrug" path="res://content/sounds/keeper2/Diginit_04.wav" id="70_gwau8"]
+[ext_resource type="AudioStream" uid="uid://cs41pme3ohsw" path="res://content/sounds/keeper2/ExplodeOrb 04.wav" id="71_7g0om"]
+[ext_resource type="AudioStream" uid="uid://cud2mfaukxqbs" path="res://content/sounds/Bastards/Strenght_47.wav" id="72_ubuce"]
+[ext_resource type="AudioStream" uid="uid://brygjtyjspgyn" path="res://content/sounds/keeper2/soft shot.wav" id="73_nlbyf"]
+[ext_resource type="AudioStream" uid="uid://ch4383mbyyl7a" path="res://content/sounds/keeper2/soft shot_1.wav" id="74_diosl"]
+[ext_resource type="AudioStream" uid="uid://dtslxevkwjqqx" path="res://content/sounds/keeper2/soft shot_2.wav" id="75_mwnv4"]
+[ext_resource type="AudioStream" uid="uid://s61guyajjpaq" path="res://content/sounds/keeper2/soft shot_3.wav" id="76_d651s"]
+[ext_resource type="AudioStream" uid="uid://b4jiphu5krhbg" path="res://content/sounds/keeper2/shooty.wav" id="77_qbrmd"]
+[ext_resource type="AudioStream" uid="uid://cbl4l6qes271i" path="res://content/sounds/UI/Error.wav" id="78_pebbb"]
+[ext_resource type="AudioStream" uid="uid://dgn67y5gwreqo" path="res://content/sounds/keeper2/vaugely.wav" id="79_nc1b2"]
+[ext_resource type="AudioStream" uid="uid://d05rxpiqfggmy" path="res://content/sounds/keeper2/New_1.wav" id="80_cyes5"]
+[ext_resource type="AudioStream" uid="uid://b3v2lip0oxdht" path="res://content/sounds/keeper2/New_2.wav" id="81_uhap0"]
+[ext_resource type="AudioStream" uid="uid://dax2631x8uai2" path="res://content/sounds/keeper2/New_3.wav" id="82_ksgss"]
+[ext_resource type="AudioStream" uid="uid://cyj64x686o8dk" path="res://content/sounds/UI/UnlockUpgrade.wav" id="83_dx1sb"]
+
+[sub_resource type="Curve" id="306"]
+_data = [Vector2(0.0145349, 0), 0.0, 0.0, 0, 0, Vector2(0.0959302, 0.863636), 1.35968, 1.35968, 0, 0, Vector2(1, 0.354545), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="260"]
+offsets = PackedFloat32Array(0, 0.606119, 0.848948, 1)
+colors = PackedColorArray(0.188235, 0.92549, 0.156863, 1, 0.12549, 0.568627, 0.156863, 1, 0.0313726, 0.145098, 0.156863, 1, 0.0313726, 0.145098, 0.156863, 0)
+
+[sub_resource type="GradientTexture2D" id="167"]
+gradient = SubResource("260")
+width = 128
+
+[sub_resource type="ParticleProcessMaterial" id="263"]
+lifetime_randomness = 0.8
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 4, 1)
+angle_max = 360.0
+spread = 40.0
+initial_velocity_min = -60.0
+initial_velocity_max = -6.0
+angular_velocity_min = -800.0
+angular_velocity_max = 800.0
+gravity = Vector3(0, 20, 0)
+color_ramp = SubResource("167")
+
+[sub_resource type="CanvasItemMaterial" id="262"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="249"]
+atlas = ExtResource("5_vo1pw")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="250"]
+atlas = ExtResource("5_vo1pw")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="251"]
+atlas = ExtResource("5_vo1pw")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="252"]
+atlas = ExtResource("5_vo1pw")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="245"]
+atlas = ExtResource("5_vo1pw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="246"]
+atlas = ExtResource("5_vo1pw")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="247"]
+atlas = ExtResource("5_vo1pw")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="248"]
+atlas = ExtResource("5_vo1pw")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="240"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("249")
+}, {
+"duration": 1.0,
+"texture": SubResource("250")
+}, {
+"duration": 1.0,
+"texture": SubResource("251")
+}, {
+"duration": 1.0,
+"texture": SubResource("252")
+}],
+"loop": true,
+"name": &"bundle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("245")
+}, {
+"duration": 1.0,
+"texture": SubResource("246")
+}, {
+"duration": 1.0,
+"texture": SubResource("247")
+}, {
+"duration": 1.0,
+"texture": SubResource("248")
+}],
+"loop": true,
+"name": &"charge",
+"speed": 12.0
+}]
+
+[sub_resource type="AtlasTexture" id="228"]
+atlas = ExtResource("6_xl1be")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="229"]
+atlas = ExtResource("6_xl1be")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="230"]
+atlas = ExtResource("6_xl1be")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="231"]
+atlas = ExtResource("6_xl1be")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="232"]
+atlas = ExtResource("6_xl1be")
+region = Rect2(128, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="233"]
+atlas = ExtResource("6_xl1be")
+region = Rect2(160, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="234"]
+atlas = ExtResource("6_xl1be")
+region = Rect2(192, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="235"]
+atlas = ExtResource("6_xl1be")
+region = Rect2(224, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="227"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("228")
+}, {
+"duration": 1.0,
+"texture": SubResource("229")
+}, {
+"duration": 1.0,
+"texture": SubResource("230")
+}, {
+"duration": 1.0,
+"texture": SubResource("231")
+}, {
+"duration": 1.0,
+"texture": SubResource("232")
+}, {
+"duration": 1.0,
+"texture": SubResource("233")
+}, {
+"duration": 1.0,
+"texture": SubResource("234")
+}, {
+"duration": 1.0,
+"texture": SubResource("235")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="283"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="281"]
+offsets = PackedFloat32Array(0, 0.244624, 0.395161, 0.556452, 0.819892, 1)
+colors = PackedColorArray(1, 0.615686, 0.372549, 0, 1, 0.666667, 0.368627, 1, 0.644531, 0.366699, 0.329819, 1, 0.372549, 0.184314, 0.290196, 1, 0.25098, 0.172549, 0.360784, 0.694118, 0.25098, 0.172549, 0.360784, 0)
+
+[sub_resource type="GradientTexture2D" id="282"]
+gradient = SubResource("281")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_27g1x"]
+resource_local_to_scene = true
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 40.0
+emission_ring_inner_radius = 40.0
+spread = 0.0
+orbit_velocity_min = 0.1
+orbit_velocity_max = 0.1
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -300.0
+radial_accel_max = -210.0
+attractor_interaction_enabled = false
+color_ramp = SubResource("282")
+
+[sub_resource type="Gradient" id="304"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.0144404, 0.244624, 0.303249, 0.516245, 0.797834)
+colors = PackedColorArray(0.87451, 0.87451, 0.87451, 0, 1, 1, 1, 0.0235294, 1, 1, 1, 1, 0.18, 0.13116, 0.1008, 1, 0.07, 0.0049, 0.049385, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="305"]
+gradient = SubResource("304")
+width = 256
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_obyiy"]
+resource_local_to_scene = true
+shader = ExtResource("7_kxklu")
+shader_parameter/step_edge = 0.5
+shader_parameter/pixel_grid_size = 200
+shader_parameter/noise_power = 0.2
+shader_parameter/noise_speed = 2.0
+shader_parameter/radius = 50.0
+shader_parameter/edge_width = 0.8
+shader_parameter/color_gradient = SubResource("305")
+shader_parameter/noise_map = ExtResource("8_nps2g")
+
+[sub_resource type="Gradient" id="278"]
+
+[sub_resource type="GradientTexture2D" id="272"]
+gradient = SubResource("278")
+width = 200
+height = 200
+
+[sub_resource type="CanvasItemMaterial" id="1"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="311"]
+offsets = PackedFloat32Array(0.0469314, 0.216606, 0.386282, 0.566787, 0.747292, 1)
+colors = PackedColorArray(1, 0.666667, 0.368627, 1, 0.535156, 0.294754, 0.439903, 1, 0.289062, 0.135498, 0.263469, 1, 0.198423, 0.111359, 0.320312, 1, 0.137255, 0.0470588, 0.27451, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="312"]
+gradient = SubResource("311")
+
+[sub_resource type="Curve" id="2"]
+max_value = 30.0
+_data = [Vector2(0, 0), 0.0, -18.0149, 0, 0, Vector2(0.494131, 12.4398), 63.0568, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="308"]
+curve = SubResource("2")
+
+[sub_resource type="ParticleProcessMaterial" id="309"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 4.0
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_min = 1.8
+initial_velocity_max = 3.0
+gravity = Vector3(0, 0, 0)
+damping_curve = SubResource("308")
+color_ramp = SubResource("312")
+
+[sub_resource type="ParticleProcessMaterial" id="310"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 4.0
+direction = Vector3(0, 1, 0)
+spread = 120.0
+initial_velocity_min = 12.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+damping_curve = SubResource("308")
+color_ramp = SubResource("312")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yxqep"]
+resource_local_to_scene = true
+radius = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_olfdj"]
+resource_local_to_scene = true
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2pvo6"]
+resource_local_to_scene = true
+radius = 20.0
+
+[sub_resource type="AtlasTexture" id="255"]
+atlas = ExtResource("10_20epj")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="256"]
+atlas = ExtResource("10_20epj")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="254"]
+atlas = ExtResource("10_20epj")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="253"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("255")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("256")
+}],
+"loop": true,
+"name": &"approach",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("254")
+}],
+"loop": true,
+"name": &"reflect",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_djtlf"]
+resource_local_to_scene = true
+radius = 28.0
+
+[sub_resource type="ShaderMaterial" id="259"]
+shader = ExtResource("16_nf8ti")
+shader_parameter/pixelation_factor = 100
+shader_parameter/noise = ExtResource("17_263ir")
+shader_parameter/palette = ExtResource("18_ryrxn")
+
+[sub_resource type="Curve2D" id="215"]
+_data = {
+"points": PackedVector2Array(0.15874, -5.04001, -0.15874, 5.04001, -11, -3, -8.96827, 0.197175, 8.96827, -0.197175, 0, 12, -0.119055, 5.51623, 0.119055, -5.51623, 11, -2, 7.57804, 0.0245612, -7.57804, -0.0245612, 0, -15, -0.00458813, -5.22173, 0.00458813, 5.22173, -11, -3)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="301"]
+_data = {
+"points": PackedVector2Array(0.0261575, -8.00102, -0.0261575, 8.00102, 11, 0, 8.09068, 0.0203983, -8.09068, -0.0203983, 0, 14, 0.0135275, 7.90272, -0.0135275, -7.90272, -11, 0, -7.97831, 0.0245612, 7.97831, -0.0245612, 0, -14, 0.039606, -7.96177, -0.039606, 7.96177, 11, 0)
+}
+point_count = 5
+
+[sub_resource type="AtlasTexture" id="223"]
+atlas = ExtResource("28_x1inv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="224"]
+atlas = ExtResource("28_x1inv")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="225"]
+atlas = ExtResource("28_x1inv")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="226"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("223")
+}, {
+"duration": 1.0,
+"texture": SubResource("224")
+}, {
+"duration": 1.0,
+"texture": SubResource("225")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="286"]
+atlas = ExtResource("29_u8210")
+region = Rect2(10, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="287"]
+atlas = ExtResource("29_u8210")
+region = Rect2(20, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="288"]
+atlas = ExtResource("29_u8210")
+region = Rect2(30, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="290"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(0, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="291"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(6, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="292"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(12, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="293"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(18, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="294"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(24, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="295"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(30, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="296"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(36, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="297"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(42, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="298"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(48, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="299"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(54, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="300"]
+atlas = ExtResource("30_6ywog")
+region = Rect2(60, 0, 6, 6)
+
+[sub_resource type="SpriteFrames" id="289"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("286")
+}, {
+"duration": 1.0,
+"texture": SubResource("287")
+}, {
+"duration": 1.0,
+"texture": SubResource("288")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("290")
+}, {
+"duration": 1.0,
+"texture": SubResource("291")
+}, {
+"duration": 1.0,
+"texture": SubResource("292")
+}, {
+"duration": 1.0,
+"texture": SubResource("293")
+}, {
+"duration": 1.0,
+"texture": SubResource("294")
+}, {
+"duration": 1.0,
+"texture": SubResource("295")
+}, {
+"duration": 1.0,
+"texture": SubResource("296")
+}, {
+"duration": 1.0,
+"texture": SubResource("297")
+}, {
+"duration": 1.0,
+"texture": SubResource("298")
+}, {
+"duration": 1.0,
+"texture": SubResource("299")
+}, {
+"duration": 1.0,
+"texture": SubResource("300")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nkdm8"]
+radius = 5.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7oxeu"]
+size = Vector2(4.24264, 4.24264)
+
+[node name="Keeper" type="CharacterBody2D" groups=["gamepadListeners", "keeper", "lostL", "pauseL"]]
+z_index = 25
+texture_filter = 1
+collision_layer = 16384
+collision_mask = 2147483649
+wall_min_slide_angle = 0.0872665
+floor_max_angle = 0.0872665
+floor_snap_length = 0.0
+platform_wall_layers = 4294967295
+script = ExtResource("1_feh67")
+collect_modulation_curve = SubResource("306")
+techId = "biologist"
+
+[node name="MuzzleFlash" parent="." instance=ExtResource("2_m5ycg")]
+visible = false
+
+[node name="DrillHitTestRay" type="RayCast2D" parent="."]
+visible = false
+target_position = Vector2(10, 0)
+
+[node name="DrillParticles" type="GPUParticles2D" parent="."]
+visible = false
+z_index = 1
+emitting = false
+amount = 100
+process_material = SubResource("263")
+texture = ExtResource("3_qpd0r")
+speed_scale = 2.0
+
+[node name="DrillSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
+texture_filter = 1
+material = SubResource("262")
+texture = ExtResource("4_so2ue")
+
+[node name="ChargeCentral" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("240")
+animation = &"charge"
+frame_progress = 0.591273
+
+[node name="ChargePointer" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 2)
+sprite_frames = SubResource("227")
+offset = Vector2(16, 0)
+
+[node name="CollectSpriteParticles" type="GPUParticles2D" parent="."]
+visible = false
+z_as_relative = false
+material = SubResource("283")
+emitting = false
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_27g1x")
+lifetime = 0.5
+
+[node name="CollectSprite" type="Sprite2D" parent="." groups=["customStyle"]]
+visible = false
+modulate = Color(1, 0.615686, 0.372549, 1)
+z_index = -26
+texture_filter = 4
+texture_repeat = 2
+material = SubResource("ShaderMaterial_obyiy")
+position = Vector2(0, -2)
+texture = SubResource("272")
+script = ExtResource("9_1rua6")
+
+[node name="Trail" type="GPUParticles2D" parent="."]
+visible = false
+material = SubResource("1")
+amount = 70
+process_material = SubResource("309")
+lifetime = 4.0
+
+[node name="StoppedParticles" type="GPUParticles2D" parent="."]
+visible = false
+material = SubResource("1")
+position = Vector2(0, 2)
+emitting = false
+amount = 25
+process_material = SubResource("310")
+lifetime = 2.0
+
+[node name="UseArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UseArea"]
+visible = false
+shape = SubResource("CircleShape2D_yxqep")
+
+[node name="CarryArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionDrops" type="CollisionShape2D" parent="CarryArea"]
+shape = SubResource("CircleShape2D_olfdj")
+
+[node name="CollisionNotDrops" type="CollisionShape2D" parent="CarryArea"]
+shape = SubResource("CircleShape2D_2pvo6")
+disabled = true
+
+[node name="ReflectCooldownSprite" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("253")
+animation = &"approach"
+
+[node name="BallSplitArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 1048576
+script = ExtResource("11_1era2")
+
+[node name="BallCatchCollision" type="CollisionShape2D" parent="BallSplitArea"]
+position = Vector2(0, -0.5)
+shape = SubResource("CircleShape2D_djtlf")
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BallSplitArea"]
+sprite_frames = SubResource("253")
+animation = &"approach"
+
+[node name="SplitActivated" parent="BallSplitArea" instance=ExtResource("12_eip7f")]
+stream = ExtResource("13_yjmnv")
+volume_db = 5.244
+pitch_scale = 1.22
+bus = &"Keeper"
+randomVolume = 1.0
+
+[node name="SplitReady" parent="BallSplitArea" instance=ExtResource("12_eip7f")]
+stream = ExtResource("14_sl0hv")
+volume_db = 5.244
+pitch_scale = 1.22
+bus = &"Keeper"
+randomVolume = 1.0
+
+[node name="BallExplodeArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 1048576
+script = ExtResource("15_6rmwq")
+
+[node name="BallCatchCollision" type="CollisionShape2D" parent="BallExplodeArea"]
+shape = SubResource("CircleShape2D_djtlf")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="BallExplodeArea"]
+texture_filter = 1
+material = SubResource("259")
+texture = ExtResource("19_af6ax")
+
+[node name="Tween" parent="BallExplodeArea" instance=ExtResource("20_b6uyh")]
+
+[node name="ExplodeReady" parent="BallExplodeArea" instance=ExtResource("12_eip7f")]
+stream = ExtResource("14_sl0hv")
+volume_db = 2.0
+pitch_scale = 1.68
+bus = &"Keeper"
+randomVolume = 1.0
+
+[node name="ExplodeOn" parent="BallExplodeArea" instance=ExtResource("12_eip7f")]
+stream = ExtResource("21_6epa1")
+volume_db = 3.714
+pitch_scale = 1.01
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.11
+
+[node name="ExplodeOn2" parent="BallExplodeArea/ExplodeOn" instance=ExtResource("12_eip7f")]
+stream = ExtResource("22_1d6no")
+volume_db = 3.714
+pitch_scale = 1.01
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.11
+
+[node name="ExplodeOnUpgrade" parent="BallExplodeArea" instance=ExtResource("12_eip7f")]
+stream = ExtResource("21_6epa1")
+volume_db = 7.647
+pitch_scale = 0.89
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.11
+
+[node name="ExplodeOn2" parent="BallExplodeArea/ExplodeOnUpgrade" instance=ExtResource("12_eip7f")]
+stream = ExtResource("22_1d6no")
+volume_db = 4.588
+pitch_scale = 0.91
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.11
+
+[node name="ExplodeOff" parent="BallExplodeArea" instance=ExtResource("12_eip7f")]
+stream = ExtResource("23_skyph")
+volume_db = 3.714
+pitch_scale = 0.64
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="ExplodeTrigger" parent="BallExplodeArea" instance=ExtResource("12_eip7f")]
+stream = ExtResource("24_bohxc")
+volume_db = 3.714
+pitch_scale = 1.01
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="ExplodeTriggerUpgrade" parent="BallExplodeArea" instance=ExtResource("12_eip7f")]
+stream = ExtResource("24_bohxc")
+volume_db = 5.0
+pitch_scale = 0.93
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="ExplodeTriggerUpgrade2" parent="BallExplodeArea/ExplodeTriggerUpgrade" instance=ExtResource("12_eip7f")]
+stream = ExtResource("25_vwb28")
+volume_db = 0.193
+pitch_scale = 0.93
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="Light3D" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, -2)
+
+[node name="Tween" parent="Light3D" instance=ExtResource("20_b6uyh")]
+
+[node name="LightBig" type="Node2D" parent="Light3D"]
+script = ExtResource("26_5xbip")
+light_name = "keeper_big"
+light_color = Color(0.12549, 0.568627, 0.156863, 0.627451)
+light_size = 36.0
+light_flicker_strength = 1.0
+
+[node name="LightSmall" type="Node2D" parent="Light3D"]
+script = ExtResource("26_5xbip")
+light_name = "keeper_small"
+light_color = Color(0.12549, 0.568627, 0.156863, 1)
+light_size = 28.0
+light_flicker_strength = 1.0
+
+[node name="PinballAmmo" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, -2)
+script = ExtResource("27_my044")
+
+[node name="AmmoPath_Old" type="Path2D" parent="PinballAmmo"]
+visible = false
+position = Vector2(0, 2)
+curve = SubResource("215")
+
+[node name="AmmoPath" type="Path2D" parent="PinballAmmo"]
+curve = SubResource("301")
+
+[node name="AmmoSpin" type="AnimatedSprite2D" parent="PinballAmmo"]
+sprite_frames = SubResource("226")
+animation = &"spin"
+
+[node name="ReloadSphere" type="AnimatedSprite2D" parent="PinballAmmo"]
+sprite_frames = SubResource("289")
+animation = &"idle"
+frame = 5
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 0
+position = Vector2(0.5, 1)
+sprite_frames = ExtResource("31_hspwk")
+animation = &"push_right_buffed"
+
+[node name="AimIndicator" type="Node2D" parent="."]
+visible = false
+z_index = 12
+
+[node name="Sprite2D" type="Sprite2D" parent="AimIndicator"]
+texture_filter = 1
+position = Vector2(26, 0)
+rotation = 1.57079
+texture = ExtResource("32_v60ht")
+
+[node name="PlayerCollision4" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_nkdm8")
+
+[node name="PlayerCollision6" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -3.935)
+rotation = 0.785398
+shape = SubResource("RectangleShape2D_7oxeu")
+
+[node name="PlayerCollision5" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 3.94)
+rotation = 0.785398
+shape = SubResource("RectangleShape2D_7oxeu")
+
+[node name="Tween" parent="." instance=ExtResource("20_b6uyh")]
+
+[node name="AudioTween" parent="." instance=ExtResource("20_b6uyh")]
+
+[node name="Pickup" type="AudioStreamPlayer" parent="."]
+volume_db = 5.062
+pitch_scale = 1.63
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+randomPitch = 0.0
+streams = Array[AudioStream]([ExtResource("34_x27u8"), ExtResource("35_7voun"), ExtResource("36_41ilj"), ExtResource("37_utomt")])
+
+[node name="Drop" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("38_scdwe")
+volume_db = -4.269
+pitch_scale = 1.73
+bus = &"Keeper"
+
+[node name="Drop2" type="AudioStreamPlayer" parent="Drop"]
+stream = ExtResource("39_ttj0b")
+volume_db = -2.958
+pitch_scale = 1.44
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+
+[node name="ChargeCollectStart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("40_xl6id")
+volume_db = -9.076
+bus = &"Sounds"
+script = ExtResource("33_0d6q6")
+
+[node name="ChargeCollectStart2" type="AudioStreamPlayer" parent="ChargeCollectStart"]
+stream = ExtResource("41_jcs6o")
+volume_db = -8.202
+bus = &"Sounds"
+script = ExtResource("33_0d6q6")
+fadeOutTime = 2.0
+
+[node name="ChargeCollectAmb" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("42_y4c1h")
+volume_db = 7.764
+bus = &"Sounds"
+script = ExtResource("33_0d6q6")
+fadeInTime = 2.0
+fadeOutTime = 1.0
+loop = true
+
+[node name="ChargeCollectAmb2" type="AudioStreamPlayer" parent="ChargeCollectAmb"]
+stream = ExtResource("43_3ifq3")
+volume_db = -11.261
+bus = &"Sounds"
+script = ExtResource("33_0d6q6")
+fadeInTime = 3.0
+fadeOutTime = 2.0
+
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("44_uqaf2")
+volume_db = -2.622
+pitch_scale = 1.89
+bus = &"Sounds"
+
+[node name="TeleportInit" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("45_jea1m")
+pitch_scale = 0.91
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="TeleportDone" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("46_lajxh")
+volume_db = 3.714
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="ReflectionCooldownOver" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("47_lredd")
+volume_db = -2.404
+pitch_scale = 0.5
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.05
+
+[node name="ReflectionOn" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("48_17v3v")
+volume_db = -5.026
+pitch_scale = 1.61
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.05
+
+[node name="ReflectionOn2" parent="ReflectionOn" instance=ExtResource("12_eip7f")]
+stream = ExtResource("49_bgjqc")
+volume_db = -7.211
+pitch_scale = 1.17
+bus = &"NoMusic"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="ReflectionOn3" parent="ReflectionOn" instance=ExtResource("12_eip7f")]
+stream = ExtResource("50_miiga")
+volume_db = 1.966
+pitch_scale = 1.29
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="ReflectionOnUpgrade" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("48_17v3v")
+volume_db = 1.092
+pitch_scale = 1.43
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.05
+
+[node name="ReflectionOn2" parent="ReflectionOnUpgrade" instance=ExtResource("12_eip7f")]
+stream = ExtResource("49_bgjqc")
+volume_db = -5.899
+pitch_scale = 1.09
+bus = &"NoMusic"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="ReflectionOn3" parent="ReflectionOnUpgrade" instance=ExtResource("12_eip7f")]
+stream = ExtResource("50_miiga")
+volume_db = 5.899
+pitch_scale = 1.29
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="MoveStartSound" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("51_gk3iu")
+volume_db = -15.0
+pitch_scale = 1.5
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="MoveStopSound" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("52_3swcw")
+volume_db = -41.036
+bus = &"Keeper"
+randomVolume = 0.0
+randomPitch = 0.0
+
+[node name="MoveSound" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("53_6d6v8")
+volume_db = -5.445
+pitch_scale = 1.08
+bus = &"Keeper"
+randomVolume = 1.8
+randomPitch = 0.11
+fadeInTime = 0.1
+fadeOutTime = 0.1
+
+[node name="MoveFastSound" parent="MoveSound" instance=ExtResource("12_eip7f")]
+stream = ExtResource("54_4avwa")
+volume_db = 9.85
+pitch_scale = 1.08
+bus = &"Keeper"
+randomVolume = 1.8
+randomPitch = 0.11
+fadeInTime = 0.1
+fadeOutTime = 0.1
+
+[node name="BallDrill" parent="." instance=ExtResource("12_eip7f")]
+volume_db = -4.446
+bus = &"Keeper"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+streams = Array[AudioStream]([ExtResource("55_4f1t6"), ExtResource("56_4n66q"), ExtResource("57_r36h0"), ExtResource("58_g5kib")])
+loop = true
+
+[node name="BallDrill2" parent="BallDrill" instance=ExtResource("12_eip7f")]
+stream = ExtResource("59_vva13")
+volume_db = -3.721
+pitch_scale = 1.37
+bus = &"Mine"
+randomVolume = 2.2
+randomPitch = 0.09
+fadeInTime = 1.0
+loop = true
+
+[node name="BallDrillCobolt" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("60_nvlqi")
+volume_db = -1.783
+bus = &"Keeper"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+loop = true
+
+[node name="BallDrillCobolt2" parent="BallDrillCobolt" instance=ExtResource("12_eip7f")]
+stream = ExtResource("61_6e5bj")
+volume_db = -1.783
+pitch_scale = 1.72
+bus = &"NoMusic"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+loop = true
+
+[node name="BallDrillSpecial" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("60_nvlqi")
+volume_db = 2.587
+pitch_scale = 0.74
+bus = &"Keeper"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+loop = true
+
+[node name="BallDrillSpecial2" parent="BallDrillSpecial" instance=ExtResource("12_eip7f")]
+stream = ExtResource("62_m14vs")
+volume_db = 2.587
+pitch_scale = 0.74
+bus = &"NoMusic"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+loop = true
+
+[node name="BallDrillWater" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("60_nvlqi")
+volume_db = -11.396
+bus = &"Keeper"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+loop = true
+
+[node name="BallDrillWater2" parent="BallDrillWater" instance=ExtResource("12_eip7f")]
+stream = ExtResource("63_58cgm")
+volume_db = -7.463
+pitch_scale = 1.27
+bus = &"NoMusic"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+loop = true
+
+[node name="BallDrillIron" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("60_nvlqi")
+volume_db = 0.402
+bus = &"Keeper"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+loop = true
+
+[node name="BallDrillIron2" parent="BallDrillIron" instance=ExtResource("12_eip7f")]
+stream = ExtResource("61_6e5bj")
+volume_db = 0.839
+bus = &"NoMusic"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+loop = true
+
+[node name="BallDrillUpgrade1" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("64_2kk1g")
+volume_db = -11.396
+bus = &"Keeper"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 2.0
+loop = true
+
+[node name="BallDrill3" parent="BallDrillUpgrade1" instance=ExtResource("12_eip7f")]
+volume_db = -0.908
+pitch_scale = 1.23
+bus = &"Mine"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.4
+streams = Array[AudioStream]([ExtResource("55_4f1t6"), ExtResource("56_4n66q"), ExtResource("57_r36h0"), ExtResource("58_g5kib")])
+loop = true
+
+[node name="BallDrill2" parent="BallDrillUpgrade1" instance=ExtResource("12_eip7f")]
+stream = ExtResource("59_vva13")
+volume_db = -1.963
+pitch_scale = 1.18
+bus = &"Mine"
+randomVolume = 2.2
+randomPitch = 0.24
+fadeInTime = 1.0
+loop = true
+
+[node name="BallDrillInitUpgrade1" parent="." instance=ExtResource("12_eip7f")]
+volume_db = -10.89
+pitch_scale = 1.3
+bus = &"Keeper"
+streams = Array[AudioStream]([ExtResource("65_tpfsm"), ExtResource("66_ow8g5"), ExtResource("67_mjucg")])
+
+[node name="BallDrillInit2" parent="BallDrillInitUpgrade1" instance=ExtResource("12_eip7f")]
+stream = ExtResource("68_p2btq")
+volume_db = 8.0
+pitch_scale = 1.3
+bus = &"Mine"
+
+[node name="BallDrillInit3" parent="BallDrillInitUpgrade1" instance=ExtResource("12_eip7f")]
+stream = ExtResource("69_piqkm")
+volume_db = 3.0
+pitch_scale = 1.3
+bus = &"Mine"
+
+[node name="BallDrillInit" parent="." instance=ExtResource("12_eip7f")]
+volume_db = -7.787
+pitch_scale = 1.6
+bus = &"Keeper"
+streams = Array[AudioStream]([ExtResource("70_gwau8")])
+
+[node name="BallDrillInitUpgrade2" parent="BallDrillInit" instance=ExtResource("12_eip7f")]
+volume_db = -0.522
+pitch_scale = 1.04
+bus = &"Mine"
+randomPitch = 0.12
+streams = Array[AudioStream]([ExtResource("68_p2btq")])
+
+[node name="BallDrillUpgrade2" parent="." instance=ExtResource("12_eip7f")]
+volume_db = 0.839
+bus = &"Keeper"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+streams = Array[AudioStream]([ExtResource("55_4f1t6"), ExtResource("56_4n66q"), ExtResource("57_r36h0"), ExtResource("58_g5kib")])
+loop = true
+
+[node name="BallDrill3" parent="BallDrillUpgrade2" instance=ExtResource("12_eip7f")]
+volume_db = -2.656
+bus = &"Mine"
+randomVolume = 2.2
+randomPitch = 0.0
+fadeInTime = 0.5
+streams = Array[AudioStream]([ExtResource("55_4f1t6"), ExtResource("56_4n66q"), ExtResource("57_r36h0"), ExtResource("58_g5kib")])
+loop = true
+
+[node name="BallDrill2" parent="BallDrillUpgrade2" instance=ExtResource("12_eip7f")]
+stream = ExtResource("59_vva13")
+volume_db = -3.721
+pitch_scale = 0.91
+bus = &"Mine"
+randomVolume = 2.2
+randomPitch = 0.24
+fadeInTime = 1.0
+loop = true
+
+[node name="BallDrillInitUpgrade2" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("71_7g0om")
+volume_db = 3.761
+pitch_scale = 1.17
+bus = &"Keeper"
+
+[node name="BallDrillInitUpgrade2" parent="BallDrillInitUpgrade2" instance=ExtResource("12_eip7f")]
+stream = ExtResource("72_ubuce")
+volume_db = -15.491
+pitch_scale = 1.45
+bus = &"Mine"
+randomPitch = 0.15
+
+[node name="BallDrillInitUpgrade3" parent="BallDrillInitUpgrade2" instance=ExtResource("12_eip7f")]
+volume_db = -7.188
+pitch_scale = 1.12
+bus = &"Mine"
+streams = Array[AudioStream]([ExtResource("65_tpfsm"), ExtResource("66_ow8g5"), ExtResource("67_mjucg")])
+
+[node name="BundleShotSmall" type="AudioStreamPlayer" parent="."]
+volume_db = -6.161
+pitch_scale = 1.71
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+streams = Array[AudioStream]([ExtResource("73_nlbyf"), ExtResource("74_diosl"), ExtResource("75_mwnv4"), ExtResource("76_d651s")])
+
+[node name="Drop2" type="AudioStreamPlayer" parent="BundleShotSmall"]
+stream = ExtResource("77_qbrmd")
+volume_db = -0.774
+pitch_scale = 1.28
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+
+[node name="Drop3" type="AudioStreamPlayer" parent="BundleShotSmall"]
+stream = ExtResource("38_scdwe")
+volume_db = 0.974
+pitch_scale = 1.28
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+
+[node name="BundleShotMedium" type="AudioStreamPlayer" parent="."]
+volume_db = -1.373
+pitch_scale = 1.51
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+streams = Array[AudioStream]([ExtResource("73_nlbyf"), ExtResource("74_diosl"), ExtResource("75_mwnv4"), ExtResource("76_d651s")])
+
+[node name="Drop2" type="AudioStreamPlayer" parent="BundleShotMedium"]
+stream = ExtResource("77_qbrmd")
+volume_db = -0.337
+pitch_scale = 0.99
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+
+[node name="Drop3" type="AudioStreamPlayer" parent="BundleShotMedium"]
+stream = ExtResource("38_scdwe")
+volume_db = 1.411
+pitch_scale = 0.99
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+
+[node name="BundleShotBig" type="AudioStreamPlayer" parent="."]
+volume_db = -0.774
+pitch_scale = 1.23
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+streams = Array[AudioStream]([ExtResource("73_nlbyf"), ExtResource("74_diosl"), ExtResource("75_mwnv4"), ExtResource("76_d651s")])
+
+[node name="Drop2" type="AudioStreamPlayer" parent="BundleShotBig"]
+stream = ExtResource("77_qbrmd")
+volume_db = 0.974
+pitch_scale = 0.74
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+
+[node name="Drop3" type="AudioStreamPlayer" parent="BundleShotBig"]
+stream = ExtResource("38_scdwe")
+volume_db = -0.337
+pitch_scale = 0.74
+bus = &"Keeper"
+script = ExtResource("33_0d6q6")
+
+[node name="AbilityOnCooldown" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("78_pebbb")
+volume_db = -10.05
+pitch_scale = 1.22
+bus = &"Keeper"
+randomVolume = 1.0
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+visible = false
+current = true
+
+[node name="AmmoAdded" parent="." instance=ExtResource("12_eip7f")]
+volume_db = -10.494
+bus = &"NoMusic"
+randomVolume = 1.0
+randomPitch = 0.0
+streams = Array[AudioStream]([ExtResource("37_utomt"), ExtResource("35_7voun"), ExtResource("36_41ilj"), ExtResource("37_utomt")])
+
+[node name="AmmoAdded2" parent="AmmoAdded" instance=ExtResource("12_eip7f")]
+stream = ExtResource("79_nc1b2")
+volume_db = -9.419
+pitch_scale = 1.75
+bus = &"Keeper"
+randomVolume = 1.0
+
+[node name="AmmoAdded" parent="AmmoAdded" instance=ExtResource("12_eip7f")]
+volume_db = -20.502
+pitch_scale = 0.8
+bus = &"NoMusic"
+randomVolume = 1.0
+randomPitch = 0.0
+streams = Array[AudioStream]([ExtResource("37_utomt"), ExtResource("80_cyes5"), ExtResource("81_uhap0"), ExtResource("82_ksgss")])
+
+[node name="InitPull" parent="." instance=ExtResource("12_eip7f")]
+stream = ExtResource("83_dx1sb")
+volume_db = -14.856
+pitch_scale = 1.4
+bus = &"Keeper"
+randomVolume = 1.0
+
+[connection signal="area_entered" from="UseArea" to="." method="_on_UseArea_usable_entered"]
+[connection signal="area_exited" from="UseArea" to="." method="_on_UseArea_usable_exited"]
+[connection signal="body_entered" from="UseArea" to="." method="_on_UseArea_usable_entered"]
+[connection signal="body_exited" from="UseArea" to="." method="_on_UseArea_usable_exited"]
+[connection signal="body_entered" from="CarryArea" to="." method="_on_CarryArea_body_entered"]
+[connection signal="body_exited" from="CarryArea" to="." method="_on_CarryArea_body_exited"]

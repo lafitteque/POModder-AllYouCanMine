@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmfnq7i66ehwc"
-path="res://.godot/imported/excavator_icon.png-d34cf542d9b1709fcd0043c70b8328f4.ctex"
+uid="uid://duy21wovddndo"
+path="res://.godot/imported/iconCarry2.png-342f705782545b35756c580e338476b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator_icon.png"
-dest_files=["res://.godot/imported/excavator_icon.png-d34cf542d9b1709fcd0043c70b8328f4.ctex"]
+source_file="res://mods-unpacked/POModder-AllYouCanMine/images/iconCarry2.png"
+dest_files=["res://.godot/imported/iconCarry2.png-342f705782545b35756c580e338476b7.ctex"]
 
 [params]
 

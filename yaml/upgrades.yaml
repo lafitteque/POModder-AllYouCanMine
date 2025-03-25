@@ -33,6 +33,45 @@ worldmodifierfulllaser:
   eraseupgradelimits: [primaryweapon]
   
 
+
+biologist:
+  type: keeper
+  scenes: 
+    keeper: content/keeper/biologist/Biologist.tscn
+  addslots: [keepersuit, keepersupplement]
+  unlockslimits: [biologist]
+  propertyChanges:
+    - biologist.maxSpeed = 65
+    - biologist.minspeed = 1.0/h
+    - biologist.acceleration = 70
+    - biologist.deceleration = 3
+    - biologist.totalspheres = 1
+    - biologist.spherereload = 10.0
+    - biologist.directminingdamage = 0.4
+    - biologist.directmininghardness = 1.0
+    - biologist.directminingstage = 1
+    - biologist.spherebasedamage = 1.2
+    - biologist.spherefractiondamage = 0.03/h
+    - biologist.spherebaselifetime = 9.0
+    - biologist.sphereadditionalfirsthitdamage = 2.0
+    - biologist.spherespeed = 200.0
+    - biologist.actioncooldown = 0.0/h
+    - biologist.actionstage = 0/h
+    - biologist.spheresplit = false/h
+    - biologist.splitlifetime = 0.0/h
+    - biologist.explodespheres = false/h
+    - biologist.explodespheresradius = 0.0/h
+    - biologist.reflectsphere = false/h
+    - biologist.reflectspeed = 0.0/h
+    - biologist.reflectnexthitdamage = 0.0/h
+    - biologist.reflectlifetime = 0.0/h
+    - biologist.bundleduration = 15.0
+    - biologist.bundlespeed = 30.0
+    - biologist.bundlestopcenter = false/h
+    - biologist.bundleguide = false/h
+    - biologist.pinballdestroyadjacenttiles = false/h
+
+
 excavator:
   type: keeper
   scenes: 
@@ -56,7 +95,7 @@ excavator:
     - excavator.boomDamageMultiplier = 3.0
     - excavator.extraDamagePerHightUnit = 0.0025
     - excavator.boostUpIntensity = 50.0
-    - excavator.minBoomSpeed = 220.0
+    - excavator.minBoomHeight = 150.0
     - excavator.gravity = 2500.0
     - excavator.frictionFactor = 0.005
     - excavator.maxCarry = 3
@@ -64,6 +103,12 @@ excavator:
     - excavator.fillRatio = 1.0
     - excavator.boomHeight1 = 300.0
     - excavator.boomHeight2 = 500.0
+    - excavator.fallIndicator = false
+excavatorFallIndicator:
+  cost: iron=2 , water=2
+  propertyChanges:
+    - excavator.fallIndicator = true
+  predecessors: [excavator]
 excavatorSpeedUp1:
   cost: iron=4
   propertyChanges: 

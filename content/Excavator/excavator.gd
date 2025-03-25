@@ -171,7 +171,7 @@ func _physics_process(delta):
 	
 	
 	# if the keeper is moving and the hit cooldown is at 0, check for possible hits
-	if speed.y < Data.of(playerId + ".excavator.minBoomSpeed") and hitCooldown <= 0:
+	if boomHeight < Data.of(playerId + ".excavator.minBoomHeight") and hitCooldown <= 0:
 		
 		#########################"
 		
@@ -217,7 +217,7 @@ func _physics_process(delta):
 		#########################
 		
 	if $CollisionDown.is_colliding():
-		if move.y >= Data.of(playerId + ".excavator.minBoomSpeed") and boomCooldown <= 0 :
+		if boomHeight >= Data.of(playerId + ".excavator.minBoomHeight") and boomCooldown <= 0 :
 			boom_check()
 		
 	if $CollisionDown.is_colliding():

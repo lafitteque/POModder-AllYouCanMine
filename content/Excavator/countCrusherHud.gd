@@ -1,14 +1,15 @@
 extends HudElement
 
+var keeperId = "player1"
 var originY = -2
 
 func init():
 	super.init()
-	Data.listen(self, "player1.excavator.fillRatio") #playerId + ".excavator.crusherFillRatio")
+	Data.listen(self, keeperId + ".excavator.fillRatio") #playerId + ".excavator.crusherFillRatio")
 	
 func propertyChanged(property:String, oldValue, newValue):
-	var crusherFilling = "player1.excavator.fillratio" #playerId + ".excavator.fillRatio"
-	var crusherCount = "player1.excavator.crushercount" #playerId + ".excavator.fillRatio"
+	var crusherFilling = keeperId + ".excavator.fillratio" #playerId + ".excavator.fillRatio"
+	var crusherCount = keeperId + ".excavator.crushercount" #playerId + ".excavator.fillRatio"
 	match property:
 		crusherFilling:
 			var rel = round(newValue*14)
