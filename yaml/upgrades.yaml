@@ -62,6 +62,8 @@ excavator:
     - excavator.maxCarry = 3
     - excavator.crusherCount = 1
     - excavator.fillRatio = 1.0
+    - excavator.boomHeight1 = 300.0
+    - excavator.boomHeight2 = 500.0
 excavatorSpeedUp1:
   cost: iron=4
   propertyChanges: 

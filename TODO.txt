@@ -1,13 +1,30 @@
 EN COURS (Nouveau perso) :
-- Sprite pour UI
-- ajouter une charge qui se remplit en jaune puis rouge pour indiquer la hauteur
-- Balance
-- Special upgrade : chance de déclancher 1 plus petite explosion près de l'impact initial
+	A FAIRE EN PRIORITE
+		- dessins arbre upgrade (perso + carry lv 1 et 2)
+		- transformer indicateur en upgrade
 
+	A FAIRE ENSUITE :
+		- Balance
+		- Special upgrade A : chance de déclancher 1 plus petite explosion près de l'impact initial
+		- Special upgrade B : change la hauteur pour explosion lvl 2
+		- Tutos
+		- Sprite pushing
+		- Sprite attack (un poing?)
 
 ISSUES : 
 - Diamonds + all you can mine -> wtf les sprites
 - arrondis foireux heat
+
+
+A FAIRE BIOLOGIST :
+	- Sprites (move = celui de engineer ; attaque = assessor)
+	- Graine : sur minerai -> nouvel arbre (comme le 1 mais parametrable sur le nb de ressources et la vitesse de prod + lache les ressources) ; sur pierre -> attaque les roches en profondeur comme les vers mais avec dégats
+	- Sprites Dot
+	- Enlever les ressources qd kill tile
+	- Hud génération de graines
+	- Attaque Damage over time à partir d'assessor
+	- tuto
+	
 
 
 PLUS TARD :

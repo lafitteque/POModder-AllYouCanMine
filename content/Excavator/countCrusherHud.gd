@@ -1,5 +1,6 @@
 extends HudElement
 
+var originY = -2
 
 func init():
 	super.init()
@@ -10,11 +11,15 @@ func propertyChanged(property:String, oldValue, newValue):
 	var crusherCount = "player1.excavator.crushercount" #playerId + ".excavator.fillRatio"
 	match property:
 		crusherFilling:
-			$UiPlaceCrusher.region_rect.position.y = 0
-			$UiPlaceCrusher.region_rect.size.y = round(newValue*14.0)
+			var rel = round(newValue*14)
+			$UiPlaceCrusher.region_rect.size.y = rel
+			$UiPlaceCrusher.region_rect.position.y = 14 - rel
+			$UiPlaceCrusher.position.y =  originY +  $UiPlaceCrusher.region_rect.position.y
 		crusherCount:
-			$UiPlaceCrusher.region_rect.position.y = 0
-			$UiPlaceCrusher.region_rect.size.y = round(newValue*14.0)
+			var rel = round(newValue*14)
+			$UiPlaceCrusher.region_rect.size.y = rel
+			$UiPlaceCrusher.region_rect.position.y = 14 - rel
+			$UiPlaceCrusher.position.y = originY +  $UiPlaceCrusher.region_rect.position.y
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

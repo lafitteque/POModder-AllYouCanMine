@@ -40,8 +40,8 @@ var crusherPosition : Vector2 = Vector2.ZERO
 	# params
 var prePushTime = 0.2
 var pushTimeMax = 0.8
-var hightBoomBonus1 = 300.0
-var hightBoomBonus2 = 600.0
+var hightBoomBonus1 
+var hightBoomBonus2 
 
 
 func init():
@@ -60,11 +60,10 @@ func init():
 	await StageManager.stage_started
 
 
-var speedLabel : Label
 func _ready():
-	speedLabel = Label.new()
-	add_child(speedLabel)
-	speedLabel.position += Vector2.UP*20
+	hightBoomBonus1 = Data.ofOr("excavator.boomHeight1", 300.0)
+	hightBoomBonus2 = Data.ofOr("excavator.boomHeight2", 500.0)
+	
 	if not (StageManager.currentStage is MultiplayerLoadoutStage):
 		$UseArea/CollisionShape2D.shape.radius = 22.0
 
@@ -305,8 +304,7 @@ func _physics_process(delta):
 		boomHeight = 0.0
 	else :
 		boomHeight += actualMove.y
-	
-	
+
 		
 func addCrusher():
 	if Data.ofOr(playerId + ".excavator.crusherCount", 0) < 1 :

@@ -20,14 +20,15 @@ element_size = Vector2(2, 2)
 layoutWeights = Vector2(1, 5)
 layoutPriority = 10
 
-[node name="UiPlaceCrusher" type="Sprite2D" parent="."]
-position = Vector2(-9, -8)
-texture = ExtResource("4_3nbgo")
-centered = false
-region_rect = Rect2(0, 16, 17, 5)
-
 [node name="UiPlaceCrusherEmpty" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(-9, -8)
+position = Vector2(-2.6, -2.2)
+scale = Vector2(1, 1)
 texture = ExtResource("2_o1i4f")
 centered = false
+
+[node name="UiPlaceCrusher" type="Sprite2D" parent="."]
+position = Vector2(-2.6, -2)
+texture = ExtResource("4_3nbgo")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 17.487, 14)

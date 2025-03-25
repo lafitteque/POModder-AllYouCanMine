@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cwjxc17iwx181"]
+[gd_scene load_steps=46 format=3 uid="uid://cwjxc17iwx181"]
 
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator.gd" id="1_wah7u"]
 [ext_resource type="Texture2D" uid="uid://d0d2j0jwmeypc" path="res://content/keeper/spark_gradient.tres" id="2_r11hh"]
@@ -24,6 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://08fn1pep6du6" path="res://content/sounds/keeper1/jetpacktest_2.wav" id="23_d2iwt"]
 [ext_resource type="AudioStream" uid="uid://cywfmlnqixtok" path="res://content/sounds/keeper1/MovementLoop_01.wav" id="24_uw6sp"]
 [ext_resource type="AudioStream" uid="uid://dcudgl18wog28" path="res://content/sounds/keeper1/CarryLoad.wav" id="25_by5f0"]
+[ext_resource type="PackedScene" uid="uid://c67gwrydn3sqa" path="res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/FallHightIndicator.tscn" id="25_j2xie"]
 
 [sub_resource type="CanvasItemMaterial" id="1"]
 blend_mode = 1
@@ -407,6 +408,11 @@ loop = true
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
+
+[node name="FallHightIndicator" parent="." instance=ExtResource("25_j2xie")]
+
+[node name="Debug" type="RayCast2D" parent="."]
+target_position = Vector2(0, 650)
 
 [connection signal="area_entered" from="UseArea" to="." method="_on_UseArea_usable_entered"]
 [connection signal="area_exited" from="UseArea" to="." method="_on_UseArea_usable_exited"]
