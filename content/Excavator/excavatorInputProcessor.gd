@@ -13,11 +13,24 @@ var dropKeyCooldown := 0.0
 var pickHoldOverlap := false
 var pickupDropMode := 0 # 0= nothin, 1=pickup, 2=drop
 
+## Modded var
+var pickupKeyDownMax = 2.0 
+var realPichupKeyDown = false
+var realPichupKeyDownTime = 0.0
+
 func _process(delta):
 	super._process(delta)
 	if GameWorld.paused or desintegrating:
 		return
 	
+	if realPichupKeyDown :
+		realPichupKeyDownTime += delta
+		keeper.holdCollect = true
+		if realPichupKeyDownTime >= pickupKeyDownMax :
+			keeper.addCrusher()
+		if realPichupKeyDownTime <= 0.3:
+			keeper.holdCollect = false
+		
 	if pickupKeyDown and not useHoldHandled:
 		pickupKeyDownTime += delta
 		if pickupKeyDownTime > 0.3:
@@ -34,7 +47,7 @@ func _process(delta):
 						keeper.pickupHold()
 					2:
 						keeper.dropHold()
-			else:
+			elif is_instance_valid(keeper):
 				keeper.pickupHold()
 			pickupHold = true
 			# intentional getting shorter
@@ -70,6 +83,15 @@ func keeperButtonEvent(event, handled:bool):
 		pickHoldOverlap = InputMap.event_is_action(event, "keeper1_pickup") and InputMap.event_is_action(event, "keeper1_drop")
 		pickupKeyDownTime = 0.0
 		pickupKeyDown = true
+		realPichupKeyDown = true
+		realPichupKeyDownTime = 0.0
+	
+	elif released(event, "keeper1_pickup"):
+		realPichupKeyDown = false
+		realPichupKeyDownTime = 0.0
+		if keeper and ("holdCollect" in keeper):
+			keeper.holdCollect = false
+		
 	elif justPressed(event, "keeper1_drop"):
 		dropKeyDownTime = 0.0
 		dropHold = false

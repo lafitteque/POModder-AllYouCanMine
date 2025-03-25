@@ -110,8 +110,6 @@ func _on_level_ready():
 	"worldmodifierpyromaniac" in Level.loadout.modeConfig.get(CONST.MODE_CONFIG_WORLDMODIFIERS, []):
 		Data.parseUpgradesYaml("res://mods-unpacked/POModder-AllYouCanMine/yaml/upgrades.yaml")
 
-	Data.changeByInt("inventory.iron", 500)
-
 	var mining_data = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Data/mining_data.tscn").instantiate()
 	add_child(mining_data)
 	

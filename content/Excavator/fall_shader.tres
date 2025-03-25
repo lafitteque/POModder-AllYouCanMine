@@ -1,0 +1,24 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://7g6r4uxnsw4f"]
+
+[sub_resource type="Gradient" id="Gradient_qb1nx"]
+offsets = PackedFloat32Array(0.320158, 0.944664)
+colors = PackedColorArray(1, 1, 1, 0.8, 0, 0, 0, 0.67451)
+
+[sub_resource type="GradientTexture1D" id="167"]
+gradient = SubResource("Gradient_qb1nx")
+width = 128
+
+[resource]
+lifetime_randomness = 0.8
+emission_shape_offset = Vector3(-2, 6, 0)
+emission_shape = 1
+emission_sphere_radius = 12.64
+spread = 5.0
+initial_velocity_min = 6.0
+initial_velocity_max = 60.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 1.0
+linear_accel_max = 1.0
+damping_min = 10.0
+damping_max = 10.0
+color_ramp = SubResource("167")

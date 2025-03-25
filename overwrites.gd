@@ -2,16 +2,36 @@ func _init():
 	
 	### Excavator overwrites
 	
-	var overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/loadout_spelunker-skin0.png")
-	overwrite.take_over_path("res://content/icons/loadout_excavator-skin0.png")
-	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator.tscn")
+	var overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator.tscn")
 	overwrite.take_over_path("res://content/keeper/excavator/Excavator.tscn")
 	overwrite = preload("res://content/keeper/keeper1/spriteframes-skin0.tres")
 	overwrite.take_over_path("res://content/keeper/excavator/spriteframes-skin0.tres")
 	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavatorInputProcessor.gd")
 	overwrite.take_over_path("res://content/keeper/ExcavatorInputProcessor.gd")
-
-
+	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/crushCountHud.tscn")
+	overwrite.take_over_path("res://content/keeper/excavator/crushCountHud.tscn")
+	
+		# Excavator Icons
+	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator_icon.png")
+	overwrite.take_over_path("res://content/icons/loadout_excavator-skin0.png")
+	
+	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/images/boom_icon1.png")
+	overwrite.take_over_path("res://content/icons/excavatordamage1.png")
+	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/images/boom_icon2.png")
+	overwrite.take_over_path("res://content/icons/excavatordamage2.png")
+	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/images/boom_icon3.png")
+	overwrite.take_over_path("res://content/icons/excavatordamage3.png")
+	
+	overwrite = preload("res://content/icons/keeper2movement1.png")
+	overwrite.take_over_path("res://content/icons/excavatorspeedup1.png")
+	overwrite = preload("res://content/icons/keeper2movement2.png")
+	overwrite.take_over_path("res://content/icons/excavatorspeedup2.png")
+	
+	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/images/excavatorlateral1.png")
+	overwrite.take_over_path("res://content/icons/excavatorlateralspeed1.png")
+	overwrite = preload("res://mods-unpacked/POModder-AllYouCanMine/images/excavatorlateral2.png")
+	overwrite.take_over_path("res://content/icons/excavatorlateralspeed2.png")
+	
 	### Adding new map archetypes for assignments
 	
 	var new_archetype_mineall = preload("res://mods-unpacked/POModder-AllYouCanMine/overwrites/assignment-mineall.tres")

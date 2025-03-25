@@ -1,20 +1,13 @@
 EN COURS (Nouveau perso) :
-- Ajouter upgrade move vertical
-- Ajouter upgrade move up
-- Ajouter upgrade degats
-- Ajouter upgrade transport (equiv upgrade 1 et 2.5 de keeper 1)
-
-- ajouter aiment à objets (max n)
-- Traiter l'explosion selon la chute
-- Ajouter grab d'objets
-- Placer des gobe-ressources (mettre x ressources dedans pour en placer un autre, à ce moment là le précédent devient obsolète)
-
-- Special upgrade : toupie en mode sonic (dégats à toutes les tuiles ds un rayon)
+- Sprite pour UI
+- ajouter une charge qui se remplit en jaune puis rouge pour indiquer la hauteur
+- Balance
+- Special upgrade : chance de déclancher 1 plus petite explosion près de l'impact initial
 
 
 ISSUES : 
 - Diamonds + all you can mine -> wtf les sprites
-
+- arrondis foireux heat
 
 
 PLUS TARD :
