@@ -1,18 +1,5 @@
 func _init():
 	
-	### Biologist overwrites
-	
-	var biologist = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Biologist/biologist.tscn")
-	biologist.take_over_path("res://content/keeper/biologist/Biologist.tscn")
-	biologist = preload("res://content/keeper/keeper1/spriteframes-skin3.tres")
-	biologist.take_over_path("res://content/keeper/biologist/spriteframes-skin0.tres")
-	biologist = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Biologist/biologistInputProcessor.gd")
-	biologist.take_over_path("res://content/keeper/BiologistInputProcessor.gd")
-	
-		# Biologist icons
-	var biologist_icon = preload("res://content/icons/loadout_keeper2-skin0.png")
-	biologist_icon.take_over_path("res://content/icons/loadout_biologist-skin0.png")
-	
 	### Excavator overwrites
 	
 	var excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator.tscn")

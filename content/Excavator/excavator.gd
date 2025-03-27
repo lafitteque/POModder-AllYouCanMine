@@ -56,7 +56,9 @@ func init():
 	$Hit.frame = 4
 	
 	Style.init(self)
-
+	var tutorialName = "excavator_intro10"
+	Data.TUTORIAL_SCENES[tutorialName] = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/ExcavatorTutorial.tscn")
+	Level.addTutorial(self, tutorialName)
 	await StageManager.stage_started
 
 

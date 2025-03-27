@@ -33,45 +33,6 @@ worldmodifierfulllaser:
   eraseupgradelimits: [primaryweapon]
   
 
-
-biologist:
-  type: keeper
-  scenes: 
-    keeper: content/keeper/biologist/Biologist.tscn
-  addslots: [keepersuit, keepersupplement]
-  unlockslimits: [biologist]
-  propertyChanges:
-    - biologist.maxSpeed = 65
-    - biologist.minspeed = 1.0/h
-    - biologist.acceleration = 70
-    - biologist.deceleration = 3
-    - biologist.totalspheres = 1
-    - biologist.spherereload = 10.0
-    - biologist.directminingdamage = 0.4
-    - biologist.directmininghardness = 1.0
-    - biologist.directminingstage = 1
-    - biologist.spherebasedamage = 1.2
-    - biologist.spherefractiondamage = 0.03/h
-    - biologist.spherebaselifetime = 9.0
-    - biologist.sphereadditionalfirsthitdamage = 2.0
-    - biologist.spherespeed = 200.0
-    - biologist.actioncooldown = 0.0/h
-    - biologist.actionstage = 0/h
-    - biologist.spheresplit = false/h
-    - biologist.splitlifetime = 0.0/h
-    - biologist.explodespheres = false/h
-    - biologist.explodespheresradius = 0.0/h
-    - biologist.reflectsphere = false/h
-    - biologist.reflectspeed = 0.0/h
-    - biologist.reflectnexthitdamage = 0.0/h
-    - biologist.reflectlifetime = 0.0/h
-    - biologist.bundleduration = 15.0
-    - biologist.bundlespeed = 30.0
-    - biologist.bundlestopcenter = false/h
-    - biologist.bundleguide = false/h
-    - biologist.pinballdestroyadjacenttiles = false/h
-
-
 excavator:
   type: keeper
   scenes: 
