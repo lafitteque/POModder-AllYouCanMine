@@ -25,8 +25,6 @@ var action_hint_interact := -1
 ### Modded variables
 
 	# vars
-var falling : bool = false
-var fallingDistance : float = 0.0
 var boomCooldown : float = 0.0
 var prevSpeed : Vector2 = Vector2.ZERO
 var boomHeight : float = 0.0
@@ -42,7 +40,7 @@ var prePushTime = 0.2
 var pushTimeMax = 0.8
 var hightBoomBonus1 
 var hightBoomBonus2 
-
+var placingCrusher = false
 
 func init():
 	super.init()
@@ -123,7 +121,8 @@ func _physics_process(delta):
 	# If an axis is way greater than the other one, re-align with this axis
 	if abs(moveDirectionInput.x) < 0.1 and abs(moveDirectionInput.y) > 0.9:
 		move.x *= 1 - delta * Data.of(playerId + ".excavator.deceleration")
-		
+	
+	placingCrusher = false
 	var tryPlaceCrusher = holdCollect and Data.ofOr(playerId + ".excavator.crusherCount",0) >= 1 and global_position.y >= 10.0
 	var mainlyX = abs(moveDirectionInput.y) < 0.1 and abs(moveDirectionInput.x) > 0.9
 	if tryPlaceCrusher or mainlyX:
@@ -132,8 +131,12 @@ func _physics_process(delta):
 		if holdCollect :
 			speed = Vector2.ZERO
 			move.x *= max(0 , 1 - delta  * Data.of(playerId + ".excavator.deceleration"))
+			if !placingCrusher:
+				placingCrusher = true
+				$PlaceCrusherAnimation/AnimationPlayer.play("place_crusher")
 		move.y *= max(0 , 1 - delta  * Data.of(playerId + ".excavator.deceleration"))
-		
+	if ! placingCrusher:
+		$PlaceCrusherAnimation/AnimationPlayer.play("stop")
 			
 	
 
@@ -209,6 +212,11 @@ func _physics_process(delta):
 						var v = max(15, Data.ofOr("map.ironAdditionalHealth", 0))
 						mod = 15.0 / float(v)
 					tile.hit(pushDirection, directMiningDamage * drillbuff)
+					emit_signal("mined", 0.1)
+					emit_signal("tileHit")
+					$TileHitSounds.hit(tile, drillbuff < 1.0, true)
+					if Options.shakeDrill:
+						InputSystem.shakeTarget(self, 20, 0.2, 8)
 					var hits_needed_to_destroy:float = float(tile.max_health) / float(Data.of(playerId + ".excavator.baseDamage"))
 					emit_sparks($HitTestRay.get_collision_point(), tile, hits_needed_to_destroy)
 					var pt = $HitTestRay.get_collision_point()
@@ -285,7 +293,6 @@ func _physics_process(delta):
 					$MoveSound.stop()
 					$CarryLoadSound.stop()
 					$MoveStopSound.play()
-					$StillSound.play()
 					moveStopSoundPlayBuffer = 0
 		else:
 			moveStopSoundPlayBuffer = 0
@@ -295,7 +302,6 @@ func _physics_process(delta):
 					$MoveSound.play()
 					$CarryLoadSound.play()
 					$MoveStartSound.play()
-					$StillSound.stop()
 					moveStartSoundPlayBuffer = 0
 	
 	# because there is no notification about usables becoming focussable, this runs every loop
@@ -304,7 +310,10 @@ func _physics_process(delta):
 
 	if $CollisionDown.is_colliding() or move.y <= 0 or abs(moveDirectionInput.x) > 0.3 :
 		boomHeight = 0.0
+		$FallSound.stop()
 	else :
+		if ! $FallSound.playing:
+			$FallSound.play()
 		boomHeight += actualMove.y
 
 		
@@ -613,11 +622,9 @@ func disableEffects():
 	$ThrusterRight.emitting = false
 	$ThrusterLeft/Booster.visible = false
 	$ThrusterRight/Booster.visible = false
-	$StillSound.stop()
 
 func enableEffects():
 	$ThrusterLeft.emitting = true
 	$ThrusterRight.emitting = true
 	$ThrusterLeft/Booster.visible = true
 	$ThrusterRight/Booster.visible = true
-	$StillSound.play()

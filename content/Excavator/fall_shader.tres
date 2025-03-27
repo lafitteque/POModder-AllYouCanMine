@@ -10,9 +10,9 @@ width = 128
 
 [resource]
 lifetime_randomness = 0.8
-emission_shape_offset = Vector3(-2, 6, 0)
+emission_shape_offset = Vector3(-4, 6, 0)
 emission_shape = 1
-emission_sphere_radius = 12.64
+emission_sphere_radius = 15.0
 spread = 5.0
 initial_velocity_min = 6.0
 initial_velocity_max = 60.0

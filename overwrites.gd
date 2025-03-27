@@ -4,7 +4,7 @@ func _init():
 	
 	var excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator.tscn")
 	excavator.take_over_path("res://content/keeper/excavator/Excavator.tscn")
-	excavator = preload("res://content/keeper/keeper1/spriteframes-skin0.tres")
+	excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator_animation.tres")
 	excavator.take_over_path("res://content/keeper/excavator/spriteframes-skin0.tres")
 	excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavatorInputProcessor.gd")
 	excavator.take_over_path("res://content/keeper/ExcavatorInputProcessor.gd")

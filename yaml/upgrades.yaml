@@ -53,7 +53,7 @@ excavator:
     - excavator.hardtilesmodifier = 1.0
     - excavator.destroyindestructibletiles = false/h
     - excavator.baseDamage = 2.0
-    - excavator.boomDamageMultiplier = 3.0
+    - excavator.boomDamageMultiplier = 2.0
     - excavator.extraDamagePerHightUnit = 0.0025
     - excavator.boostUpIntensity = 50.0
     - excavator.minBoomHeight = 150.0

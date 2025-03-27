@@ -1,14 +1,3 @@
-EN COURS BIOLOGIST :
-	- Sprites (move = celui de engineer ; attaque = assessor)
-	- Graine : sur minerai -> nouvel arbre (comme le 1 mais parametrable sur le nb de ressources et la vitesse de prod + lache les ressources) ; 		sur pierre -> attaque les roches en profondeur comme les vers mais avec dégats
-	- Sprites Dot
-	- Enlever les ressources qd kill tile
-	- Hud génération de graines
-	- Attaque Damage over time à partir d'assessor
-	- tuto
-	- Achievements : full completion + 10 tuiles en dot en même temps ?
-	- Trads
-
 
 A FAIRE AUTRE :
 	- loadout compatible avec les nouveaux persos (flêches sur progress room + flêches sur persos)
@@ -19,17 +8,9 @@ A FAIRE AUTRE :
 
 
 A FAIRE (Excavator) :
-	A FAIRE ENSUITE :
-		- Balance
-		- Special upgrade A : chance de déclancher 1 plus petite explosion près de l'impact initial
-		- Special upgrade B : change la hauteur pour explosion lvl 2
-		- Tutos
-		- Sprite pushing
-		- Sprite attack (un poing?)
-		- Achievements : full completion + boom depuis 1500.0 ?
-		- Animation quand place crusher
-		- Trads
-		- sons adaptés aux tiles (copier coller keeper2 physics_process)
+	- Balance
+
+
 
 
 
