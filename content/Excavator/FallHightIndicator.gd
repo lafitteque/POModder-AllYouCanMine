@@ -29,7 +29,7 @@ func propertyChanged(property : String, oldValue, newValue):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if  not $RayCast2D.get_collision_point() :
+	if  not $RayCast2D.is_colliding() :
 		level1bar.value = 1.0
 		level2bar.value = 1.0
 		return
@@ -45,8 +45,6 @@ func _process(delta):
 	elif heightFall - level1 < (level2 - level1)/2 :
 		level1bar.value = 1.0
 		level2bar.value = 0.0
-	elif heightFall < level2 :
-		level1bar.value = 1.0
 		level2bar.value = 0.5
 	else :
 		level1bar.value = 1.0

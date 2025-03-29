@@ -54,7 +54,7 @@ func init():
 	$Hit.frame = 4
 	
 	Style.init(self)
-	var tutorialName = "excavator_intro10"
+	var tutorialName = "excavator_intro"
 	Data.TUTORIAL_SCENES[tutorialName] = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/ExcavatorTutorial.tscn")
 	Level.addTutorial(self, tutorialName)
 	await StageManager.stage_started
@@ -65,7 +65,7 @@ func _ready():
 	hightBoomBonus2 = Data.ofOr("excavator.boomHeight2", 500.0)
 	
 	if not (StageManager.currentStage is MultiplayerLoadoutStage):
-		$UseArea/CollisionShape2D.shape.radius = 22.0
+		$UseArea/CollisionShape2D.shape.radius = 15.0
 
 func _physics_process(delta):
 	super._physics_process(delta)
@@ -193,6 +193,8 @@ func _physics_process(delta):
 				pushDirection *= 0
 			else:
 				var directMiningDamage = Data.of(playerId + ".excavator.baseDamage")
+				if tile.hardness >= 3:
+					directMiningDamage *= Data.of(playerId + ".excavator.hardtilesmodifier")
 				var drillbuff = 1.0 + drillBuff
 				pushTime += delta * (1.0 - min(last_frame_vel.length() / 35.0, 1.0))
 				pushDirection = global_position - tile.global_position
@@ -316,6 +318,47 @@ func _physics_process(delta):
 			$FallSound.play()
 		boomHeight += actualMove.y
 
+		
+func customDamageTileCircleArea( pos:Vector2, radius:float, damage:float, delay := 0.0, offset:Vector2 = Vector2.ZERO):
+	if delay > 0.0:
+		var tween = Level.map.find_child("$Tween",true, false)
+		tween.interpolate_callback(Level.map, delay, "damageTileCircleArea", pos, radius, damage, 0.0, offset)
+		tween.start()
+		return
+	
+	var explosionCenterCoord = Vector2(Level.map.getTileCoord(pos + offset))
+	var startCoord = Vector2(Level.map.getTileCoord(pos))
+	prints(pos, offset, startCoord, explosionCenterCoord)
+	var open := [startCoord]
+	var closed := []
+	while open.size() > 0:
+		var newOpen := []
+		for coord in open:
+			if closed.has(coord):
+				continue
+			
+			for off in Level.map.NEIGHBOR_TILE_OFFSETS1:
+				var c2 = off + Vector2(coord)
+				if (c2 - explosionCenterCoord).length() <= radius and not closed.has(c2) and not newOpen.has(c2):
+					newOpen.append(c2)
+			
+			if Level.map.tiles.has(coord):
+				var tile = Level.map.tiles.get(coord)
+				if Data.isDestructable(tile):
+					var v = coord - explosionCenterCoord 
+					var dmg = damage * (1.0 - 0.5 * (v.length() / radius))
+					tile.hit(v, dmg)
+					
+					if tile.health <= 0 :
+						tile.exploded = true
+			elif Level.map.is_tile_empty(coord): #in bounds and is empty cell
+				Tile.spawn_tile_break_particles(Level.map, coord, Level.map.getTilePos(coord), Vector2(), "default", true, false)
+			closed.append(coord)
+		
+		await Level.map.get_tree().create_timer(0.08).timeout
+		while GameWorld.paused:
+			await Level.map.get_tree().create_timer(0.08).timeout
+		open = newOpen
 		
 func addCrusher():
 	if Data.ofOr(playerId + ".excavator.crusherCount", 0) < 1 :
@@ -536,11 +579,10 @@ func boom_check()->void:
 		radius += 1
 	if boomHeight >= hightBoomBonus2 :
 		radius += 1
-	print(boomStrength , " ; " , boomHeight)
 	if tile.hardness >= 3:
 		var tilehardnessmodifier = Data.ofOr(playerId + ".excavator.hardtilesmodifier", 1.0)
 		boomStrength *= tilehardnessmodifier
-	Level.map.damageTileCircleArea(tile.global_position,  radius, boomStrength)
+	customDamageTileCircleArea(tile.global_position,  radius, boomStrength)
 	emit_signal("mined", 0.1)
 	
 	if Options.shakeDrill:

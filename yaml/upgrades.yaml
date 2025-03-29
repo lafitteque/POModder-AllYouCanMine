@@ -41,9 +41,9 @@ excavator:
   addslots: [keepersuit, keepersupplement]
   unlockslimits: [excavator]
   propertyChanges:
-    - excavator.maxSpeed = 150
-    - excavator.maxUpSpeed = 120
-    - excavator.maxDownSpeed = 250
+    - excavator.maxSpeed = 60
+    - excavator.maxUpSpeed = 65
+    - excavator.maxDownSpeed = 135
     - excavator.acceleration = 5
     - excavator.deceleration = 4
     - excavator.slowdownRecovery = 4
@@ -52,71 +52,89 @@ excavator:
     - excavator.boomHitCooldown = 1.0
     - excavator.hardtilesmodifier = 1.0
     - excavator.destroyindestructibletiles = false/h
-    - excavator.baseDamage = 2.0
+    - excavator.baseDamage = 3.0
     - excavator.boomDamageMultiplier = 2.0
-    - excavator.extraDamagePerHightUnit = 0.0025
+    - excavator.extraDamagePerHightUnit = 0.005
     - excavator.boostUpIntensity = 50.0
-    - excavator.minBoomHeight = 150.0
-    - excavator.gravity = 2500.0
+    - excavator.minBoomHeight = 140.0
+    - excavator.gravity = 1500.0
     - excavator.frictionFactor = 0.005
-    - excavator.maxCarry = 3
+    - excavator.maxCarry = 2
     - excavator.crusherCount = 1
     - excavator.fillRatio = 1.0
-    - excavator.boomHeight1 = 300.0
-    - excavator.boomHeight2 = 500.0
+    - excavator.boomHeight1 = 280.0
+    - excavator.boomHeight2 = 460.0
     - excavator.fallIndicator = false
+    - excavator.hardtilesmodifier = 1.0
 excavatorFallIndicator:
-  cost: iron=2 , water=2
+  cost: iron=1 , water=1
   propertyChanges:
     - excavator.fallIndicator = true
   predecessors: [excavator]
 excavatorSpeedUp1:
-  cost: iron=4
+  cost: iron=6
   propertyChanges: 
-    - excavator.maxUpSpeed += 20
+    - excavator.maxUpSpeed += 7
   predecessors: [excavator]
 excavatorSpeedUp2:
   cost: iron=12
   propertyChanges: 
-    - excavator.maxUpSpeed += 40
+    - excavator.maxUpSpeed += 7
+  repeatable:
+    - cost.iron += 6
+    - property.excavator.maxUpSpeed += 15
+    - times = 5
   predecessors: [excavatorSpeedUp1]
 excavatorLateralSpeed1:
   cost: iron=4
   propertyChanges: 
-    - excavator.maxSpeed += 40
+    - excavator.maxSpeed += 20
   predecessors: [excavator]
 excavatorLateralSpeed2:
   cost: iron=12
   propertyChanges: 
     - excavator.maxSpeed += 40
+  repeatable:
+    - cost.iron += 10
+    - property.excavator.maxUpSpeed += 20
+    - times = 2
   predecessors: [excavatorLateralSpeed1]
 excavatorCarrySpace1:
   cost: iron=8
   propertyChanges: 
-    - excavator.maxCarry += 3
+    - excavator.maxCarry += 2
   predecessors: [excavator]
 excavatorCarrySpace2:
   cost: iron=16
   propertyChanges: 
-    - excavator.maxCarry += 3
+    - excavator.maxCarry += 2
   predecessors: [excavatorCarrySpace1]
 excavatorDamage1:
-  cost: iron=5
+  cost: iron=4
   propertyChanges: 
     - excavator.baseDamage *= 2
+    - excavator.baseDamage += 1
+    - excavator.hardtilesmodifier += 0.1
   predecessors: [excavator]
 excavatorDamage2:
-  cost: iron=15
+  cost: iron=9
   propertyChanges: 
     - excavator.baseDamage *= 2
+    - excavator.baseDamage += 2
+    - excavator.hardtilesmodifier += 0.1
   predecessors: [excavatorDamage1]
 excavatorDamage3:
-  cost: iron=25
+  cost: iron=14
   repeatable:
+    - times = 6
     - cost.iron += 10
     - property.excavator.baseDamage *= 2.0
+    - property.excavator.baseDamage += 5
+    - excavator.hardtilesmodifier += 0.1
   propertyChanges: 
     - excavator.baseDamage *= 2
+    - excavator.hardtilesmodifier += 0.1
+     - property.excavator.baseDamage += 5
   predecessors: [excavatorDamage2]
 
 

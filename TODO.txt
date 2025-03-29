@@ -1,17 +1,5 @@
-
-A FAIRE AUTRE :
-	- loadout compatible avec les nouveaux persos (flêches sur progress room + flêches sur persos)
-	- Changer le système de save pour qu'il généralise à d'autres keepers
-	- Diamonds + all you can mine -> wtf les sprites
-	- arrondis foireux heat
-
-
-
 A FAIRE (Excavator) :
 	- Balance
-
-
-
 
 
 
@@ -21,6 +9,10 @@ FINI / DONE :
 - Modifiers : ajouter incompatibilité
 - Rendre le modif Autonomous plus autonome avec auto collecte des ressources
 - Compatibility OK
+- Heat values rounding error OK
+- New Keeper
+- Progress area and keeper selection resilient to new keeper additions
+- Added compatibility with Diamonds Upgrades Mod
 
 
 ---------------------------------------------------------------------------------------------------

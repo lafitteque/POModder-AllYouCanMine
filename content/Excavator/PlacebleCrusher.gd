@@ -6,7 +6,7 @@ var countResources : float = 0.0
 var keeperId : String
 var dead = false
 
-var maxResources : float = 40.0 # Mod Added
+var maxResources : float = 55.0 # Mod Added
 
 func _ready():
 	find_child("Amb").play()

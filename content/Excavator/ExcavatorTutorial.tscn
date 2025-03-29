@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://d388vh8ymx6xo"]
+[gd_scene load_steps=11 format=3 uid="uid://d388vh8ymx6xo"]
 
 [ext_resource type="Theme" path="res://gui/theme.tres" id="1_pcnqn"]
 [ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/ExcavatorTutorial.gd" id="2_dqe12"]
 [ext_resource type="FontVariation" path="res://gui/fonts/FontHeading.tres" id="3_drkll"]
-[ext_resource type="LabelSettings" path="res://gui/fontsettings/HeadingFontSettings.tres" id="4_1iucs"]
+[ext_resource type="LabelSettings" uid="uid://c4kr8k5vslhx2" path="res://gui/fontsettings/HeadingFontSettings.tres" id="4_1iucs"]
+[ext_resource type="VideoStream" path="res://mods-unpacked/POModder-AllYouCanMine/videos/Excavator Boom.ogv" id="5_s6hlo"]
 [ext_resource type="Texture2D" uid="uid://dj7qt1rx12efp" path="res://content/shared/black_pixels.png" id="6_xcaal"]
+[ext_resource type="VideoStream" path="res://mods-unpacked/POModder-AllYouCanMine/videos/Excavator Hit.ogv" id="7_iukhv"]
+[ext_resource type="VideoStream" path="res://mods-unpacked/POModder-AllYouCanMine/videos/Excavator Carry.ogv" id="8_iv25g"]
 [ext_resource type="FontVariation" path="res://gui/fonts/FontLarge.tres" id="9_1lm6j"]
 [ext_resource type="PackedScene" path="res://gui/buttons/Action.tscn" id="10_n2ygp"]
 
@@ -17,6 +20,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_pcnqn")
 script = ExtResource("2_dqe12")
+isFullscreen = true
+summaryCategory = "upgrades.excavator.title"
+moveOutAfter = -1.0
+moveInDelay = 1.0
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
@@ -47,6 +54,7 @@ columns = 3
 [node name="VideoPlayer1" type="VideoStreamPlayer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+stream = ExtResource("5_s6hlo")
 volume_db = -80.0
 
 [node name="bg" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VideoPlayer1"]
@@ -64,6 +72,7 @@ texture = ExtResource("6_xcaal")
 [node name="VideoPlayer2" type="VideoStreamPlayer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+stream = ExtResource("7_iukhv")
 volume_db = -80.0
 
 [node name="bg" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VideoPlayer2"]
@@ -81,6 +90,7 @@ texture = ExtResource("6_xcaal")
 [node name="VideoPlayer3" type="VideoStreamPlayer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+stream = ExtResource("8_iv25g")
 volume_db = -80.0
 
 [node name="bg" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VideoPlayer3"]
@@ -144,7 +154,6 @@ autowrap_mode = 3
 justification_flags = 131
 
 [node name="Text3" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -224,7 +233,7 @@ justification_flags = 131
 
 [node name="Action" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Text3/VBoxContainer3/HBoxContainer2" instance=ExtResource("10_n2ygp")]
 layout_mode = 2
-action = "keeper1_drop"
+action = "keeper1_pickup"
 
 [node name="LabelDesc6_2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Text3/VBoxContainer3"]
 texture_filter = 4

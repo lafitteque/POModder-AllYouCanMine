@@ -7,13 +7,54 @@ var saver_progress_coresaver_id = "keeper_and_dome_progress_coresaver"
 
 @onready var saver = get_node("/root/ModLoader/POModder-Dependency").saver
 
+var current_rh_page = 1
+var progress_per_page = 2
+var max_page_progress : int 
+
+var current_coresaver_page = 1
+
+var loadout
+
 func initialize_from_loadout(loadout_scene):
+	loadout = loadout_scene
+	
 	var block = preload("res://mods-unpacked/POModder-AllYouCanMine/content/dome_progress/block_progress.tscn").instantiate()
 	loadout_scene.find_child("UI").add_child(block)
 
 	var heatDisplay = preload("res://mods-unpacked/POModder-AllYouCanMine/content/HeatRoom/HeatDisplay.tscn").instantiate()
 	heatDisplay.global_position = Vector2(-1150,-100)
 	loadout_scene.find_child("UI").add_child(heatDisplay)
+	
+	var arrow = preload("res://mods-unpacked/POModder-Dependency/stages/page_choice.tscn")
+	
+	var rh = loadout_scene.find_child("BlockProgress", true, false).find_child("ArrowsRelichunt", true, false)
+	var coresaver = loadout_scene.find_child("BlockProgress", true, false).find_child("ArrowsCoresaver", true, false)
+	
+	## Create arrows for progress Relic Hunt
+	
+	var left_arrow = arrow.instantiate()
+	left_arrow.find_child("Icon",true,false).flip_h = true
+	left_arrow.connect("select", previous_page_rh_progress)
+	rh.add_child(left_arrow)
+	Style.init(rh)
+	
+	var right_arrow = arrow.instantiate()
+	rh.add_child(right_arrow)
+	right_arrow.connect("select", next_page_rh_progress)
+	Style.init(right_arrow)
+	
+	## Create arrows for progress Coresaver
+	left_arrow = arrow.instantiate()
+	left_arrow.find_child("Icon",true,false).flip_h = true
+	left_arrow.connect("select", previous_page_coresaver_progress)
+	coresaver.add_child(left_arrow)
+	Style.init(rh)
+	
+	right_arrow = arrow.instantiate()
+	coresaver.add_child(right_arrow)
+	right_arrow.connect("select", next_page_coresaver_progress)
+	Style.init(right_arrow)
+	
 	
 func generate_ui_block(loadout_scene):
 	return preload("res://mods-unpacked/POModder-AllYouCanMine/content/loadout_gamemode/block_core_saver_loadout.tscn").instantiate()
@@ -55,7 +96,7 @@ func fillGameModes(loadout):
 	var block_progress = loadout.find_child("BlockProgress",true,false)
 	var save_progress = saver.save_dict[saver_progress_relichunt_id]
 	var block_progress_relichunt = block_progress.find_child("relichunt")
-	add_mode_progress(block_progress_relichunt, save_progress)
+	add_mode_progress(block_progress_relichunt, save_progress, current_rh_page)
 
 
 	## Add progress for coresaver
@@ -64,16 +105,14 @@ func fillGameModes(loadout):
 		
 	save_progress = saver.save_dict[saver_progress_coresaver_id]
 	var block_progress_coresaver = block_progress.find_child("coresaver")
-	add_mode_progress(block_progress_coresaver, save_progress)
+	add_mode_progress(block_progress_coresaver, save_progress, current_coresaver_page)
 
 
-func add_mode_progress(ui_vbox, save_progress):
+func add_mode_progress(ui_vbox, save_progress, current_progress_page):
 	for child in ui_vbox.get_children():
-		if child is Label :
-			continue
 		child.free()
 		
-	for keeper in Data.loadoutKeepers:
+	for keeper in Data.loadoutKeepers.slice((current_progress_page-1)*progress_per_page,current_progress_page*progress_per_page):
 		var ui_dome_progress = preload("res://mods-unpacked/POModder-AllYouCanMine/content/dome_progress/UI_dome_progress.tscn").instantiate()
 		ui_vbox.add_child(ui_dome_progress)
 		ui_dome_progress.find_child("Label").text = tr("upgrades." + keeper + ".title")
@@ -123,4 +162,44 @@ func add_mode_progress(ui_vbox, save_progress):
 			map_size.set_children_custom_size(2)
 			ui_dome_progress.add_child(e)
 			
+
+func update_progress_coresaver():
+		
+	var block_progress = loadout.find_child("BlockProgress",true,false)
+	var save_progress = saver.save_dict[saver_progress_coresaver_id]
+	var block_progress_coresaver = block_progress.find_child("coresaver")
+	add_mode_progress(block_progress_coresaver, save_progress, current_coresaver_page)
+
+func update_progress_rh():
+	var block_progress = loadout.find_child("BlockProgress",true,false)
+	var save_progress = saver.save_dict[saver_progress_relichunt_id]
+	var block_progress_rh = block_progress.find_child("relichunt")
+	add_mode_progress(block_progress_rh, save_progress, current_rh_page)
+
+
+func next_page_rh_progress():
+	
+	var max_page_progress = floor( (Data.loadoutKeepers.size() - 1 )/progress_per_page + 0.05) + 1
+
+	current_rh_page = min(max_page_progress,current_rh_page+1)
+	update_progress_rh()
+	
+func previous_page_rh_progress():
+	var max_page_progress = floor( (Data.loadoutKeepers.size() - 1 )/progress_per_page + 0.05) + 1
+
+	current_rh_page = max(1,current_rh_page-1)
+	update_progress_rh()
+
+
+func next_page_coresaver_progress():
+	var max_page_progress = floor( (Data.loadoutKeepers.size() - 1 )/progress_per_page + 0.05) + 1
+
+	current_coresaver_page = min(max_page_progress,current_coresaver_page+1)
+	update_progress_coresaver()
+	
+func previous_page_coresaver_progress():
+	var max_page_progress = floor( (Data.loadoutKeepers.size() - 1 )/progress_per_page + 0.05) + 1
+
+	current_coresaver_page = max(1,current_coresaver_page-1)
+	update_progress_coresaver()
 	
