@@ -237,3 +237,56 @@ heat.waveweight,Additional wave weight : ,Poids de vague additionnel :,Peso de o
 heat.wavemultiplier,Wave multiplier :,Multiplicateur de poids de vague :,Multiplicador de peso de oleada :
 ,,,
 heat.reset,Reset,Réinitialiser,Reiniciar
+,,,
+,,,
+,,,
+,,,
+,,,
+upgrades.excavator,Excavator,Excavateur,Excavador
+upgrades.excavator.title,Excavator,Excavateur,Excavador
+upgrades.excavator.desc,A keeper using its body to mine. He lets himself fall from high heights to mine tiles under him.,Un gardien qui utilise son corps pour creuser. Se laisse tomber pour miner.,Un guardian que usa su cuerpo para cavar. Se déjà caer para minar.
+,,,
+upgrades.excavatorfallindicator.title,Height meter,Altimètre,Altimetro
+upgrades.excavatorfallindicator.desc,Gives the state of the explosion damage based on the current height. Yellow corresponds to small and medium explosions while red corresponds to a big explosion.,Donne le stade de l’explosion produite par la chute. Le jaune pour le stade 1 et 2 et le rouge pour le stade 3.,Da el nivel de explosión producido por la caída. El amarillo indica los niveles 1 y 2 y el rojo indica el nivel 3.
+,,,
+upgrades.excavatorspeedup1.title,Upwards Speed 1,Vitesse de montée 1,Velocidad de ascensión 1
+upgrades.excavatorspeedup1.desc,Increases the speed when going up.,Augmente la vitesse de montée.,Aumenta la velocidad de ascensión.
+,,,
+upgrades.excavatorspeedup2.title,Upwards Speed 2,Vitesse de montée 2,Velocidad de ascensión 2
+upgrades.excavatorspeedup2.desc,Highly increases the speed when going up.,Augmente beaucoup la vitesse de montée.,Aumenta mucho la velocidad de ascensión.
+,,,
+upgrades.excavatorlateralspeed1.title,Lateral Speed 1,Vitesse latérale 1,Velocidad lareral 1
+upgrades.excavatorlateralspeed1.desc,Increases the speed when moving horizontally.,Augmente la vitesse de déplacement horizontale.,Aumenta la velocidad lateral.
+,,,
+upgrades.excavatorlateralspeed2.title,Lateral Speed 2,Vitesse latérale 2,Velocidad de lateral 2
+upgrades.excavatorlateralspeed2.desc,Highly increases the speed when moving horizontally.,Augmente encore plus la vitesse de déplacement horizontale.,Aumenta mucho la velocidad lateral.
+,,,
+upgrades.excavatorcarryspace1.title,Carry Lines 1,Lignes d’attache 1,Lineas de recursos 1
+upgrades.excavatorcarryspace1.desc,Increases the number of resources that chan be carried at once.,Augmente le nombre de lignes d’attache pour transporter des ressources.,Permite transportar mas recursos.
+,,,
+upgrades.excavatorcarryspace2.title,Carry Lines 2,Lignes d’attache 2,Lineas de recursos 2
+upgrades.excavatorcarryspace2.desc,Increases even more the number of resources that chan be carried at once.,Augmente encore plus le nombre de lignes d’attache pour transporter des ressources.,Permite transportar aún mas recursos.
+,,,
+upgrades.excavatordamage1.title,Damage 1,Dégâts 1,Daño 1
+upgrades.excavatordamage1.desc,Increases all types of damage.,Augmente tous les types de dégâts,Aumenta todos los tipos de daño.
+,,,
+upgrades.excavatordamage2.title,Damage 2,Dégâts 2,Daño 2
+upgrades.excavatordamage2.desc,Highly increases all types of damage.,Augmente beaucoup tous les types de dégâts,Aumenta ñucho todos los tipos de daño.
+,,,
+upgrades.excavatordamage3.title,Damage 3,Dégâts 3,Daño 3
+upgrades.excavatordamage3.desc,Increases even more all types of damage.,Augmente encore plus tous les types de dégâts,Aumenta aún más todos los tipos de daño.
+,,,
+level.tutorial.excavator.hit,Mining,Minage,Minaje
+level.tutorial.excavator.hit.desc,"By pushing towards a tile, the keeper hits them at a relatively slow rate.","En poussant vers les roches, le gardien les tapera à un rythme relativement lent.",Empujando hacia las rocasm el guardian cavara a ritmo relativamente lento.
+,,,
+level.tutorial.excavator.boom,Fall damage,Dégâts par chute,Daño de caída
+level.tutorial.excavator.boom.desc1,The excavator is affected by gravity but uses it to damage tiles under him if the fall starts high enough.,L’excavateur est affecté par la gravité mais l’utilise pour causer des dégâts aux roches sous lui s’il part de suffisamment haut.,La gravedad afecta el excavador pero la usa para dañar rocas. 
+level.tutorial.excavator.boom.desc2,"There are 3 stages of explosions caused by fall, causing different sizes of explosions. These stages and the damage delt both depend on the fall height.","Il y a 3 stades d’explosions causées par la chute, se traduisant en des tailles et des dégâts différents.",Hay 3 niveles de explosión que dependen de la altura de la caída. Cada nivel afecta el daño y el area de explosión.
+,,,
+level.tutorial.excavator.carry,Resources,Ressources ,Recursos 
+level.tutorial.excavator.carry.desc11,Resources are automaticaly attached to the excavator (press,Les ressources s’attachent automatiquement au gardien.,Los recursos se recojen automáticamente.
+level.tutorial.excavator.carry.desc21,Hold,Maintenir,Mantener
+level.tutorial.excavator.carry.desc31,Hold,Maintenir,Mantener
+level.tutorial.excavator.carry.desc12,"to use trees, caves, dome, …).","pour interagir avec les arbres, le dôme, …)","para interactuar con los arboles, la cúpula, …"
+level.tutorial.excavator.carry.desc22,to detach resources.,pour détacher les ressources.,para dejar los recursos en el suelo.
+level.tutorial.excavator.carry.desc32,to create a shredder (will disapear and be reusable after beeing fed enough resources).,pour créer un concasseur (disparaît et devient réutilisable une fois qu’on lui a donné suffisamment de ressources),para crear una trituradora (desaparece y se puede volver a usar cuando se le han dado sufientes recursos)

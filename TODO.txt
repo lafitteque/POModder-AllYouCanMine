@@ -1,28 +1,7 @@
-EN COURS (Nouveau perso) :
-- Ajouter upgrade move vertical
-- Ajouter upgrade move up
-- Ajouter upgrade degats
-- Ajouter upgrade transport (equiv upgrade 1 et 2.5 de keeper 1)
-
-- ajouter aiment à objets (max n)
-- Traiter l'explosion selon la chute
-- Ajouter grab d'objets
-- Placer des gobe-ressources (mettre x ressources dedans pour en placer un autre, à ce moment là le précédent devient obsolète)
-
-- Special upgrade : toupie en mode sonic (dégats à toutes les tuiles ds un rayon)
+A FAIRE (Excavator) :
+	- Balance
 
 
-ISSUES : 
-- Diamonds + all you can mine -> wtf les sprites
-
-
-
-PLUS TARD :
-- Farming : nouveau gadget suit pour planter des graines sur les minerais (nouveau perso qui plante uniquement et qui drop zero iron quand il les casse)
-- perso explosions qd il tombe, convertit les ressources en les écrasant
-- Resources pour créer une tile
-- Resource pour créer une grotte
-- Resource pour créer une chamber
 
 
 
@@ -30,6 +9,10 @@ FINI / DONE :
 - Modifiers : ajouter incompatibilité
 - Rendre le modif Autonomous plus autonome avec auto collecte des ressources
 - Compatibility OK
+- Heat values rounding error OK
+- New Keeper
+- Progress area and keeper selection resilient to new keeper additions
+- Added compatibility with Diamonds Upgrades Mod
 
 
 ---------------------------------------------------------------------------------------------------
@@ -51,4 +34,3 @@ PLUS TARD Nouveau Perso
 
 
 PLUS TARD COMPATIBILITE:
-- Changer le système de save pour qu'il généralise à d'autres keepers

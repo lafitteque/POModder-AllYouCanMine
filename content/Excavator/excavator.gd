@@ -1,10 +1,8 @@
-extends Keeper
+extends "res://content/keeper/Keeper.gd"
 
 signal tileHit
 
-@onready var DrillSprite = $DrillSprite
-@onready var DrillHitTestRay = $DrillHitTestRay
-@onready var BoomHitTestRay = $BoomHitTestRay
+@onready var HitTestRay = $HitTestRay
 
 @export var simulatedCarrySlowdown := false
 
@@ -25,9 +23,24 @@ var action_hint_interact := -1
 
 
 ### Modded variables
-var falling := false
-var fallingDistance := 0.0
-var boomCooldown = 0.0
+
+	# vars
+var boomCooldown : float = 0.0
+var prevSpeed : Vector2 = Vector2.ZERO
+var boomHeight : float = 0.0
+var pushing := false
+var pushTime : float = 0.0
+var pushDirection := Vector2()
+var last_frame_vel
+var holdCollect = false
+var crusherPosition : Vector2 = Vector2.ZERO
+
+	# params
+var prePushTime = 0.2
+var pushTimeMax = 0.8
+var hightBoomBonus1 
+var hightBoomBonus2 
+var placingCrusher = false
 
 func init():
 	super.init()
@@ -37,26 +50,24 @@ func init():
 	focussedUsable = null
 	focussedCarryable = null
 	hitCooldown = 0.0
-	boomCooldown = 0.0
 	
-	$DrillHit.frame = 4
+	$Hit.frame = 4
 	
 	Style.init(self)
-
+	var tutorialName = "excavator_intro"
+	Data.TUTORIAL_SCENES[tutorialName] = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/ExcavatorTutorial.tscn")
+	Level.addTutorial(self, tutorialName)
 	await StageManager.stage_started
 
 
-var speedLabel : Label
 func _ready():
-	speedLabel = Label.new()
-	add_child(speedLabel)
-	speedLabel.position += Vector2.UP*20
+	hightBoomBonus1 = Data.ofOr("excavator.boomHeight1", 300.0)
+	hightBoomBonus2 = Data.ofOr("excavator.boomHeight2", 500.0)
 	
-	
+	if not (StageManager.currentStage is MultiplayerLoadoutStage):
+		$UseArea/CollisionShape2D.shape.radius = 15.0
 
 func _physics_process(delta):
-	
-	
 	super._physics_process(delta)
 	for t in carryLines:
 		var line = carryLines[t]
@@ -71,49 +82,64 @@ func _physics_process(delta):
 		pullCarry()
 		return
 	
+	#### Update arrow towards crusher
+	if Data.ofOr(playerId + ".excavator.crusherCount", 1) == 0:
+		$ArrowTowardsCrusher.visible = true
+		$ArrowTowardsCrusher.rotation = (crusherPosition - global_position).angle()
+	else :
+		$ArrowTowardsCrusher.visible = false
+		
+		
+		
 	moveSlowdown *= 1.0 - delta * Data.of(playerId + ".excavator.slowdownRecovery")  * 1.0
 	
-	
-	
-	var baseAcceleration : Vector2 = Vector2.ZERO
+	var baseSpeed : Vector2 = Vector2.ZERO
 	var boost = Data.ofOr(playerId + ".keeper.speedBuff", 0) * (moveDirectionInput.normalized())
 	
-	baseAcceleration.x  = Data.of(playerId + ".excavator.maxSpeed")
-	baseAcceleration.x += boost.x
+	baseSpeed.x  = Data.of(playerId + ".excavator.maxSpeed")
+	baseSpeed.x += boost.x
 	
 	if moveDirectionInput.y <= 0 :
-		baseAcceleration.y = -Data.of(playerId + ".excavator.maxUpSpeed") 
+		baseSpeed.y = -Data.of(playerId + ".excavator.maxUpSpeed") 
 	else:
-		baseAcceleration.y = Data.of(playerId + ".excavator.maxDownSpeed")
+		baseSpeed.y = Data.of(playerId + ".excavator.maxDownSpeed")
 		
 	var yMove = move.normalized().y
-	baseAcceleration.y += Data.ofOr(playerId + ".keeper.additionalupwardsspeed", 0) * abs(yMove)
+	baseSpeed.y += Data.ofOr(playerId + ".keeper.additionalupwardsspeed", 0) * abs(yMove)
 	
-	var acceleration:Vector2 = Vector2(moveDirectionInput.x * baseAcceleration.x , abs(moveDirectionInput.y) * baseAcceleration.y)
-	
-	speedLabel.text = str(acceleration)
+	var speed:Vector2 = Vector2.ZERO
+	speed.x = moveDirectionInput.x * baseSpeed.x 
+	if moveDirectionInput.y<= 0 :
+		speed.y = abs(moveDirectionInput.y) * baseSpeed.y
 	
 	# Falling
-	acceleration.y += Data.of(playerId + ".excavator.gravity") 
+	var forces : float = Data.of(playerId + ".excavator.gravity")
+	if prevSpeed.y >= 0 :
+		forces -=  Data.of(playerId + ".excavator.frictionFactor") * prevSpeed.y**2
+	speed.y += forces * delta
 	
-	# Limit horizontal inertia
-	if sign(move.x) != sign(moveDirectionInput.x): 
-		move.x = max(-80.0 , min(move.x , 80.0))
-			
-	# Boost when high down speed
-	elif move.y >= 50.0 and moveDirectionInput.y <= 0:
-		acceleration.y -= Data.of(playerId + ".excavator.boostupIntensity")
-	
-	speedLabel.text = speedLabel.text + str(acceleration)
 	# If an axis is way greater than the other one, re-align with this axis
 	if abs(moveDirectionInput.x) < 0.1 and abs(moveDirectionInput.y) > 0.9:
 		move.x *= 1 - delta * Data.of(playerId + ".excavator.deceleration")
-	if abs(moveDirectionInput.y) < 0.1 and abs(moveDirectionInput.x) > 0.9:
-		move.y *= 1 - delta *  Data.of(playerId + ".excavator.deceleration")
 	
-	var speedChange = acceleration * delta 
-	move +=  speedChange
+	placingCrusher = false
+	var tryPlaceCrusher = holdCollect and Data.ofOr(playerId + ".excavator.crusherCount",0) >= 1 and global_position.y >= 10.0
+	var mainlyX = abs(moveDirectionInput.y) < 0.1 and abs(moveDirectionInput.x) > 0.9
+	if tryPlaceCrusher or mainlyX:
+		if move.y >= 0 :
+			speed.y -= forces * delta
+		if holdCollect :
+			speed = Vector2.ZERO
+			move.x *= max(0 , 1 - delta  * Data.of(playerId + ".excavator.deceleration"))
+			if !placingCrusher:
+				placingCrusher = true
+				$PlaceCrusherAnimation/AnimationPlayer.play("place_crusher")
+		move.y *= max(0 , 1 - delta  * Data.of(playerId + ".excavator.deceleration"))
+	if ! placingCrusher:
+		$PlaceCrusherAnimation/AnimationPlayer.play("stop")
+			
 	
+
 	updateCarry()
 	pullCarry()
 	
@@ -122,21 +148,22 @@ func _physics_process(delta):
 		moveDirectionInput *= 0
 	
 	
+	var moveChange = speed * Data.of(playerId + ".excavator.acceleration") * delta * max(0.1, 1.0 - moveSlowdown)
+	if move.y <= 0 or speed.y >= 0.5 * Data.of(playerId + ".excavator.maxDownSpeed"):
+		move = (move * (1 - delta * Data.of(playerId + ".excavator.deceleration"))) + moveChange
+	else :
+		move.x = (move.x * (1 - delta * Data.of(playerId + ".excavator.deceleration"))) 
+		move += moveChange
+		move.y = min(max(move.y, -Data.of(playerId + ".excavator.maxUpSpeed")), Data.of(playerId + ".excavator.maxDownSpeed"))
 	
-	#move.y = min(max(move.y, -Data.of(playerId + ".excavator.maxUpSpeed")), Data.of(playerId + ".excavator.maxDownSpeed"))
-	#move.x = min(max(move.x, -Data.of(playerId + ".excavator.maxSpeed")), Data.of(playerId + ".excavator.maxSpeed"))
-	
-	if $CollisionDown.is_colliding():
-		move.y = min(20, move.y)
-	elif $CollisionUp.is_colliding():
-		move.y = max(-20.0, move.y)	
 	
 	var actualMove = position 
 	set_velocity(move)
 	#fix for gd4 changes to move and slide
 	move_and_slide_custom()
 	actualMove = position - actualMove
-		
+	
+	prevSpeed = speed
 	
 	
 	GameWorld.travelledDistance += actualMove.length()
@@ -147,12 +174,72 @@ func _physics_process(delta):
 	if boomCooldown > 0:
 		boomCooldown = max(boomCooldown - delta, 0)
 	
+	
 	# if the keeper is moving and the hit cooldown is at 0, check for possible hits
-	if abs(move.y) < Data.of(playerId + ".excavator.minBoomSpeed") and hitCooldown <= 0:
-		drill_check()
-	elif boomCooldown <= 0 :
-		boom_check()
+	if boomHeight < Data.of(playerId + ".excavator.minBoomHeight") and hitCooldown <= 0:
 		
+		#########################"
+		
+		var drillBuff = Data.of(playerId + ".keeper.drillBuff")
+		if moveDirectionInput.length() == 0:
+			pushTime = 0.0
+			pushDirection *= 0
+		else:
+			$HitTestRay.rotation = moveDirectionInput.angle()
+			$HitTestRay.force_raycast_update()
+			var tile = $HitTestRay.get_collider()
+			if not (tile and tile.has_meta("destructable") and tile.get_meta("destructable")):
+				pushTime = 0.0
+				pushDirection *= 0
+			else:
+				var directMiningDamage = Data.of(playerId + ".excavator.baseDamage")
+				if tile.hardness >= 3:
+					directMiningDamage *= Data.of(playerId + ".excavator.hardtilesmodifier")
+				var drillbuff = 1.0 + drillBuff
+				pushTime += delta * (1.0 - min(last_frame_vel.length() / 35.0, 1.0))
+				pushDirection = global_position - tile.global_position
+				if pushTime * drillbuff > prePushTime:
+					if not pushing:
+						pushing = true
+					move.x = 0
+				if pushTime * drillbuff > pushTimeMax:
+					pushTime = 0.05
+					var hardnessMod = 1.0
+					if tile.hardness >= 3:
+						hardnessMod -= ((tile.hardness - 2) * Data.of(playerId + ".excavator.baseDamage")) / 4.0
+					if tile.hardness <= 1:
+						hardnessMod += ((2 - tile.hardness) * Data.of(playerId + ".excavator.baseDamage")) / 2.0
+					var mod = 1.0
+					if tile.type == "iron":
+						var v = max(15, Data.ofOr("map.ironAdditionalHealth", 0))
+						mod = 15.0 / float(v)
+					tile.hit(pushDirection, directMiningDamage * drillbuff)
+					emit_signal("mined", 0.1)
+					emit_signal("tileHit")
+					$TileHitSounds.hit(tile, drillbuff < 1.0, true)
+					if Options.shakeDrill:
+						InputSystem.shakeTarget(self, 20, 0.2, 8)
+					var hits_needed_to_destroy:float = float(tile.max_health) / float(Data.of(playerId + ".excavator.baseDamage"))
+					emit_sparks($HitTestRay.get_collision_point(), tile, hits_needed_to_destroy)
+					var pt = $HitTestRay.get_collision_point()
+					
+	if pushTime <= 0 and pushing:
+		pushing = false
+	last_frame_vel = actualMove / delta
+		#########################
+		
+	if $CollisionDown.is_colliding():
+		if boomHeight >= Data.of(playerId + ".excavator.minBoomHeight") and boomCooldown <= 0 :
+			boom_check()
+		
+	if $CollisionDown.is_colliding():
+		move.y = min(20, move.y)
+	elif $CollisionUp.is_colliding():
+		move.y = max(-20.0, move.y)	
+		
+		
+
+			
 	if $CarryLoadSound.playing:
 		$CarryLoadSound.volume_db = min(-2, -30 + carriedCarryables.size()*50)
 	
@@ -165,22 +252,41 @@ func _physics_process(delta):
 	
 	$Trail.emitting = moveDirectionInput.length() > 0 and hitCooldown <= 0.0 and spriteLockDuration <= 0.0
 	$Trail.direction = -moveDirectionInput
+	$FallParticules.emitting = false
 	
+	$ThrusterLeft.visible = true
+	$ThrusterRight.visible = true 
 	if spriteLockDuration > 0.0:
 		spriteLockDuration -= delta
 	else:
 		var combinedMove = moveDirectionInput
 		if actualMove.length() > 0.15:
 			combinedMove += actualMove
-		$DrillSprite.hide()
-		$DrillSprite.stop()
 		if combinedMove.length() < 0.35:
 			$Sprite2D.play("default"+animationSuffix)
 		else:
+			$ThrusterLeft/Booster.play("boosting")
+			$ThrusterLeft.restart()
+			$ThrusterLeft.emitting = true
+			$ThrusterRight/Booster.play("boosting")
+			$ThrusterRight.restart()
+			$ThrusterRight.emitting = true
+			$ThrusterLeft/Booster.visible = true
+			$ThrusterRight/Booster.visible = true
 			if abs(combinedMove.x) > abs(combinedMove.y) * 0.95:
 				$Sprite2D.play("left"+animationSuffix if combinedMove.x < 0 else "right"+animationSuffix)
 			else:
-				$Sprite2D.play("up"+animationSuffix if combinedMove.y < 0 else "down"+animationSuffix)
+				if combinedMove.y < 0:
+					$Sprite2D.play("up"+animationSuffix)
+				elif combinedMove.y >= 0 and move.y <= 100.0:
+					$Sprite2D.play("down"+animationSuffix)
+				else :
+					$Sprite2D.play("fall"+animationSuffix)
+					$FallParticules.emitting = true
+					$ThrusterLeft.emitting = false
+					$ThrusterRight.emitting = false
+					$ThrusterLeft/Booster.visible = false
+					$ThrusterRight/Booster.visible = false
 		if moveDirectionInput.length() == 0:
 			moveStartSoundPlayBuffer = 0
 			if $MoveSound.shouldPlay:
@@ -189,7 +295,6 @@ func _physics_process(delta):
 					$MoveSound.stop()
 					$CarryLoadSound.stop()
 					$MoveStopSound.play()
-					$StillSound.play()
 					moveStopSoundPlayBuffer = 0
 		else:
 			moveStopSoundPlayBuffer = 0
@@ -199,13 +304,74 @@ func _physics_process(delta):
 					$MoveSound.play()
 					$CarryLoadSound.play()
 					$MoveStartSound.play()
-					$StillSound.stop()
 					moveStartSoundPlayBuffer = 0
 	
 	# because there is no notification about usables becoming focussable, this runs every loop
 	# otherwise there would be problems with drops and stations, like in the cellar
 	updateInteractables()
 
+	if $CollisionDown.is_colliding() or move.y <= 0 or abs(moveDirectionInput.x) > 0.3 :
+		boomHeight = 0.0
+		$FallSound.stop()
+	else :
+		if ! $FallSound.playing:
+			$FallSound.play()
+		boomHeight += actualMove.y
+
+		
+func customDamageTileCircleArea( pos:Vector2, radius:float, damage:float, delay := 0.0, offset:Vector2 = Vector2.ZERO):
+	if delay > 0.0:
+		var tween = Level.map.find_child("$Tween",true, false)
+		tween.interpolate_callback(Level.map, delay, "damageTileCircleArea", pos, radius, damage, 0.0, offset)
+		tween.start()
+		return
+	
+	var explosionCenterCoord = Vector2(Level.map.getTileCoord(pos + offset))
+	var startCoord = Vector2(Level.map.getTileCoord(pos))
+	prints(pos, offset, startCoord, explosionCenterCoord)
+	var open := [startCoord]
+	var closed := []
+	while open.size() > 0:
+		var newOpen := []
+		for coord in open:
+			if closed.has(coord):
+				continue
+			
+			for off in Level.map.NEIGHBOR_TILE_OFFSETS1:
+				var c2 = off + Vector2(coord)
+				if (c2 - explosionCenterCoord).length() <= radius and not closed.has(c2) and not newOpen.has(c2):
+					newOpen.append(c2)
+			
+			if Level.map.tiles.has(coord):
+				var tile = Level.map.tiles.get(coord)
+				if Data.isDestructable(tile):
+					var v = coord - explosionCenterCoord 
+					var dmg = damage * (1.0 - 0.5 * (v.length() / radius))
+					tile.hit(v, dmg)
+					
+					if tile.health <= 0 :
+						tile.exploded = true
+			elif Level.map.is_tile_empty(coord): #in bounds and is empty cell
+				Tile.spawn_tile_break_particles(Level.map, coord, Level.map.getTilePos(coord), Vector2(), "default", true, false)
+			closed.append(coord)
+		
+		await Level.map.get_tree().create_timer(0.08).timeout
+		while GameWorld.paused:
+			await Level.map.get_tree().create_timer(0.08).timeout
+		open = newOpen
+		
+func addCrusher():
+	if Data.ofOr(playerId + ".excavator.crusherCount", 0) < 1 :
+		return 
+	var crusher = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/PlacebleCrusher.tscn").instantiate()
+	Level.map.add_child(crusher)
+	crusher.global_position = global_position
+	crusher.keeperId = playerId
+	
+	Data.changeByInt(playerId + ".excavator.crusherCount", -1)
+	crusherPosition = crusher.global_position
+	
+	
 func update_action_hints():
 	pass
 	
@@ -384,78 +550,17 @@ func dropHold():
 
 func pickup(drop):
 	attachCarry(drop)
+	
 
 func currentSpeed() -> float:
 	var s = Data.of(playerId + ".excavator.maxSpeed")
 	s += Data.ofOr(playerId + ".keeper.speedBuff", 0)
 	var yMove = move.normalized().y
-	s += Data.ofOr(playerId + ".keeper.additionalupwardsspeed", 0) * abs(yMove)
+	s += Data.ofOr(playerId + ".k+eeper.additionalupwardsspeed", 0) * abs(yMove)
 	return s
 
-func drill_check()->void:
-	DrillHitTestRay.target_position = sign(moveDirectionInput.x) * Vector2(11,0)
-#	force raycast update, as otherwise we might get a drill collision while already moving in an other direction
-	DrillHitTestRay.force_raycast_update()
-	var tile = DrillHitTestRay.get_collider()
-	
-	if not tile or not tile.has_meta("destructable"):
-		return
-	if not tile.get_meta("destructable"):
-		if Data.of(playerId + ".excavator.destroyindestructibletiles"):
-			if not Level.map.isWithinBounds(tile.coord):
-				return 
-		else:
-			return
-	
-	var dir = global_position - tile.global_position
-	var drillStrength = Data.of(playerId + ".excavator.drillStrength")
-	if tile.hardness >= 3:
-		var tilehardnessmodifier = Data.ofOr(playerId + ".excavator.hardtilesmodifier", 1.0)
-		drillStrength *= tilehardnessmodifier
-	tile.hit(dir, drillStrength)
-	emit_signal("mined", 0.1)
-	
-	if Options.shakeDrill:
-		InputSystem.shakeTarget(self, 20, 0.2, 8)
-
-	var knockback = Data.of("excavator.acceleration") * Data.of("excavator.tileKnockback")
-	hitCooldown = Data.of("excavator.tileHitCooldown")
-	moveSlowdown = 0.25 + currentSpeed() * 0.01
-	spriteLockDuration = hitCooldown
-	var drillbuff = 1.0 - float(Data.of(playerId+".keeper.drillBuff"))
-	if drillbuff < 1.0:
-		hitCooldown = max(hitCooldown * drillbuff, 0.017)
-		knockback *= drillbuff
-		spriteLockDuration *= drillbuff
-	if abs(dir.x) > abs(dir.y):
-		move.x = sign(dir.x) * knockback
-		move.y *=  0.1
-	else:
-		move.y = sign(dir.y) * knockback
-		move.x *=  0.1
-
-	$TileHitSounds.hit(tile, drillbuff < 1.0, true)
-
-	DrillSprite.show()
-	DrillSprite.frame = 0
-	var infix  = "_big" if Data.of("excavator.destroyindestructibletiles") else ""
-	DrillSprite.play("drill" + infix + animationSuffix)
-	DrillSprite.rotation = DrillHitTestRay.rotation + PI
-
-	var anim_name = ""
-	if abs(move.x) > abs(move.y):
-		anim_name = "drill_right" if move.x < 0 else "drill_left"
-	else:
-		anim_name = "down" if move.y < 0 else "up"
-
-	$Sprite2D.play(anim_name + animationSuffix)
-	
-	var hits_needed_to_destroy:float = float(tile.max_health) / float(Data.of(playerId + ".excavator.drillStrength"))
-	emit_sparks(DrillHitTestRay.get_collision_point(), tile, hits_needed_to_destroy)
-	emit_signal("tileHit")
-
 func boom_check()->void:
-	var tile = BoomHitTestRay.get_collider()
+	var tile = $CollisionDown.get_collider()
 	
 	if not tile or not tile.has_meta("destructable"):
 		return
@@ -467,17 +572,23 @@ func boom_check()->void:
 			return
 	
 	var dir = global_position - tile.global_position
-	var boomStrength = 5000.0
+	var boomStrength = Data.of(playerId + ".excavator.baseDamage") * Data.of(playerId + ".excavator.boomDamageMultiplier") 
+	boomStrength +=  Data.of(playerId + ".excavator.extraDamagePerHightUnit") * boomHeight * Data.of(playerId + ".excavator.baseDamage")
+	var radius = 2
+	if boomHeight >= hightBoomBonus1 :
+		radius += 1
+	if boomHeight >= hightBoomBonus2 :
+		radius += 1
 	if tile.hardness >= 3:
 		var tilehardnessmodifier = Data.ofOr(playerId + ".excavator.hardtilesmodifier", 1.0)
 		boomStrength *= tilehardnessmodifier
-	Level.map.damageTileCircleArea(tile.global_position,  3, boomStrength)
+	customDamageTileCircleArea(tile.global_position,  radius, boomStrength)
 	emit_signal("mined", 0.1)
 	
 	if Options.shakeDrill:
 		InputSystem.shakeTarget(self, 20, 0.2, 8)
 
-	var knockback = Data.of("excavator.acceleration") * Data.of("excavator.tileKnockback")
+	var knockback = Data.of("excavator.Speed") * Data.of("excavator.tileKnockback")
 	boomCooldown = Data.of("excavator.boomHitCooldown")
 	moveSlowdown = 0.25 + currentSpeed() * 0.01
 	spriteLockDuration = boomCooldown
@@ -488,12 +599,6 @@ func boom_check()->void:
 
 	$TileHitSounds.hit(tile, drillbuff < 1.0, true)
 
-	DrillSprite.show()
-	DrillSprite.frame = 0
-	var infix  = "_big" if Data.of("excavator.destroyindestructibletiles") else ""
-	DrillSprite.play("drill" + infix + animationSuffix)
-	DrillSprite.rotation = DrillHitTestRay.rotation + PI
-
 	var anim_name = ""
 	if abs(move.x) > abs(move.y):
 		anim_name = "drill_right" if move.x < 0 else "drill_left"
@@ -502,20 +607,34 @@ func boom_check()->void:
 
 	$Sprite2D.play(anim_name + animationSuffix)
 	
-	var hits_needed_to_destroy:float = float(tile.max_health) / float(Data.of(playerId + ".excavator.drillStrength"))
-	emit_sparks(DrillHitTestRay.get_collision_point(), tile, hits_needed_to_destroy)
+	var hits_needed_to_destroy:float = float(tile.max_health) / float(boomStrength)
 	emit_signal("tileHit")
 
-@onready var drill_hit = $DrillHit
+
+
+func kill():
+	for carry in carriedCarryables:
+		dropCarry(carry)
+	for c in carryLines.values():
+		c.queue_free()
+	carriedCarryables.clear()
+	carryLines.clear()
+	$Light3D/LightSmall.set_light_active(false)
+	$Light3D/LightBig.set_light_active(false)
+	super.kill()
+
+
+
+@onready var drill_hit = $Hit
 func emit_sparks(hit_position:Vector2, tile:Node, hits_needed_to_destroy:float):
 	var tile_type = tile.type
 	drill_hit.position = to_local(hit_position)*1.5
-	drill_hit.rotation = DrillHitTestRay.rotation + PI
+	drill_hit.rotation = $HitTestRay.rotation + PI
 	drill_hit.frame = 0
 	drill_hit.play("hit")
 	var particle_amount = int(round(remap(clamp(hits_needed_to_destroy, 1.0, 8.0), 1, 8, 60, 10)))
-	$DrillHit/DrillHitParticles.amount = particle_amount
-	$DrillHit/DrillHitParticles.restart()
+	$Hit/HitParticules.amount = particle_amount
+	$Hit/HitParticules.restart()
 
 	
 	var spark_amount = int(round(remap(clamp(hits_needed_to_destroy, 1.0, 8.0), 1, 8, 20, 3)))
@@ -540,21 +659,14 @@ func emit_sparks(hit_position:Vector2, tile:Node, hits_needed_to_destroy:float):
 		t.apply_central_impulse(Vector2.RIGHT.rotated(drill_hit.rotation+randf_range(-0.7,0.7))*randf_range(60,130))
 		get_parent().call_deferred("add_child", t)
 
-
 func disableEffects():
-	$StillSound.stop()
+	$ThrusterLeft.emitting = false
+	$ThrusterRight.emitting = false
+	$ThrusterLeft/Booster.visible = false
+	$ThrusterRight/Booster.visible = false
 
 func enableEffects():
-	$StillSound.play()
-
-
-func kill():
-	for carry in carriedCarryables:
-		dropCarry(carry)
-	for c in carryLines.values():
-		c.queue_free()
-	carriedCarryables.clear()
-	carryLines.clear()
-	$Light3D/LightSmall.set_light_active(false)
-	$Light3D/LightBig.set_light_active(false)
-	super.kill()
+	$ThrusterLeft.emitting = true
+	$ThrusterRight.emitting = true
+	$ThrusterLeft/Booster.visible = true
+	$ThrusterRight/Booster.visible = true

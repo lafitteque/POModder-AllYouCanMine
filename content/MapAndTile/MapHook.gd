@@ -335,3 +335,4 @@ func find_in_direction(main_node, start,direction,max_distance_from_start = 30):
 		
 	return last_available_position
 
+

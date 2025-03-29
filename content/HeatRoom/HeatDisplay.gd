@@ -192,7 +192,7 @@ func _on_multiplier_minus():
 	changePropertyValue("totalrunweightmodifier", "monstermodifiers", multiplier)
 	
 func updateMultiplier():
-	var text = str(int(multiplier*100)) + "%"
+	var text = str(round(multiplier*100)) + "%"
 	%Multiplier.text = text
 	
 	
