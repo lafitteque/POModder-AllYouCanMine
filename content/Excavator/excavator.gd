@@ -41,6 +41,9 @@ var pushTimeMax = 0.8
 var hightBoomBonus1 
 var hightBoomBonus2 
 var placingCrusher = false
+var maxHorizontalFallControl = 0.6
+
+var speedLabel : Label 
 
 func init():
 	super.init()
@@ -66,6 +69,10 @@ func _ready():
 	
 	if not (StageManager.currentStage is MultiplayerLoadoutStage):
 		$UseArea/CollisionShape2D.shape.radius = 15.0
+		
+	speedLabel = Label.new()
+	speedLabel.position.y += 20
+	
 
 func _physics_process(delta):
 	super._physics_process(delta)
@@ -109,7 +116,7 @@ func _physics_process(delta):
 	
 	var speed:Vector2 = Vector2.ZERO
 	speed.x = moveDirectionInput.x * baseSpeed.x 
-	if moveDirectionInput.y<= 0 :
+	if moveDirectionInput.y<= 0:
 		speed.y = abs(moveDirectionInput.y) * baseSpeed.y
 	
 	# Falling
@@ -117,6 +124,11 @@ func _physics_process(delta):
 	if prevSpeed.y >= 0 :
 		forces -=  Data.of(playerId + ".excavator.frictionFactor") * prevSpeed.y**2
 	speed.y += forces * delta
+	
+	# Restrict x axis control while falling
+	if moveDirectionInput.y >= maxHorizontalFallControl: 
+		speed.x = speed.x/2.5
+	
 	
 	# If an axis is way greater than the other one, re-align with this axis
 	if abs(moveDirectionInput.x) < 0.1 and abs(moveDirectionInput.y) > 0.9:
@@ -128,7 +140,7 @@ func _physics_process(delta):
 	if tryPlaceCrusher or mainlyX:
 		if move.y >= 0 :
 			speed.y -= forces * delta
-		if holdCollect :
+		if tryPlaceCrusher :
 			speed = Vector2.ZERO
 			move.x *= max(0 , 1 - delta  * Data.of(playerId + ".excavator.deceleration"))
 			if !placingCrusher:
@@ -164,7 +176,7 @@ func _physics_process(delta):
 	actualMove = position - actualMove
 	
 	prevSpeed = speed
-	
+	speedLabel.text = str(move)
 	
 	GameWorld.travelledDistance += actualMove.length()
 
@@ -310,7 +322,8 @@ func _physics_process(delta):
 	# otherwise there would be problems with drops and stations, like in the cellar
 	updateInteractables()
 
-	if $CollisionDown.is_colliding() or move.y <= 0 or abs(moveDirectionInput.x) > 0.3 :
+	var xAxisControl = moveDirectionInput.y < maxHorizontalFallControl and abs(moveDirectionInput.x) >=1
+	if $CollisionDown.is_colliding() or move.y <= 0 or xAxisControl or moveDirectionInput.y < -0.1 :
 		boomHeight = 0.0
 		$FallSound.stop()
 	else :
