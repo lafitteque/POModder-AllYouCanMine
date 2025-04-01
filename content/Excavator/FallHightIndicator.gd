@@ -45,7 +45,6 @@ func _process(delta):
 	elif heightFall - level1 < (level2 - level1)/2 :
 		level1bar.value = 1.0
 		level2bar.value = 0.0
-		level2bar.value = 0.5
 	else :
 		level1bar.value = 1.0
 		level2bar.value = 1.0

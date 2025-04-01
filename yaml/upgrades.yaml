@@ -43,7 +43,7 @@ excavator:
   propertyChanges:
     - excavator.maxSpeed = 60
     - excavator.maxUpSpeed = 65
-    - excavator.maxDownSpeed = 135
+    - excavator.maxDownSpeed = 220
     - excavator.acceleration = 5
     - excavator.deceleration = 4
     - excavator.slowdownRecovery = 4
@@ -57,7 +57,7 @@ excavator:
     - excavator.extraDamagePerHightUnit = 0.005
     - excavator.boostUpIntensity = 50.0
     - excavator.minBoomHeight = 140.0
-    - excavator.gravity = 1500.0
+    - excavator.gravity = 2100.0
     - excavator.frictionFactor = 0.005
     - excavator.maxCarry = 2
     - excavator.crusherCount = 1
@@ -134,7 +134,7 @@ excavatorDamage3:
   propertyChanges: 
     - excavator.baseDamage *= 2
     - excavator.hardtilesmodifier += 0.1
-     - property.excavator.baseDamage += 5
+    - excavator.baseDamage += 5
   predecessors: [excavatorDamage2]
 
 

@@ -31,10 +31,10 @@ func _init():
 	# Add extensions
 	for loc in ["en" , "es" , "fr"]:
 		ModLoaderMod.add_translation(trans_dir + "translations." + loc + ".translation")
+	
 	ModLoaderMod.install_script_extension(ext_dir + "AssignmentDisplay.gd")
 	ModLoaderMod.install_script_extension(ext_dir + "TileDataGenerator.gd")
 	ModLoaderMod.install_script_extension(ext_dir + "laser_superhot.gd")
-	
 	
 	
 func _ready():

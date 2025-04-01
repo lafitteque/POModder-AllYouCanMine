@@ -34,6 +34,9 @@ var pushDirection := Vector2()
 var last_frame_vel
 var holdCollect = false
 var crusherPosition : Vector2 = Vector2.ZERO
+var collectCooldown := 0.0
+var maxCameraSpeed := Vector2.ZERO
+
 
 	# params
 var prePushTime = 0.2
@@ -41,6 +44,8 @@ var pushTimeMax = 0.8
 var hightBoomBonus1 
 var hightBoomBonus2 
 var placingCrusher = false
+var maxHorizontalFallControl = 0.6
+
 
 func init():
 	super.init()
@@ -60,12 +65,18 @@ func init():
 	await StageManager.stage_started
 
 
+func currentSpeed() -> float:
+	return maxCameraSpeed.length()
+	
+	
 func _ready():
 	hightBoomBonus1 = Data.ofOr("excavator.boomHeight1", 300.0)
 	hightBoomBonus2 = Data.ofOr("excavator.boomHeight2", 500.0)
 	
 	if not (StageManager.currentStage is MultiplayerLoadoutStage):
 		$UseArea/CollisionShape2D.shape.radius = 15.0
+		
+	
 
 func _physics_process(delta):
 	super._physics_process(delta)
@@ -82,6 +93,9 @@ func _physics_process(delta):
 		pullCarry()
 		return
 	
+	if collectCooldown > 0.0:
+		collectCooldown -= delta
+	
 	#### Update arrow towards crusher
 	if Data.ofOr(playerId + ".excavator.crusherCount", 1) == 0:
 		$ArrowTowardsCrusher.visible = true
@@ -96,20 +110,25 @@ func _physics_process(delta):
 	var baseSpeed : Vector2 = Vector2.ZERO
 	var boost = Data.ofOr(playerId + ".keeper.speedBuff", 0) * (moveDirectionInput.normalized())
 	
+	if Data.ofOr(playerId + ".keeper.speedBuff", 0) != 0 :
+		print("debut")
+		
 	baseSpeed.x  = Data.of(playerId + ".excavator.maxSpeed")
-	baseSpeed.x += boost.x
+	baseSpeed.x += abs(boost.x)
 	
 	if moveDirectionInput.y <= 0 :
 		baseSpeed.y = -Data.of(playerId + ".excavator.maxUpSpeed") 
+		baseSpeed.y += boost.y
+		baseSpeed.y -= Data.ofOr(playerId + ".keeper.additionalupwardsspeed", 0) 
 	else:
 		baseSpeed.y = Data.of(playerId + ".excavator.maxDownSpeed")
 		
 	var yMove = move.normalized().y
-	baseSpeed.y += Data.ofOr(playerId + ".keeper.additionalupwardsspeed", 0) * abs(yMove)
+	
 	
 	var speed:Vector2 = Vector2.ZERO
 	speed.x = moveDirectionInput.x * baseSpeed.x 
-	if moveDirectionInput.y<= 0 :
+	if moveDirectionInput.y<= 0:
 		speed.y = abs(moveDirectionInput.y) * baseSpeed.y
 	
 	# Falling
@@ -117,6 +136,11 @@ func _physics_process(delta):
 	if prevSpeed.y >= 0 :
 		forces -=  Data.of(playerId + ".excavator.frictionFactor") * prevSpeed.y**2
 	speed.y += forces * delta
+	
+	# Restrict x axis control while falling
+	if moveDirectionInput.y >= maxHorizontalFallControl: 
+		speed.x = speed.x/2.5
+	
 	
 	# If an axis is way greater than the other one, re-align with this axis
 	if abs(moveDirectionInput.x) < 0.1 and abs(moveDirectionInput.y) > 0.9:
@@ -128,7 +152,7 @@ func _physics_process(delta):
 	if tryPlaceCrusher or mainlyX:
 		if move.y >= 0 :
 			speed.y -= forces * delta
-		if holdCollect :
+		if tryPlaceCrusher :
 			speed = Vector2.ZERO
 			move.x *= max(0 , 1 - delta  * Data.of(playerId + ".excavator.deceleration"))
 			if !placingCrusher:
@@ -137,8 +161,6 @@ func _physics_process(delta):
 		move.y *= max(0 , 1 - delta  * Data.of(playerId + ".excavator.deceleration"))
 	if ! placingCrusher:
 		$PlaceCrusherAnimation/AnimationPlayer.play("stop")
-			
-	
 
 	updateCarry()
 	pullCarry()
@@ -157,6 +179,8 @@ func _physics_process(delta):
 		move.y = min(max(move.y, -Data.of(playerId + ".excavator.maxUpSpeed")), Data.of(playerId + ".excavator.maxDownSpeed"))
 	
 	
+	maxCameraSpeed = move
+	
 	var actualMove = position 
 	set_velocity(move)
 	#fix for gd4 changes to move and slide
@@ -164,7 +188,6 @@ func _physics_process(delta):
 	actualMove = position - actualMove
 	
 	prevSpeed = speed
-	
 	
 	GameWorld.travelledDistance += actualMove.length()
 
@@ -310,7 +333,8 @@ func _physics_process(delta):
 	# otherwise there would be problems with drops and stations, like in the cellar
 	updateInteractables()
 
-	if $CollisionDown.is_colliding() or move.y <= 0 or abs(moveDirectionInput.x) > 0.3 :
+	var xAxisControl = moveDirectionInput.y < maxHorizontalFallControl and abs(moveDirectionInput.x) >=1
+	if $CollisionDown.is_colliding() or move.y <= 0 or xAxisControl or moveDirectionInput.y < -0.1 :
 		boomHeight = 0.0
 		$FallSound.stop()
 	else :
@@ -420,6 +444,8 @@ func pullCarry():
 		strength = max(strength * 0.90, 0.005)
 
 func attachCarry(body):
+	if collectCooldown > 0.0:
+		return
 	if carriedCarryables.has(body):
 		Logger.error("Tried to attach carryable " + body.name + "although it's already carried ")
 		return
@@ -466,6 +492,9 @@ func dropCarry(body):
 
 	if carryLines.size() == 0:
 		$CarryLine.stop()
+		
+	collectCooldown = 1.0
+	
 
 func updateCarryables():
 	if not is_instance_valid(focussedCarryable):
@@ -552,7 +581,7 @@ func pickup(drop):
 	attachCarry(drop)
 	
 
-func currentSpeed() -> float:
+func currentSpeed2() -> float:
 	var s = Data.of(playerId + ".excavator.maxSpeed")
 	s += Data.ofOr(playerId + ".keeper.speedBuff", 0)
 	var yMove = move.normalized().y
@@ -590,7 +619,7 @@ func boom_check()->void:
 
 	var knockback = Data.of("excavator.Speed") * Data.of("excavator.tileKnockback")
 	boomCooldown = Data.of("excavator.boomHitCooldown")
-	moveSlowdown = 0.25 + currentSpeed() * 0.01
+	moveSlowdown = 0.25 + currentSpeed2() * 0.01
 	spriteLockDuration = boomCooldown
 	var drillbuff = 1.0 - float(Data.of(playerId+".keeper.drillBuff"))
 	if drillbuff < 1.0:
