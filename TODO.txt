@@ -1,5 +1,13 @@
-A FAIRE (Excavator) :
-	- Balance
+A Faire :
+- Balance excavator
+- vitesse de chute + camera
+
+
+Bug fixed :
+- Orchard fruit issue
+- breakable Walls issue
+- issue with a damage upgrade that can cause game crash
+- 
 
 
 
