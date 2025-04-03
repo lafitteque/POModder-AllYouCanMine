@@ -76,7 +76,7 @@ func setType(tile, type, baseHealth):
 			destroyer.global_position = tile.global_position
 			customInitResourceSprite(tile,Vector2(2,0))
 		"chaos": 
-			var chaos = preload("res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTile.tscn").instantiate()
+			var chaos = preload("res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTileCreator.tscn").instantiate()
 			tile.add_child(chaos)
 			chaos.global_position = tile.global_position
 			customInitResourceSprite(tile,Vector2(2,1))

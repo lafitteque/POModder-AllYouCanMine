@@ -1,12 +1,12 @@
 extends Node2D
 
-var used = false
 var timer_label : Timer
 var effect_list 
 var label_duration = 3.0
 var should_queue_free = false
 var animation_finished = false
-var tile_child_type = "chaos"
+
+var tile
 
 @onready var default_gravity_vector = ProjectSettings.get_setting("physics/2d/default_gravity_vector")
 @onready var data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod
@@ -16,12 +16,7 @@ func _ready():
 	effect_list= data_mod.chaos_effects
 	set_physics_process(false)
 	
-	
 func activate():
-	if used :
-		return
-	
-	
 	var label = preload("res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/chaos_label.tscn").instantiate()
 	var effect_name = effect_list[randi() % effect_list.size()]
 	var effect = load("res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/effect_" + effect_name + ".tscn").instantiate()
@@ -37,7 +32,6 @@ func activate():
 	for c in get_children():
 		print(c.name)
 	effect.activate()
-	used = true
 	await get_tree().create_timer(0.1).timeout
 	$activation/AnimationPlayer.play("activate")
 	

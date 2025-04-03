@@ -1,12 +1,27 @@
 extends Node2D
-
 var cooldown := 0.0
 
-var countResources : float = 0.0 
+var countResources : int = 0 
 var keeperId : String
 var dead = false
-
+var thisIsACrusher
 var maxResources : float = 55.0 # Mod Added
+
+func serialize()->Dictionary:
+	var data = {}
+	data["meta.kind"] = "generic"
+	data["dead"] = dead
+	data["countResources"] = countResources
+	print("debug saved : " , global_position)
+	data["meta.priority"] = 100
+	return data
+	
+func deserialize(data : Dictionary):
+	dead = data["dead"]
+	countResources = int(data["countResources"])
+	print("debug loaded : " , global_position)
+	Data.apply(keeperId + ".excavator.fillRatio", float(countResources)/maxResources)
+	
 
 func _ready():
 	find_child("Amb").play()

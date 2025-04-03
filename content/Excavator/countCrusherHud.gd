@@ -5,6 +5,14 @@ var originY = -2
 
 func init():
 	super.init()
+	
+
+func _ready():
+	var crusherFilling = Data.ofOr(keeperId + ".excavator.fillratio", 0.0)
+	var rel = round(crusherFilling*14)
+	$UiPlaceCrusher.region_rect.size.y = rel
+	$UiPlaceCrusher.region_rect.position.y = 14 - rel
+	$UiPlaceCrusher.position.y =  originY +  $UiPlaceCrusher.region_rect.position.y
 	Data.listen(self, keeperId + ".excavator.fillRatio") #playerId + ".excavator.crusherFillRatio")
 	
 func propertyChanged(property:String, oldValue, newValue):

@@ -86,6 +86,9 @@ func modInit():
 	registerAchievenemnts()
 	
 	
+	var excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator.tscn")
+	excavator.take_over_path("res://content/keeper/excavator/Excavator.tscn")
+	
 	var modifiers = ["pyromaniac", "autonomous",
 	"superhot", "speed", 
 	"aprilfools", "smalldrops",

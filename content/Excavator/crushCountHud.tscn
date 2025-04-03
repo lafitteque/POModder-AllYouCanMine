@@ -22,7 +22,6 @@ layoutPriority = 10
 
 [node name="UiPlaceCrusherEmpty" type="Sprite2D" parent="."]
 position = Vector2(-2.6, -2.2)
-scale = Vector2(1, 1)
 texture = ExtResource("2_o1i4f")
 centered = false
 
