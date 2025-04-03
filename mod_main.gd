@@ -45,7 +45,6 @@ func modInit():
 	data_mod = get_node("/root/ModLoader/POModder-Dependency").data_mod
 	data_achievements = get_node("/root/ModLoader/POModder-Dependency").data_achievements
 	
-	#GameWorld.devMode = true
 	var pathToModYamlAssignments : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/assignments.yaml"
 	var pathToModYamlProperties : String = "res://mods-unpacked/POModder-AllYouCanMine/yaml/properties.yaml"
 	pathToModYamlUpgrades = "res://mods-unpacked/POModder-AllYouCanMine/yaml/upgrades.yaml"
@@ -61,9 +60,6 @@ func modInit():
 	Data.upgrades.erase("blastminingassignment")
 	Data.upgrades.erase("suitblasterassignment")
 	
-	var stage_manager_extender = preload("res://mods-unpacked/POModder-AllYouCanMine/content/StageManagerExtender/StageManagerExtender.tscn").instantiate()
-	StageManager.add_child(stage_manager_extender)
-
 	StageManager.connect("level_ready", _on_level_ready)
 
 	var coresaver_loadout = load("res://mods-unpacked/POModder-AllYouCanMine/content/loadout_gamemode/coresaver_loadout.tscn").instantiate()
@@ -84,10 +80,6 @@ func modInit():
 	add_child(tile_hook)
 	
 	registerAchievenemnts()
-	
-	
-	var excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator.tscn")
-	excavator.take_over_path("res://content/keeper/excavator/Excavator.tscn")
 	
 	var modifiers = ["pyromaniac", "autonomous",
 	"superhot", "speed", 
