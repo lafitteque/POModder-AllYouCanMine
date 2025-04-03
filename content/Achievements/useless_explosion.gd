@@ -52,6 +52,5 @@ func verify_kill_count():
 			get_parent().unlockAchievement(id)
 		else:
 			timer.start()
-			second_timer.queue_free()
 			if is_instance_valid(second_timer):
 				second_timer.queue_free()

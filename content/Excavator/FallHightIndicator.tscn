@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bfqlpe504ju8h" path="res://mods-unpacked/POModder-AllYouCanMine/images/FallHeightIndicator2.png" id="4_x6tcs"]
 
 [node name="FallHightIndicator" type="Node2D"]
+visible = false
 script = ExtResource("1_2svb7")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

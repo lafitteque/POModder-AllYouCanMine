@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpbgdlhd3dejg"]
+
+[ext_resource type="Script" path="res://mods-unpacked/POModder-AllYouCanMine/content/ChaosTile/ChaosTileCreator.gd" id="1_5vrcd"]
+
+[node name="ChaosTileCreator" type="Node2D"]
+script = ExtResource("1_5vrcd")

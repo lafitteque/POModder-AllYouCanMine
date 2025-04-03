@@ -45,7 +45,7 @@ var hightBoomBonus1
 var hightBoomBonus2 
 var placingCrusher = false
 var maxHorizontalFallControl = 0.6
-
+var hasIndicator = false
 
 func init():
 	super.init()
@@ -76,8 +76,18 @@ func _ready():
 	if not (StageManager.currentStage is MultiplayerLoadoutStage):
 		$UseArea/CollisionShape2D.shape.radius = 15.0
 		
-	
+	Data.listen(self, playerId + ".excavator.fallIndicator")
+	hasIndicator = Data.ofOr(playerId + ".excavator.fallIndicator", false)
+	$FallHightIndicator.visible = hasIndicator
 
+func propertyChanged(property, oldValue, newValue):
+	var fallVisible = playerId + ".excavator.fallindicator"
+	match property:
+		fallVisible:
+			hasIndicator = true
+			$FallHightIndicator.visible = true
+	
+	
 func _physics_process(delta):
 	super._physics_process(delta)
 	for t in carryLines:

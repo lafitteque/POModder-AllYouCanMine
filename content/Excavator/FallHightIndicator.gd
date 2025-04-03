@@ -14,17 +14,7 @@ func _ready():
 	level2 = Data.ofOr(keeperId + ".excavator.boomHeight2", 500.0)
 	level1bar = $Background/Level1
 	level2bar = $Background/Level2
-	Data.listen(self, keeperId + ".excavator.fallIndicator")
-	var hasIndicator = Data.ofOr(keeperId + ".excavator.fallIndicator", false)
-	visible = hasIndicator
-	set_physics_process(hasIndicator)
-	
-func propertyChanged(property : String, oldValue, newValue):
-	var fallVisible = keeperId + ".excavator.fallindicator"
-	match property:
-		fallVisible:
-			visible = true
-			set_physics_process(true)
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

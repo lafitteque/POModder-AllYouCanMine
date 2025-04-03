@@ -1,17 +1,14 @@
 func _init():
-	
 	### Excavator overwrites
 	
-	var excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator.tscn")
-	excavator.take_over_path("res://content/keeper/excavator/Excavator.tscn")
-	excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator_animation.tres")
+	var excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavator_animation.tres")
 	excavator.take_over_path("res://content/keeper/excavator/spriteframes-skin0.tres")
 	excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/excavatorInputProcessor.gd")
 	excavator.take_over_path("res://content/keeper/ExcavatorInputProcessor.gd")
 	excavator = preload("res://mods-unpacked/POModder-AllYouCanMine/content/Excavator/crushCountHud.tscn")
 	excavator.take_over_path("res://content/keeper/excavator/crushCountHud.tscn")
 	
-		# Excavator Icons
+		## Excavator Icons
 	var excavator_icon = preload("res://mods-unpacked/POModder-AllYouCanMine/images/excavator_icon.png")
 	excavator_icon.take_over_path("res://content/icons/loadout_excavator-skin0.png")
 	
