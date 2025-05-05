@@ -20,7 +20,6 @@ func explode():
 					
 			if carryable.carriedBy.size() == 0:
 				carryable.queue_free()
-	await get_tree().create_timer(0.1).timeout
 	if Level.map:
 		Level.map.damageTileCircleArea(global_position,  3, 100000)
 	queue_free()

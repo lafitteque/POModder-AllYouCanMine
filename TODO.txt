@@ -1,29 +1,23 @@
+Changes :
+- destroyer tile no longer destroys resources spawned with its own explosion.
+- destroyer tile bug fixed : explosions are now visible. 
+
+
 A Faire :
-- Balance excavator
-- vitesse de chute + camera
+
+- specialisation boom : area vs damage
 
 
-Bug fixed :
-- Orchard fruit issue
-- breakable Walls issue
-- issue with a damage upgrade that can cause game crash
-- 
+Fait :
+- Increased explosion damage
+- Increased gravity, making the falling time shorter
+- Minimum height to cause an explosion decreased
+- Moving upwards gets faster the longer the upwards button is pressed.
+- Compression mining gets faster when pushing longer
+- Compression mining creates explosions after a certain amount of time pusing
 
+--------------------
 
-
-
-
-FINI / DONE :
-- Modifiers : ajouter incompatibilité
-- Rendre le modif Autonomous plus autonome avec auto collecte des ressources
-- Compatibility OK
-- Heat values rounding error OK
-- New Keeper
-- Progress area and keeper selection resilient to new keeper additions
-- Added compatibility with Diamonds Upgrades Mod
-
-
----------------------------------------------------------------------------------------------------
 PLUS TARD nouvelles tiles :
 - Faire en sorte que les profondeurs soient plus sombre et ajouter des tuiles de lumiere
 - Tile qui change la dureté des roches autour

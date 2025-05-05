@@ -134,8 +134,8 @@ func hit(tile, type, dir, dmg):
 	if detonator and is_instance_valid(detonator) and  !detonator.exploded:
 		detonator.explode()
 	
-	if destroyer and is_instance_valid(destroyer) and!destroyer.exploded:
-			destroyer.explode()
+	if destroyer and is_instance_valid(destroyer) and !destroyer.exploded:
+		destroyer.explode()
 			
 			
 func tileBreak(tile, type, dir, dmg):
