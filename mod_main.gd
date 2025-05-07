@@ -35,7 +35,8 @@ func _init():
 	ModLoaderMod.install_script_extension(ext_dir + "AssignmentDisplay.gd")
 	ModLoaderMod.install_script_extension(ext_dir + "TileDataGenerator.gd")
 	ModLoaderMod.install_script_extension(ext_dir + "laser_superhot.gd")
-	
+	ModLoaderMod.add_hook(_getRelevantBodies, "res://content/gadgets/ressourcepacker/ResourcePackerEffect.gd", "_getRelevantBodies")
+
 	
 func _ready():
 	ModLoaderLog.info("Done", MYMODNAME_LOG)
@@ -186,3 +187,22 @@ func registerAchievenemnts():
 		data_achievements.add_achievement(achievement[1], achievement[0])
 
 
+func _getRelevantBodies(chain:ModLoaderHookChain, area:Area2D) -> Array:
+	var main_node : Node = chain.reference_object
+	var max = Data.of("resourcepacker.packcount")
+	var used :=0
+	var drops := []
+	for drop in area.get_overlapping_bodies():
+		if drop is Drop and (drop.type == "iron" or drop.type == "water" or drop.type == "sand") and (not "iron_value" in drop):
+			drops.append(drop)
+			var inf = drop.getCarryInfluence()
+			if inf and inf.bundle:
+				main_node.bundle = inf.bundle
+				main_node.bundleInfluence = inf
+					
+	drops.sort_custom(main_node.sort_by_distance_asc)
+	
+	while(drops.size() > max):
+		drops.pop_back()
+	
+	return drops
